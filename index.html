@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -41,9 +42,10 @@
             <a href="#faq" class="nav-link">FAQ</a>
         </div>
 
-        <div class="nav-actions">
-            <a href="login.html" class="nav-btn nav-btn-ghost">Log In</a>
-            <a href="signup.html" class="nav-btn nav-btn-primary">Sign Up</a>
+        <div class="nav-actions" id="navActions">
+            <a href="login.html" class="nav-btn nav-btn-ghost" id="loginBtn">Log In</a>
+            <a href="signup.html" class="nav-btn nav-btn-primary" id="signupBtn">Sign Up</a>
+            <a href="#" class="nav-btn nav-btn-ghost" id="signoutBtn" style="display:none;" onclick="signOut()">Sign Out</a>
         </div>
 
         <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
@@ -745,6 +747,35 @@
     </div>
 </footer>
 
+<script>
+    const sb = window.supabase.createClient(
+        'https://xdhmexgxhjalxieiwzcj.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkaG1leGd4aGphbHhpZWl3emNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNjczOTUsImV4cCI6MjA4Nzg0MzM5NX0.kqIGkdEpvNosppqZMmXPTDfdqiTs95ZTc8I7fIABIaM'
+    );
+
+    async function updateNav() {
+        const { data: { session } } = await sb.auth.getSession();
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const signoutBtn = document.getElementById('signoutBtn');
+        if (session) {
+            loginBtn.style.display = 'none';
+            signupBtn.style.display = 'none';
+            signoutBtn.style.display = '';
+        } else {
+            loginBtn.style.display = '';
+            signupBtn.style.display = '';
+            signoutBtn.style.display = 'none';
+        }
+    }
+
+    async function signOut() {
+        await sb.auth.signOut();
+        window.location.reload();
+    }
+
+    updateNav();
+</script>
 <script src="script.js"></script>
 </body>
 </html>

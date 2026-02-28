@@ -206,24 +206,45 @@
         submitBtn.disabled = true;
         submitBtn.textContent = 'Creating account…';
 
-        const { data, error } = await supabase.auth.signUp({
-            email: email,
-            password: password,
-            options: {
-                data: {
-                    first_name: firstName,
-                    last_name: lastName
+        let result;
+        try {
+            result = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        first_name: firstName,
+                        last_name: lastName
+                    }
                 }
-            }
-        });
+            });
+            console.log('Supabase response:', JSON.stringify(result));
+        } catch (err) {
+            console.error('Supabase exception:', err);
+            showError('Connection error: ' + err.message);
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Create Free Account';
+            return;
+        }
+
+        const { data, error } = result;
 
         if (error) {
+            console.error('Supabase error:', error);
             showError(error.message);
             submitBtn.disabled = false;
             submitBtn.textContent = 'Create Free Account';
             return;
         }
 
+        if (data?.user?.identities?.length === 0) {
+            showError('An account with this email already exists.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Create Free Account';
+            return;
+        }
+
+        console.log('Signup success:', data);
         submitBtn.textContent = '✓ Account Created!';
         submitBtn.style.background = 'linear-gradient(135deg, #34d399, #06b6d4)';
 

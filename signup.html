@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -157,6 +158,11 @@
 </main>
 
 <script>
+    const supabase = window.supabase.createClient(
+        'https://xdhmexgxhjalxieiwzcj.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkaG1leGd4aGphbHhpZWl3emNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNjczOTUsImV4cCI6MjA4Nzg0MzM5NX0.kqIGkdEpvNosppqZMmXPTDfdqiTs95ZTc8I7fIABIaM'
+    );
+
     const form = document.getElementById('signupForm');
     const submitBtn = document.getElementById('submitBtn');
     const formError = document.getElementById('formError');
@@ -200,13 +206,27 @@
         submitBtn.disabled = true;
         submitBtn.textContent = 'Creating account…';
 
-        // Simulate account creation (replace with real API call)
-        await new Promise(r => setTimeout(r, 1200));
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+            options: {
+                data: {
+                    first_name: firstName,
+                    last_name: lastName
+                }
+            }
+        });
+
+        if (error) {
+            showError(error.message);
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Create Free Account';
+            return;
+        }
 
         submitBtn.textContent = '✓ Account Created!';
         submitBtn.style.background = 'linear-gradient(135deg, #34d399, #06b6d4)';
 
-        // Redirect to main page after a moment
         setTimeout(() => {
             window.location.href = 'index.html';
         }, 1500);

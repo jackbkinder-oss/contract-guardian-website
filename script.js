@@ -98,7 +98,10 @@ if (websiteBillingToggle) {
             el.textContent = el.dataset[mode];
         });
         document.querySelectorAll('.price-period[data-monthly]').forEach(el => {
-            el.innerHTML = el.dataset[mode];
+            el.textContent = el.dataset[mode];
+        });
+        document.querySelectorAll('.price-annual-note').forEach(el => {
+            el.style.display = isAnnual ? 'block' : 'none';
         });
     });
 }

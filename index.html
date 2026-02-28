@@ -110,67 +110,68 @@
     </div>
 </section>
 
-<!-- ─── HOW IT WORKS ──────────────────────────────── -->
-<section id="how-it-works">
-    <div class="container text-center">
-        <div class="section-label">How It Works</div>
-        <h2 class="section-title">From risky contract to clean draft in minutes</h2>
-        <p class="section-subtitle">Upload a PDF or paste your contract text. Contract Guardian does the rest — no legal degree required.</p>
-
-        <div class="steps-grid">
-            <div class="step-card fade-up">
-                <div class="step-number">Step 01</div>
-                <div class="step-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
-                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                        <polyline points="17 8 12 3 7 8"/>
-                        <line x1="12" y1="3" x2="12" y2="15"/>
-                    </svg>
-                </div>
-                <div class="step-title">Upload Your Contract</div>
-                <div class="step-desc">Drop in a PDF or paste contract text. Contract Guardian accepts any freelance contract, SOW, or service agreement up to 80,000 characters.</div>
-            </div>
-
-            <div class="step-card fade-up" style="transition-delay:0.1s">
-                <div class="step-number">Step 02</div>
-                <div class="step-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-                    </svg>
-                </div>
-                <div class="step-title">AI Scans Every Clause</div>
-                <div class="step-desc">Gemini AI reads the full contract and flags deal-killer clauses across 8 risk categories — Scope Creep, Cashflow Risk, IP Ownership, Non-Compete, and more.</div>
-            </div>
-
-            <div class="step-card fade-up" style="transition-delay:0.2s">
-                <div class="step-number">Step 03</div>
-                <div class="step-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                        <polyline points="14 2 14 8 20 8"/>
-                        <line x1="16" y1="13" x2="8" y2="13"/>
-                        <line x1="16" y1="17" x2="8" y2="17"/>
-                    </svg>
-                </div>
-                <div class="step-title">Review &amp; Understand with AI</div>
-                <div class="step-desc">Each flagged clause comes with a plain-English explanation of the risk and why it matters. Premium users also receive AI-suggested revisions. Ask the AI follow-up questions in chat.</div>
-            </div>
-
-            <div class="step-card fade-up" style="transition-delay:0.3s">
-                <div class="step-number">Step 04</div>
-                <div class="step-icon">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><path d="M9 15l2 2 4-4"/>
-                    </svg>
-                </div>
-                <div class="step-title">Preview Your Analysis Report</div>
-                <div class="step-desc">After analysis, a professionally formatted PDF report appears right in the app — flagged clauses, risk scores, and explanations clearly laid out. Premium reports also include AI-suggested revisions for every flagged clause.</div>
-            </div>
-        </div>
-
-        <!-- Product Demo (embedded interactive animation) -->
+<!-- ─── DEMO ──────────────────────────────────────── -->
+<section id="demo">
+    <div class="container">
         <div class="demo-video-wrapper fade-up">
             <iframe src="product-demo.html" class="product-demo-iframe" loading="lazy" title="Contract Guardian Product Demo" allow="autoplay"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- ─── HOW IT WORKS (Zigzag) ────────────────────── -->
+<section id="how-it-works">
+    <div class="container">
+        <div class="steps-zigzag">
+
+            <!-- Step 1: text left, image right -->
+            <div class="step-row fade-up">
+                <div class="step-row-text">
+                    <div class="step-number">Step 01</div>
+                    <h3 class="step-title">Upload Your Contract</h3>
+                    <p class="step-desc">Drop in a PDF or paste contract text. Contract Guardian accepts any freelance contract, SOW, or service agreement up to 80,000 characters.</p>
+                </div>
+                <div class="step-row-image">
+                    <span>Image placeholder</span>
+                </div>
+            </div>
+
+            <!-- Step 2: text right, image left (reverse) -->
+            <div class="step-row reverse fade-up">
+                <div class="step-row-text">
+                    <div class="step-number">Step 02</div>
+                    <h3 class="step-title">AI Scans Every Clause</h3>
+                    <p class="step-desc">Gemini AI reads the full contract and flags deal-killer clauses across 8 risk categories — Scope Creep, Cashflow Risk, IP Ownership, Non-Compete, and more.</p>
+                </div>
+                <div class="step-row-image">
+                    <span>Image placeholder</span>
+                </div>
+            </div>
+
+            <!-- Step 3: text left, image right -->
+            <div class="step-row fade-up">
+                <div class="step-row-text">
+                    <div class="step-number">Step 03</div>
+                    <h3 class="step-title">Review &amp; Understand with AI</h3>
+                    <p class="step-desc">Each flagged clause comes with a plain-English explanation of the risk and why it matters. Premium users also receive AI-suggested revisions. Ask the AI follow-up questions in chat.</p>
+                </div>
+                <div class="step-row-image">
+                    <span>Image placeholder</span>
+                </div>
+            </div>
+
+            <!-- Step 4: text right, image left (reverse) -->
+            <div class="step-row reverse fade-up">
+                <div class="step-row-text">
+                    <div class="step-number">Step 04</div>
+                    <h3 class="step-title">Preview Your Analysis Report</h3>
+                    <p class="step-desc">After analysis, a professionally formatted PDF report appears right in the app — flagged clauses, risk scores, and explanations clearly laid out. Premium reports also include AI-suggested revisions for every flagged clause.</p>
+                </div>
+                <div class="step-row-image">
+                    <span>Image placeholder</span>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>

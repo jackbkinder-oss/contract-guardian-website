@@ -516,31 +516,39 @@ section {
     color: var(--text-primary);
 }
 
-/* ─── HOW IT WORKS ───────────────────────────────── */
+/* ─── HOW IT WORKS (Zigzag) ──────────────────────── */
 #how-it-works {
     position: relative;
 }
 
-.steps-grid {
+#demo {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.steps-zigzag {
+    display: flex;
+    flex-direction: column;
+    gap: 80px;
+}
+
+.step-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 24px;
-    margin-top: 56px;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 48px;
 }
 
-.step-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 32px 28px;
-    position: relative;
-    transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+.step-row.reverse .step-row-text {
+    order: 2;
 }
 
-.step-card:hover {
-    border-color: rgba(99,102,241,0.35);
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-glow);
+.step-row.reverse .step-row-image {
+    order: 1;
+}
+
+.step-row-text {
+    text-align: left;
 }
 
 .step-number {
@@ -549,48 +557,57 @@ section {
     letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--indigo);
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     opacity: 0.7;
 }
 
-.step-icon {
-    width: 52px; height: 52px;
-    background: rgba(99,102,241,0.12);
-    border: 1px solid rgba(99,102,241,0.2);
-    border-radius: var(--radius);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 20px;
-}
-
 .step-title {
-    font-size: 17px;
+    font-size: 22px;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     color: var(--text-primary);
 }
 
 .step-desc {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-secondary);
-    line-height: 1.65;
+    line-height: 1.7;
 }
 
-/* Connector line between steps — spans the full 24px gap between cards */
-.steps-grid .step-card:not(:last-child)::after {
-    content: '';
-    position: absolute;
-    top: 90px;    /* vertically centred on the step icon */
-    right: -24px; /* left edge at card's right edge, right edge at next card's left edge */
-    width: 24px;
-    height: 2px;
-    background: linear-gradient(90deg, rgba(99,102,241,0.4), rgba(6,182,212,0.4));
-    z-index: 1;
+.step-row-image {
+    aspect-ratio: 16 / 9;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    font-size: 14px;
+    font-weight: 500;
 }
 
 @media (max-width: 768px) {
-    .steps-grid .step-card::after { display: none; }
+    .steps-zigzag {
+        gap: 48px;
+    }
+
+    .step-row {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .step-row .step-row-image {
+        order: -1;
+    }
+
+    .step-row.reverse .step-row-text {
+        order: 2;
+    }
+
+    .step-row.reverse .step-row-image {
+        order: 1;
+    }
 }
 
 /* ─── DEMO VIDEO ─────────────────────────────────── */
@@ -1676,7 +1693,7 @@ footer {
     .pricing-grid { grid-template-columns: 1fr; max-width: 400px; margin-left: auto; margin-right: auto; }
     .plan-card.featured { transform: none; }
     .plan-card.featured:hover { transform: translateY(-4px); }
-    .steps-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
+
 }
 
 @media (max-width: 600px) {

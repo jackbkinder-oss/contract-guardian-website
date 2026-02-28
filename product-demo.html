@@ -138,13 +138,122 @@
             box-shadow: 0 3px 14px rgba(99,102,241,0.35); transition: all var(--transition);
         }
 
-        /* File animation */
-        .flying-file { position: absolute; top: 80px; left: 50%; transform: translateX(-50%); width: 56px; opacity: 0; z-index: 10; }
-        .flying-file.animate { animation: fileDrop 1s ease forwards; }
-        .file-icon-rect { fill: rgba(99,102,241,0.12); stroke: var(--accent-blue); stroke-width: 1.5; }
-        .file-icon-fold { fill: rgba(99,102,241,0.2); stroke: var(--accent-blue); stroke-width: 1.5; }
-        .file-icon-lines line { stroke: var(--text-tertiary); stroke-width: 1.5; stroke-linecap: round; }
-        @keyframes fileDrop { 0%{opacity:0;top:40px;transform:translateX(-50%) rotate(-12deg)} 40%{opacity:1} 100%{opacity:1;top:170px;transform:translateX(-50%) rotate(0) scale(0.7)} }
+        /* Cursor */
+        .cursor {
+            position: absolute; z-index: 50; opacity: 0; pointer-events: none;
+            transition: left 0.5s cubic-bezier(0.4,0,0.2,1), top 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.25s ease;
+        }
+        .cursor.visible { opacity: 1; }
+        .cursor.click { animation: cursorClick 0.2s ease; }
+        @keyframes cursorClick { 0%{transform:scale(1)} 50%{transform:scale(0.85)} 100%{transform:scale(1)} }
+
+        /* Finder window — macOS dark style */
+        .finder-window {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.95);
+            width: 420px; background: #232323; border: 1px solid rgba(255,255,255,0.10);
+            border-radius: 10px; box-shadow: 0 22px 70px rgba(0,0,0,0.65); z-index: 40;
+            opacity: 0; transition: opacity 0.3s ease, transform 0.3s ease; overflow: hidden;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+            font-size: 12px;
+        }
+        .finder-window.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        /* Titlebar */
+        .finder-titlebar {
+            display: flex; align-items: center; padding: 11px 14px;
+            background: #2d2d2d; border-bottom: 1px solid rgba(0,0,0,0.35);
+        }
+        .finder-titlebar .traffic-lights { display: flex; gap: 7px; flex-shrink: 0; }
+        .finder-titlebar .tl { width: 11px; height: 11px; border-radius: 50%; }
+        .finder-titlebar .tl-r { background: #ff5f57; }
+        .finder-titlebar .tl-y { background: #febc2e; }
+        .finder-titlebar .tl-g { background: #28c840; }
+        .finder-title { font-size: 13px; color: #e0e0e0; font-weight: 600; flex: 1; text-align: center; }
+
+        /* Toolbar */
+        .finder-toolbar {
+            display: flex; align-items: center; gap: 6px; padding: 6px 12px;
+            background: #2d2d2d; border-bottom: 1px solid rgba(0,0,0,0.3);
+        }
+        .finder-nav-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 22px; height: 22px; border: none; background: none;
+            color: rgba(255,255,255,0.35); cursor: default; font-size: 14px;
+        }
+        .finder-toolbar-spacer { flex: 1; }
+        .finder-view-btns {
+            display: flex; border: 1px solid rgba(255,255,255,0.10); border-radius: 5px; overflow: hidden;
+        }
+        .finder-view-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 26px; height: 20px; border: none; background: rgba(255,255,255,0.04);
+            color: rgba(255,255,255,0.4); cursor: default; border-right: 1px solid rgba(255,255,255,0.08);
+        }
+        .finder-view-btn:last-child { border-right: none; }
+        .finder-view-btn.active { background: rgba(255,255,255,0.10); color: rgba(255,255,255,0.7); }
+
+        /* Body */
+        .finder-body { display: flex; min-height: 170px; }
+
+        /* Sidebar */
+        .finder-sidebar {
+            width: 130px; padding: 8px 0; background: rgba(0,0,0,0.15);
+            border-right: 1px solid rgba(0,0,0,0.3); overflow: hidden;
+        }
+        .finder-sidebar-label {
+            font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.35);
+            text-transform: uppercase; letter-spacing: 0.5px; padding: 6px 12px 4px; margin-top: 2px;
+        }
+        .finder-sidebar-item {
+            display: flex; align-items: center; gap: 6px; padding: 3px 12px;
+            border-radius: 5px; margin: 0 6px; font-size: 12px; color: #ccc; cursor: default;
+        }
+        .finder-sidebar-item.active { background: rgba(99,102,241,0.15); color: var(--accent-blue); }
+        .finder-sb-icon { width: 14px; height: 14px; flex-shrink: 0; }
+
+        /* File grid (icon view like real Finder) */
+        .finder-files {
+            flex: 1; padding: 16px 12px; display: flex; flex-wrap: wrap;
+            gap: 8px; align-content: flex-start; overflow: hidden; background: #1e1e1e;
+        }
+        .finder-file-item {
+            display: flex; flex-direction: column; align-items: center; gap: 4px;
+            width: 72px; padding: 6px 4px 4px; border-radius: 6px; cursor: default;
+            transition: background 0.12s ease;
+        }
+        .finder-file-item.selected { background: rgba(99,102,241,0.18); outline: 1px solid rgba(99,102,241,0.35); }
+        .finder-file-thumb {
+            width: 48px; height: 48px; border-radius: 4px; display: flex;
+            align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.05); position: relative;
+        }
+        .finder-file-thumb.folder { background: none; }
+        .finder-file-name {
+            font-size: 10px; color: #ccc; text-align: center; word-break: break-all;
+            line-height: 1.25; max-height: 26px; overflow: hidden;
+        }
+        .finder-file-item.selected .finder-file-name { color: var(--text-primary); }
+
+        /* Path bar */
+        .finder-pathbar {
+            display: flex; align-items: center; gap: 4px; padding: 5px 12px;
+            background: #282828; border-top: 1px solid rgba(0,0,0,0.3);
+            font-size: 10px; color: rgba(255,255,255,0.4);
+        }
+        .finder-pathbar svg { opacity: 0.35; }
+
+        /* Bottom (Cancel/Open) */
+        .finder-bottom {
+            display: flex; justify-content: flex-end; align-items: center; gap: 8px;
+            padding: 10px 14px; background: #2d2d2d; border-top: 1px solid rgba(0,0,0,0.3);
+        }
+        .finder-btn {
+            padding: 4px 16px; border-radius: 5px; font-size: 12px; font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.08);
+            color: #ccc; cursor: default; transition: all 0.12s ease;
+        }
+        .finder-btn.primary { background: var(--accent-blue); color: #fff; border-color: var(--accent-blue); }
+        .finder-btn.clicked { filter: brightness(0.75); }
 
         /* ═══ LOADING STATE ═══ */
         .loading-state { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 60px 20px; }
@@ -324,11 +433,99 @@
                     <p class="subtitle">Scan client contracts for financial and legal risks</p>
                 </div>
                 <div class="upload-section" style="position:relative;">
-                    <svg class="flying-file" id="flyingFile" viewBox="0 0 64 80">
-                        <rect class="file-icon-rect" x="4" y="4" width="48" height="68" rx="4"/>
-                        <path class="file-icon-fold" d="M36 4V20H52L36 4Z"/>
-                        <g class="file-icon-lines"><line x1="14" y1="34" x2="42" y2="34"/><line x1="14" y1="44" x2="38" y2="44"/><line x1="14" y1="54" x2="34" y2="54"/></g>
+                    <!-- Cursor -->
+                    <svg class="cursor" id="demoCursor" width="20" height="24" viewBox="0 0 20 24" fill="none" style="top:200px;left:50%;">
+                        <path d="M2 1L2 18L6.5 13.5L10.5 21L13.5 19.5L9.5 12L15 11L2 1Z" fill="white" stroke="#222" stroke-width="1.2"/>
                     </svg>
+                    <!-- Finder window (macOS dark style) -->
+                    <div class="finder-window" id="finderWindow">
+                        <div class="finder-titlebar">
+                            <div class="traffic-lights"><div class="tl tl-r"></div><div class="tl tl-y"></div><div class="tl tl-g"></div></div>
+                            <span class="finder-title">Documents</span>
+                        </div>
+                        <!-- Toolbar -->
+                        <div class="finder-toolbar">
+                            <button class="finder-nav-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg></button>
+                            <button class="finder-nav-btn"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></button>
+                            <div class="finder-toolbar-spacer"></div>
+                            <div class="finder-view-btns">
+                                <button class="finder-view-btn active"><svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg></button>
+                                <button class="finder-view-btn"><svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="14" height="3" rx="1"/><rect x="1" y="6" width="14" height="3" rx="1"/><rect x="1" y="11" width="14" height="3" rx="1"/></svg></button>
+                                <button class="finder-view-btn"><svg width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="4" height="14" rx="1"/><rect x="6" y="1" width="4" height="14" rx="1"/><rect x="11" y="1" width="4" height="14" rx="1"/></svg></button>
+                            </div>
+                        </div>
+                        <div class="finder-body">
+                            <!-- Sidebar -->
+                            <div class="finder-sidebar">
+                                <div class="finder-sidebar-label">Favourites</div>
+                                <div class="finder-sidebar-item">
+                                    <svg class="finder-sb-icon" viewBox="0 0 16 16"><path d="M2 4h12v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4z" fill="#3b82f6"/><path d="M1 3.5A1.5 1.5 0 0 1 2.5 2h11A1.5 1.5 0 0 1 15 3.5V4H1V3.5z" fill="#5b9cf6"/></svg>
+                                    Desktop
+                                </div>
+                                <div class="finder-sidebar-item active">
+                                    <svg class="finder-sb-icon" viewBox="0 0 16 16"><path d="M1 4.5A1.5 1.5 0 0 1 2.5 3H6l1.5 2H13.5A1.5 1.5 0 0 1 15 6.5v6a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-8z" fill="#3b82f6"/></svg>
+                                    Documents
+                                </div>
+                                <div class="finder-sidebar-item">
+                                    <svg class="finder-sb-icon" viewBox="0 0 16 16"><path d="M1 4.5A1.5 1.5 0 0 1 2.5 3H6l1.5 2H13.5A1.5 1.5 0 0 1 15 6.5v6a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-8z" fill="#3b82f6"/></svg>
+                                    Downloads
+                                </div>
+                                <div class="finder-sidebar-label" style="margin-top:6px;">iCloud</div>
+                                <div class="finder-sidebar-item">
+                                    <svg class="finder-sb-icon" viewBox="0 0 16 16"><path d="M4 12a3.5 3.5 0 0 1-.35-6.98 5 5 0 0 1 9.5 1.48A3 3 0 0 1 12 12H4z" fill="#5b9cf6"/></svg>
+                                    iCloud Drive
+                                </div>
+                                <div class="finder-sidebar-label" style="margin-top:6px;">Locations</div>
+                                <div class="finder-sidebar-item">
+                                    <svg class="finder-sb-icon" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1.5" fill="#888"/><rect x="4" y="5" width="8" height="6" rx="0.5" fill="#444"/></svg>
+                                    Network
+                                </div>
+                            </div>
+                            <!-- File grid (icon view) -->
+                            <div class="finder-files">
+                                <div class="finder-file-item" id="finderFile1">
+                                    <div class="finder-file-thumb">
+                                        <svg width="36" height="42" viewBox="0 0 36 42"><rect x="2" y="2" width="28" height="38" rx="3" fill="#fff"/><path d="M22 2v10h10L22 2z" fill="#ddd"/><rect x="2" y="2" width="28" height="38" rx="3" fill="none" stroke="#ccc" stroke-width="0.5"/><rect x="6" y="28" width="20" height="8" rx="1.5" fill="#e53e3e"/><text x="16" y="35" text-anchor="middle" font-size="6" fill="#fff" font-weight="700" font-family="-apple-system,sans-serif">PDF</text></svg>
+                                    </div>
+                                    <span class="finder-file-name">Freelance-Contract.pdf</span>
+                                </div>
+                                <div class="finder-file-item" id="finderFile2">
+                                    <div class="finder-file-thumb">
+                                        <svg width="36" height="42" viewBox="0 0 36 42"><rect x="2" y="2" width="28" height="38" rx="3" fill="#fff"/><path d="M22 2v10h10L22 2z" fill="#ddd"/><rect x="2" y="2" width="28" height="38" rx="3" fill="none" stroke="#ccc" stroke-width="0.5"/><rect x="6" y="28" width="20" height="8" rx="1.5" fill="#e53e3e"/><text x="16" y="35" text-anchor="middle" font-size="6" fill="#fff" font-weight="700" font-family="-apple-system,sans-serif">PDF</text></svg>
+                                    </div>
+                                    <span class="finder-file-name">Invoice-March.pdf</span>
+                                </div>
+                                <div class="finder-file-item" id="finderFile3">
+                                    <div class="finder-file-thumb">
+                                        <svg width="36" height="42" viewBox="0 0 36 42"><rect x="2" y="2" width="28" height="38" rx="3" fill="#fff"/><path d="M22 2v10h10L22 2z" fill="#ddd"/><rect x="2" y="2" width="28" height="38" rx="3" fill="none" stroke="#ccc" stroke-width="0.5"/><rect x="6" y="28" width="20" height="8" rx="1.5" fill="#e53e3e"/><text x="16" y="35" text-anchor="middle" font-size="6" fill="#fff" font-weight="700" font-family="-apple-system,sans-serif">PDF</text></svg>
+                                    </div>
+                                    <span class="finder-file-name">NDA-Draft.pdf</span>
+                                </div>
+                                <div class="finder-file-item">
+                                    <div class="finder-file-thumb folder">
+                                        <svg width="44" height="36" viewBox="0 0 44 36"><path d="M2 6a4 4 0 0 1 4-4h10l4 5h20a4 4 0 0 1 4 4v17a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6z" fill="#3b9bf5"/><path d="M2 11h40v17a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V11z" fill="#4aaaf6"/></svg>
+                                    </div>
+                                    <span class="finder-file-name">Old Contracts</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Path bar -->
+                        <div class="finder-pathbar">
+                            <svg width="10" height="10" viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1.5" fill="currentColor"/><rect x="4" y="5" width="8" height="6" rx="0.5" fill="#232323"/></svg>
+                            Macintosh HD
+                            <span style="opacity:0.5">›</span>
+                            Users
+                            <span style="opacity:0.5">›</span>
+                            jackkinder
+                            <span style="opacity:0.5">›</span>
+                            Documents
+                        </div>
+                        <!-- Bottom bar -->
+                        <div class="finder-bottom">
+                            <button class="finder-btn" id="finderCancel">Cancel</button>
+                            <button class="finder-btn primary" id="finderOpen">Open</button>
+                        </div>
+                    </div>
                     <div class="dropzone" id="dz">
                         <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4">
                             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9,15 12,12 15,15"/>
@@ -579,7 +776,7 @@ Tip: Copy the full contract text from your email, Google Doc, or PDF viewer and 
 (function() {
     const scenes = document.querySelectorAll('.scene');
     let current = 0, transitioning = false, autoTimer = null;
-    const durations = [3500, 3200, 5500, 7500, 8500, 5000];
+    const durations = [3500, 4000, 5500, 7500, 8500, 5000];
 
     function goTo(idx) {
         if (idx === current || transitioning || idx < 0 || idx >= scenes.length) return;
@@ -606,11 +803,78 @@ Tip: Copy the full contract text from your email, Google Doc, or PDF viewer and 
 
     // ── Upload ──
     function animateUpload() {
-        const f = document.getElementById('flyingFile');
+        const cursor = document.getElementById('demoCursor');
         const dz = document.getElementById('dz');
-        f.classList.remove('animate'); dz.classList.remove('drag-over', 'file-ready');
-        void f.offsetWidth;
-        setTimeout(() => { f.classList.add('animate'); setTimeout(() => dz.classList.add('drag-over'), 500); setTimeout(() => { dz.classList.remove('drag-over'); dz.classList.add('file-ready'); }, 1000); }, 400);
+        const finder = document.getElementById('finderWindow');
+        const file1 = document.getElementById('finderFile1');
+        const openBtn = document.getElementById('finderOpen');
+        const container = dz.closest('.upload-section');
+
+        // Helper: position cursor tip over the center of a target element
+        function moveCursorTo(target) {
+            const cr = container.getBoundingClientRect();
+            const tr = target.getBoundingClientRect();
+            cursor.style.left = (tr.left + tr.width / 2 - cr.left) + 'px';
+            cursor.style.top  = (tr.top  + tr.height / 2 - cr.top) + 'px';
+        }
+
+        // Reset
+        cursor.classList.remove('visible', 'click');
+        cursor.style.top = '200px'; cursor.style.left = '50%';
+        dz.classList.remove('drag-over', 'file-ready');
+        finder.classList.remove('visible');
+        file1.classList.remove('selected');
+        openBtn.classList.remove('clicked');
+
+        // t=400ms: Cursor appears, moves toward dropzone center
+        setTimeout(() => {
+            cursor.classList.add('visible');
+            moveCursorTo(dz);
+        }, 400);
+
+        // t=900ms: Cursor clicks dropzone
+        setTimeout(() => {
+            cursor.classList.add('click');
+            dz.classList.add('drag-over');
+            setTimeout(() => cursor.classList.remove('click'), 200);
+        }, 900);
+
+        // t=1200ms: Finder window fades in
+        setTimeout(() => {
+            finder.classList.add('visible');
+        }, 1200);
+
+        // t=1800ms: Cursor moves to first file item
+        setTimeout(() => {
+            moveCursorTo(file1);
+        }, 1800);
+
+        // t=2100ms: File gets selected
+        setTimeout(() => {
+            file1.classList.add('selected');
+            cursor.classList.add('click');
+            setTimeout(() => cursor.classList.remove('click'), 200);
+        }, 2100);
+
+        // t=2500ms: Cursor moves to Open button
+        setTimeout(() => {
+            moveCursorTo(openBtn);
+        }, 2500);
+
+        // t=2800ms: Click Open
+        setTimeout(() => {
+            cursor.classList.add('click');
+            openBtn.classList.add('clicked');
+            setTimeout(() => cursor.classList.remove('click'), 200);
+        }, 2800);
+
+        // t=3000ms: Finder fades out, dropzone shows file ready
+        setTimeout(() => {
+            finder.classList.remove('visible');
+            cursor.classList.remove('visible');
+            dz.classList.remove('drag-over');
+            dz.classList.add('file-ready');
+        }, 3000);
     }
 
     // ── Analysis ──

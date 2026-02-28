@@ -121,6 +121,21 @@ if (downloadToggle && downloadWrapper) {
     });
 }
 
+// ─── HERO MAC DOWNLOAD DROPDOWN ─────────────────────────────
+const heroMacToggle = document.getElementById('heroMacToggle');
+const heroMacWrapper = heroMacToggle ? heroMacToggle.closest('.hero-download-wrapper') : null;
+if (heroMacToggle && heroMacWrapper) {
+    heroMacToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        heroMacWrapper.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+        if (!heroMacWrapper.contains(e.target)) {
+            heroMacWrapper.classList.remove('open');
+        }
+    });
+}
+
 // ─── SMOOTH SCROLL FOR ANCHOR LINKS ─────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {

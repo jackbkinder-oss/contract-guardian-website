@@ -9,7 +9,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -748,17 +747,12 @@
 </footer>
 
 <script>
-    const sb = window.supabase.createClient(
-        'https://xdhmexgxhjalxieiwzcj.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkaG1leGd4aGphbHhpZWl3emNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNjczOTUsImV4cCI6MjA4Nzg0MzM5NX0.kqIGkdEpvNosppqZMmXPTDfdqiTs95ZTc8I7fIABIaM'
-    );
-
-    async function updateNav() {
-        const { data: { session } } = await sb.auth.getSession();
+    function updateNav() {
+        const user = localStorage.getItem('cg_user');
         const loginBtn = document.getElementById('loginBtn');
         const signupBtn = document.getElementById('signupBtn');
         const signoutBtn = document.getElementById('signoutBtn');
-        if (session) {
+        if (user) {
             loginBtn.style.display = 'none';
             signupBtn.style.display = 'none';
             signoutBtn.style.display = '';
@@ -769,8 +763,8 @@
         }
     }
 
-    async function signOut() {
-        await sb.auth.signOut();
+    function signOut() {
+        localStorage.removeItem('cg_user');
         window.location.reload();
     }
 

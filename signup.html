@@ -176,6 +176,13 @@
         formError.style.display = 'none';
     }
 
+    async function hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hash = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         hideError();
@@ -206,20 +213,20 @@
         submitBtn.disabled = true;
         submitBtn.textContent = 'Creating account…';
 
-        const { data, error } = await sb.auth.signUp({
-            email: email,
-            password: password,
-            options: {
-                data: {
-                    first_name: firstName,
-                    last_name: lastName
-                }
-            }
-        });
+        const passwordHash = await hashPassword(password);
+
+        const { data, error } = await sb
+            .from('users')
+            .insert([{
+                first_name: firstName,
+                last_name: lastName,
+                email: email.toLowerCase(),
+                password_hash: passwordHash
+            }])
+            .select();
 
         if (error) {
-            alert('DEBUG: ' + error.message + ' | Status: ' + error.status);
-            if (error.message.toLowerCase().includes('rate limit')) {
+            if (error.code === '23505') {
                 showError('An account with this email has already been made.');
             } else {
                 showError(error.message);
@@ -229,12 +236,12 @@
             return;
         }
 
-        if (data?.user?.identities?.length === 0) {
-            showError('An account with this email already exists.');
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'Create Free Account';
-            return;
-        }
+        localStorage.setItem('cg_user', JSON.stringify({
+            id: data[0].id,
+            first_name: firstName,
+            last_name: lastName,
+            email: email.toLowerCase()
+        }));
 
         submitBtn.textContent = '✓ Account Created!';
         submitBtn.style.background = 'linear-gradient(135deg, #34d399, #06b6d4)';
@@ -246,4 +253,3 @@
 </script>
 </body>
 </html>
-<!-- test -->

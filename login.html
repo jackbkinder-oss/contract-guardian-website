@@ -81,10 +81,7 @@
             </div>
 
             <div class="form-group">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <label for="password">Password</label>
-                    <a href="#" style="font-size: 12px; color: var(--indigo); font-weight: 500;">Forgot password?</a>
-                </div>
+                <label for="password">Password</label>
                 <input
                     type="password"
                     id="password"
@@ -118,7 +115,7 @@
 </main>
 
 <script>
-    const supabase = window.supabase.createClient(
+    const sb = window.supabase.createClient(
         'https://xdhmexgxhjalxieiwzcj.supabase.co',
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkaG1leGd4aGphbHhpZWl3emNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNjczOTUsImV4cCI6MjA4Nzg0MzM5NX0.kqIGkdEpvNosppqZMmXPTDfdqiTs95ZTc8I7fIABIaM'
     );
@@ -134,6 +131,13 @@
 
     function hideError() {
         formError.style.display = 'none';
+    }
+
+    async function hashPassword(password) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(password);
+        const hash = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
     form.addEventListener('submit', async (e) => {
@@ -155,17 +159,28 @@
         submitBtn.disabled = true;
         submitBtn.textContent = 'Logging in…';
 
-        const { data, error } = await supabase.auth.signInWithPassword({
-            email: email,
-            password: password
-        });
+        const passwordHash = await hashPassword(password);
 
-        if (error) {
-            showError(error.message);
+        const { data, error } = await sb
+            .from('users')
+            .select('*')
+            .eq('email', email.toLowerCase())
+            .eq('password_hash', passwordHash)
+            .single();
+
+        if (error || !data) {
+            showError('Invalid email or password.');
             submitBtn.disabled = false;
             submitBtn.textContent = 'Log In';
             return;
         }
+
+        localStorage.setItem('cg_user', JSON.stringify({
+            id: data.id,
+            first_name: data.first_name,
+            last_name: data.last_name,
+            email: data.email
+        }));
 
         window.location.href = 'index.html';
     });

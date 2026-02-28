@@ -158,15 +158,10 @@
 </main>
 
 <script>
-    let sb;
-    try {
-        sb = window.supabase.createClient(
-            'https://xdhmexgxhjalxieiwzcj.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkaG1leGd4aGphbHhpZWl3emNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNjczOTUsImV4cCI6MjA4Nzg0MzM5NX0.kqIGkdEpvNosppqZMmXPTDfdqiTs95ZTc8I7fIABIaM'
-        );
-    } catch (e) {
-        alert('Supabase failed to load: ' + e.message);
-    }
+    const sb = window.supabase.createClient(
+        'https://xdhmexgxhjalxieiwzcj.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkaG1leGd4aGphbHhpZWl3emNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNjczOTUsImV4cCI6MjA4Nzg0MzM5NX0.kqIGkdEpvNosppqZMmXPTDfdqiTs95ZTc8I7fIABIaM'
+    );
 
     const form = document.getElementById('signupForm');
     const submitBtn = document.getElementById('submitBtn');
@@ -184,11 +179,6 @@
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         hideError();
-
-        if (!sb) {
-            alert('Supabase not loaded! window.supabase = ' + typeof window.supabase);
-            return;
-        }
 
         const firstName = form.firstName.value.trim();
         const lastName  = form.lastName.value.trim();
@@ -228,7 +218,6 @@
         });
 
         if (error) {
-            alert('Signup error: ' + error.message);
             showError(error.message);
             submitBtn.disabled = false;
             submitBtn.textContent = 'Create Free Account';
@@ -242,7 +231,6 @@
             return;
         }
 
-        alert('Signup success! User ID: ' + data.user.id);
         submitBtn.textContent = '✓ Account Created!';
         submitBtn.style.background = 'linear-gradient(135deg, #34d399, #06b6d4)';
 

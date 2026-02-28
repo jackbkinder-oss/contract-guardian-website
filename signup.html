@@ -218,7 +218,11 @@
         });
 
         if (error) {
-            showError(error.message);
+            if (error.message.toLowerCase().includes('rate limit')) {
+                showError('An account with this email has already been made.');
+            } else {
+                showError(error.message);
+            }
             submitBtn.disabled = false;
             submitBtn.textContent = 'Create Free Account';
             return;

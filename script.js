@@ -98,7 +98,7 @@ if (websiteBillingToggle) {
             el.textContent = el.dataset[mode];
         });
         document.querySelectorAll('.price-period[data-monthly]').forEach(el => {
-            el.textContent = el.dataset[mode];
+            el.innerHTML = el.dataset[mode];
         });
     });
 }

@@ -3,39 +3,39 @@
    ============================================================ */
 
 :root {
-    --bg-primary:    #0a0e1a;
-    --bg-secondary:  #111827;
-    --bg-tertiary:   #1a2035;
-    --bg-card:       rgba(17, 24, 39, 0.7);
+    --bg-primary:    #161616;
+    --bg-secondary:  #1a1a1a;
+    --bg-tertiary:   #222222;
+    --bg-card:       rgba(26, 26, 26, 0.9);
     --bg-glass:      rgba(255, 255, 255, 0.04);
 
-    --border:        rgba(255, 255, 255, 0.07);
-    --border-hover:  rgba(255, 255, 255, 0.14);
+    --border:        rgba(255, 255, 255, 0.08);
+    --border-hover:  rgba(255, 255, 255, 0.15);
 
-    --text-primary:   #f0f4ff;
-    --text-secondary: #8b9dc3;
-    --text-tertiary:  #5a6a8a;
+    --text-primary:   #f5f5f5;
+    --text-secondary: #a0a0a0;
+    --text-tertiary:  #666666;
 
     --indigo:  #6366f1;
     --cyan:    #06b6d4;
-    --green:   #34d399;
+    --green:   #22c55e;
     --yellow:  #fbbf24;
     --orange:  #f97316;
     --red:     #ef4444;
 
     --gradient-primary: linear-gradient(135deg, #6366f1, #06b6d4);
-    --gradient-safe:    linear-gradient(135deg, #34d399, #06b6d4);
-    --gradient-hero:    linear-gradient(160deg, #0a0e1a 0%, #111827 60%, #1a2035 100%);
+    --gradient-safe:    linear-gradient(135deg, #22c55e, #06b6d4);
+    --gradient-hero:    linear-gradient(160deg, #161616 0%, #1a1a1a 60%, #222222 100%);
 
-    --shadow-md: 0 4px 24px rgba(0,0,0,0.5);
-    --shadow-lg: 0 8px 48px rgba(0,0,0,0.6);
-    --shadow-glow: 0 0 40px rgba(99,102,241,0.18);
+    --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+    --shadow-glow: 0 0 30px rgba(99,102,241,0.12);
 
     --radius: 12px;
-    --radius-lg: 20px;
+    --radius-lg: 16px;
     --radius-pill: 999px;
 
-    --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+    --transition: 0.2s ease;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,7 +46,7 @@ html {
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     line-height: 1.6;
@@ -63,7 +63,7 @@ ul { list-style: none; }
     top: 0; left: 0; right: 0;
     z-index: 1000;
     height: 64px;
-    background: rgba(10, 14, 26, 0.6);
+    background: rgba(22, 22, 22, 0.7);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid transparent;
@@ -71,9 +71,9 @@ ul { list-style: none; }
 }
 
 #mainNav.scrolled {
-    background: rgba(10, 14, 26, 0.92);
+    background: rgba(22, 22, 22, 0.95);
     border-bottom-color: var(--border);
-    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 12px rgba(0, 0, 0, 0.3);
 }
 
 .nav-inner {
@@ -127,6 +127,47 @@ ul { list-style: none; }
 .nav-link.active {
     color: var(--text-primary);
     background: rgba(99, 102, 241, 0.12);
+}
+
+.nav-download-wrapper {
+    position: relative;
+}
+
+.nav-download-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 6px;
+    min-width: 180px;
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+}
+
+.nav-download-wrapper.open .nav-download-dropdown {
+    display: block;
+}
+
+.nav-download-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13.5px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all var(--transition);
+}
+
+.nav-download-item:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 .nav-actions {
@@ -251,7 +292,7 @@ ul { list-style: none; }
     }
 
     #mainNav.mobile-open {
-        background: rgba(10, 14, 26, 0.97);
+        background: rgba(22, 22, 22, 0.97);
         border-bottom-color: var(--border);
         height: auto;
     }
@@ -260,7 +301,7 @@ ul { list-style: none; }
 /* ─── SCROLLBAR ──────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-secondary); }
-::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 3px; }
 
 /* ─── TYPOGRAPHY ─────────────────────────────────── */
 h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.3px; line-height: 1.2; }
@@ -283,10 +324,7 @@ h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.3px; line-height: 1.2; }
     font-size: clamp(28px, 4vw, 44px);
     font-weight: 800;
     margin-bottom: 14px;
-    background: linear-gradient(135deg, var(--text-primary) 40%, var(--text-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--text-primary);
 }
 
 .section-subtitle {
@@ -323,7 +361,7 @@ section {
     top: -120px; left: 50%;
     transform: translateX(-50%);
     width: 700px; height: 700px;
-    background: radial-gradient(ellipse at center, rgba(99,102,241,0.12) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(99,102,241,0.08) 0%, transparent 70%);
     pointer-events: none;
 }
 
@@ -1465,7 +1503,7 @@ footer {
     top: -200px; left: 50%;
     transform: translateX(-50%);
     width: 600px; height: 600px;
-    background: radial-gradient(ellipse, rgba(99,102,241,0.1) 0%, transparent 70%);
+    background: radial-gradient(ellipse, rgba(99,102,241,0.06) 0%, transparent 70%);
     pointer-events: none;
 }
 
@@ -1565,6 +1603,30 @@ footer {
     transform: translateY(-1px);
 }
 .auth-submit:active { transform: translateY(0); }
+
+.auth-google-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 16px;
+    background: #fff;
+    color: #333;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all var(--transition);
+    margin-bottom: 4px;
+}
+
+.auth-google-btn:hover {
+    background: #f0f0f0;
+    transform: translateY(-1px);
+}
 
 .auth-divider {
     display: flex;

@@ -106,6 +106,21 @@ if (websiteBillingToggle) {
     });
 }
 
+// ─── DOWNLOAD DROPDOWN ──────────────────────────────────────
+const downloadToggle = document.getElementById('downloadToggle');
+const downloadWrapper = downloadToggle ? downloadToggle.closest('.nav-download-wrapper') : null;
+if (downloadToggle && downloadWrapper) {
+    downloadToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        downloadWrapper.classList.toggle('open');
+    });
+    document.addEventListener('click', (e) => {
+        if (!downloadWrapper.contains(e.target)) {
+            downloadWrapper.classList.remove('open');
+        }
+    });
+}
+
 // ─── SMOOTH SCROLL FOR ANCHOR LINKS ─────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', (e) => {

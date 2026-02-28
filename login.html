@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In — Contract Guardian</title>
+    <meta name="description" content="Log in to your Contract Guardian account to access your analysis history and settings.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ─── NAV ───────────────────────────────────────── -->
+<nav id="mainNav" class="scrolled">
+    <div class="nav-inner">
+        <a href="index.html" class="nav-brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <defs>
+                    <linearGradient id="nav-sg" x1="3" y1="2" x2="21" y2="23" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#6366f1"/>
+                        <stop offset="100%" stop-color="#06b6d4"/>
+                    </linearGradient>
+                    <linearGradient id="nav-cg" x1="9" y1="10" x2="15" y2="14" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#34d399"/>
+                        <stop offset="100%" stop-color="#06b6d4"/>
+                    </linearGradient>
+                </defs>
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#nav-sg)" stroke-width="1.75" stroke-linejoin="round" fill="none"/>
+                <polyline points="14,2 14,8 20,8" stroke="url(#nav-sg)" stroke-width="1.75" stroke-linejoin="round" fill="none"/>
+                <path d="M9 15l2 2 4-4" stroke="url(#nav-cg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Contract Guardian</span>
+        </a>
+        <div class="nav-actions" style="margin-left:auto;">
+            <a href="signup.html" class="nav-btn nav-btn-primary">Sign Up</a>
+        </div>
+    </div>
+</nav>
+
+<!-- ─── LOGIN PAGE ────────────────────────────────── -->
+<main class="auth-page">
+    <div class="auth-glow"></div>
+
+    <div class="auth-card">
+        <div class="auth-logo">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+                <defs>
+                    <linearGradient id="card-sg" x1="3" y1="2" x2="21" y2="23" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#6366f1"/>
+                        <stop offset="100%" stop-color="#06b6d4"/>
+                    </linearGradient>
+                    <linearGradient id="card-cg" x1="9" y1="10" x2="15" y2="14" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#34d399"/>
+                        <stop offset="100%" stop-color="#06b6d4"/>
+                    </linearGradient>
+                </defs>
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#card-sg)" stroke-width="1.75" stroke-linejoin="round" fill="none"/>
+                <polyline points="14,2 14,8 20,8" stroke="url(#card-sg)" stroke-width="1.75" stroke-linejoin="round" fill="none"/>
+                <path d="M9 15l2 2 4-4" stroke="url(#card-cg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Contract Guardian
+        </div>
+
+        <h1 class="auth-title">Welcome back</h1>
+        <p class="auth-subtitle">Log in to your account to access your contract analysis history and settings.</p>
+
+        <form class="auth-form" id="loginForm" novalidate>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="jane@example.com"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <label for="password">Password</label>
+                    <a href="#" style="font-size: 12px; color: var(--indigo); font-weight: 500;">Forgot password?</a>
+                </div>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Your password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <!-- Inline error message -->
+            <div id="formError" style="
+                display: none;
+                background: rgba(239,68,68,0.1);
+                border: 1px solid rgba(239,68,68,0.3);
+                border-radius: 8px;
+                padding: 10px 14px;
+                font-size: 13px;
+                color: #ef4444;
+            "></div>
+
+            <button type="submit" class="auth-submit" id="submitBtn">
+                Log In
+            </button>
+        </form>
+
+        <p class="auth-footer-text">
+            Don't have an account? <a href="signup.html">Sign up free</a>
+        </p>
+    </div>
+</main>
+
+<script>
+    const form = document.getElementById('loginForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formError = document.getElementById('formError');
+
+    function showError(msg) {
+        formError.textContent = msg;
+        formError.style.display = 'block';
+    }
+
+    function hideError() {
+        formError.style.display = 'none';
+    }
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        hideError();
+
+        const email    = form.email.value.trim();
+        const password = form.password.value;
+
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            showError('Please enter a valid email address.');
+            return;
+        }
+        if (!password) {
+            showError('Please enter your password.');
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Logging in…';
+
+        // Simulate login (replace with real API call)
+        await new Promise(r => setTimeout(r, 1000));
+
+        submitBtn.textContent = '✓ Logged In!';
+        submitBtn.style.background = 'linear-gradient(135deg, #34d399, #06b6d4)';
+
+        // Redirect to main page after a moment
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 1200);
+    });
+</script>
+</body>
+</html>

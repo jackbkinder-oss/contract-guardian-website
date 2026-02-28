@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Guardian — Product Demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary:    #0a0e1a;
+            --bg-secondary:  #111827;
+            --bg-tertiary:   #1a2035;
+            --bg-card:       rgba(17, 24, 39, 0.7);
+            --bg-glass:      rgba(255, 255, 255, 0.04);
+            --border:        rgba(255, 255, 255, 0.07);
+            --border-hover:  rgba(255, 255, 255, 0.14);
+            --text-primary:   #f0f4ff;
+            --text-secondary: #8b9dc3;
+            --text-tertiary:  #5a6a8a;
+            --accent-blue:   #6366f1;
+            --accent-cyan:   #06b6d4;
+            --accent-green:  #34d399;
+            --accent-yellow: #fbbf24;
+            --accent-orange: #f97316;
+            --accent-red:    #ef4444;
+            --gradient-primary: linear-gradient(135deg, #6366f1, #06b6d4);
+            --gradient-warm:    linear-gradient(135deg, #f97316, #fbbf24);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: 0.22s cubic-bezier(0.4,0,0.2,1);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(99,102,241,0.3); border-radius: 3px; }
+
+        /* ═══ SCENES ═══ */
+        .scene { position: absolute; inset: 0; opacity: 0; transform: scale(0.97); transition: opacity 0.7s ease, transform 0.7s ease; pointer-events: none; }
+        .scene.active { opacity: 1; transform: scale(1); pointer-events: auto; }
+
+        /* ═══ SCENE 1: TITLE ═══ */
+        .title-scene { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; }
+        .title-logo { width: 64px; height: 64px; opacity: 0; animation: fadeScaleIn 0.8s 0.3s ease forwards; }
+        .title-name { font-size: 32px; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; animation: fadeUp 0.7s 0.7s ease forwards; letter-spacing: -0.5px; }
+        .title-tagline { font-size: 14px; color: var(--text-secondary); opacity: 0; animation: fadeUp 0.7s 1.1s ease forwards; }
+        .title-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg-glass); font-size: 13px; color: var(--text-tertiary); opacity: 0; animation: fadeUp 0.6s 1.5s ease forwards; }
+        .title-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 6px rgba(52,211,153,0.5); }
+
+        /* ═══ SCENE 2-5: APP FRAME ═══ */
+        .app-frame {
+            position: absolute; inset: 8px;
+            background: var(--bg-primary);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column;
+        }
+        /* Titlebar */
+        .app-titlebar {
+            height: 42px; background: var(--bg-secondary); border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; padding: 0 16px 0 16px; gap: 9px; flex-shrink: 0;
+        }
+        .traffic-lights { display: flex; gap: 6px; margin-right: 8px; }
+        .tl { width: 10px; height: 10px; border-radius: 50%; }
+        .tl-r { background: #ef4444; } .tl-y { background: #fbbf24; } .tl-g { background: #34d399; }
+        .tb-logo-text { font-size: 13px; font-weight: 700; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tb-version { font-size: 9px; font-weight: 500; color: var(--text-tertiary); background: var(--bg-glass); border: 1px solid var(--border); padding: 1px 6px; border-radius: 999px; }
+        .tb-status { margin-left: auto; display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-secondary); }
+        .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 6px rgba(52,211,153,0.5); animation: pulseDot 2s infinite; }
+        @keyframes pulseDot { 0%,100%{opacity:1} 50%{opacity:0.5} }
+
+        /* Layout */
+        .app-body { display: flex; flex: 1; overflow: hidden; }
+
+        /* Sidebar */
+        .app-sidebar {
+            width: 140px; background: var(--bg-secondary); border-right: 1px solid var(--border);
+            padding: 8px 6px; display: flex; flex-direction: column; flex-shrink: 0;
+        }
+        .sb-nav { display: flex; flex-direction: column; gap: 4px; }
+        .sb-btn {
+            display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+            border: none; border-radius: var(--radius-sm); background: transparent;
+            color: var(--text-secondary); font-family: inherit; font-size: 13px; font-weight: 500;
+            cursor: default; transition: all var(--transition); text-align: left;
+        }
+        .sb-btn.active { background: rgba(99,102,241,0.12); color: var(--accent-blue); }
+        .sb-btn svg { flex-shrink: 0; opacity: 0.7; }
+        .sb-btn.active svg { opacity: 1; }
+        .sb-footer { margin-top: auto; }
+        .tier-badge { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-radius: var(--radius-sm); background: var(--bg-glass); border: 1px solid var(--border); }
+        .tier-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .tier-dot.premium { background: var(--gradient-warm); }
+        .tier-dot.free { background: var(--text-tertiary); }
+        .tier-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); }
+        .premium-badge { display: inline-block; padding: 1px 7px; background: linear-gradient(135deg, #f59e0b, #f97316); border-radius: 999px; color: #fff; font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+
+        /* Content area */
+        .app-content { flex: 1; overflow-y: auto; padding: 28px 32px; position: relative; }
+
+        /* ═══ DASHBOARD (Upload) STATE ═══ */
+        .view-header h1 { font-size: 22px; font-weight: 800; letter-spacing: -0.3px; }
+        .view-header .subtitle { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+        .upload-section { max-width: 620px; margin: 28px auto 0; }
+        .dropzone {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 8px; padding: 40px 20px; border: 2px dashed var(--border); border-radius: var(--radius-lg);
+            background: var(--bg-glass); text-align: center; transition: all 0.4s ease;
+        }
+        .dropzone.drag-over { border-color: var(--accent-blue); background: rgba(99,102,241,0.06); }
+        .dropzone.file-ready { border-color: var(--accent-green); background: rgba(52,211,153,0.06); }
+        .dropzone h3 { font-size: 15px; font-weight: 600; color: var(--text-secondary); }
+        .dropzone p { font-size: 12px; color: var(--text-tertiary); }
+        .divider-or { display: flex; align-items: center; gap: 12px; margin: 16px 0; color: var(--text-tertiary); font-size: 12px; font-weight: 500; }
+        .divider-or::before, .divider-or::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .contract-textarea {
+            width: 100%; padding: 14px 16px; background: var(--bg-secondary); border: 1px solid var(--border);
+            border-radius: var(--radius-md); color: var(--text-tertiary); font-family: inherit; font-size: 13px;
+            line-height: 1.6; resize: none; min-height: 90px;
+        }
+        .analyze-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            width: 100%; margin-top: 16px; padding: 13px; background: var(--gradient-primary);
+            border: none; border-radius: var(--radius-md); color: #fff; font-family: inherit;
+            font-size: 14px; font-weight: 700; cursor: default;
+            box-shadow: 0 3px 14px rgba(99,102,241,0.35); transition: all var(--transition);
+        }
+
+        /* File animation */
+        .flying-file { position: absolute; top: 80px; left: 50%; transform: translateX(-50%); width: 56px; opacity: 0; z-index: 10; }
+        .flying-file.animate { animation: fileDrop 1s ease forwards; }
+        .file-icon-rect { fill: rgba(99,102,241,0.12); stroke: var(--accent-blue); stroke-width: 1.5; }
+        .file-icon-fold { fill: rgba(99,102,241,0.2); stroke: var(--accent-blue); stroke-width: 1.5; }
+        .file-icon-lines line { stroke: var(--text-tertiary); stroke-width: 1.5; stroke-linecap: round; }
+        @keyframes fileDrop { 0%{opacity:0;top:40px;transform:translateX(-50%) rotate(-12deg)} 40%{opacity:1} 100%{opacity:1;top:170px;transform:translateX(-50%) rotate(0) scale(0.7)} }
+
+        /* ═══ LOADING STATE ═══ */
+        .loading-state { display: flex; flex-direction: column; align-items: center; gap: 14px; padding: 60px 20px; }
+        .spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--accent-blue); border-radius: 50%; animation: spin 0.8s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .progress-bar-wrap { width: 100%; max-width: 360px; }
+        .progress-bar { width: 100%; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+        .progress-fill { height: 100%; width: 0%; border-radius: 3px; background: linear-gradient(90deg, var(--accent-blue), #818cf8, var(--accent-blue)); background-size: 200% 100%; animation: progressShimmer 1.5s ease-in-out infinite; transition: width 0.15s linear; }
+        @keyframes progressShimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+        .progress-label { font-size: 13px; color: var(--text-secondary); margin-top: 8px; }
+        .scan-cats { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 450px; margin-top: 8px; }
+        .scan-cat { padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 500; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-tertiary); transition: all 0.4s ease; }
+        .scan-cat.active { border-color: var(--accent-cyan); color: var(--accent-cyan); background: rgba(6,182,212,0.08); }
+        .scan-cat.done { border-color: var(--accent-green); color: var(--accent-green); background: rgba(52,211,153,0.08); }
+
+        /* ═══ RESULTS STATE ═══ */
+        .results-layout { display: flex; flex: 1; overflow: hidden; }
+        .pdf-pane { flex: 1; background: var(--bg-tertiary); overflow-y: auto; position: relative; }
+        .pdf-toolbar { display: flex; align-items: center; gap: 6px; padding: 8px 12px; border-bottom: 1px solid var(--border); background: var(--bg-secondary); }
+        .pdf-toolbar-btn { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; border: none; border-radius: 6px; background: var(--bg-glass); color: var(--text-secondary); cursor: default; }
+        .pdf-page-info { font-size: 11px; color: var(--text-secondary); margin: 0 4px; }
+        .pdf-toolbar-divider { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+        .pdf-zoom-info { font-size: 11px; color: var(--text-secondary); min-width: 32px; text-align: center; }
+        .pdf-viewer-container { padding: 16px; }
+        .pdf-page { background: #1e2538; border-radius: 8px; border: 1px solid var(--border); padding: 28px 24px; position: relative; }
+        .pdf-line { height: 7px; border-radius: 4px; background: rgba(255,255,255,0.05); margin-bottom: 9px; }
+        .pdf-line:nth-child(3n) { width: 82%; } .pdf-line:nth-child(3n+1) { width: 94%; } .pdf-line:nth-child(3n+2) { width: 68%; }
+        .pdf-hl { position: relative; border-radius: 3px; margin-bottom: 9px; padding: 8px 10px; opacity: 0; transition: opacity 0.5s ease; }
+        .pdf-hl.visible { opacity: 1; }
+        .pdf-hl.high { background: rgba(239,68,68,0.10); border-left: 3px solid var(--accent-red); }
+        .pdf-hl.medium { background: rgba(249,115,22,0.08); border-left: 3px solid var(--accent-orange); }
+        .pdf-hl.low { background: rgba(251,191,36,0.06); border-left: 3px solid var(--accent-yellow); }
+        .pdf-hl.scroll-target { animation: hlPulse 1.5s ease; }
+        @keyframes hlPulse { 0%,100%{box-shadow:none} 50%{box-shadow: 0 0 20px rgba(99,102,241,0.35)} }
+        .pdf-hl .pdf-line { margin-bottom: 7px; } .pdf-hl .pdf-line:last-child { margin-bottom: 0; }
+        .pdf-score-overlay {
+            position: absolute; top: 58px; right: 20px; z-index: 5;
+            background: rgba(10,14,26,0.85); border: 1px solid var(--border); border-radius: 12px;
+            padding: 14px 16px; text-align: center; backdrop-filter: blur(8px);
+        }
+        .score-ring-wrap { position: relative; width: 80px; height: 80px; margin: 0 auto 6px; }
+        .score-ring-bg { fill: none; stroke: var(--border); stroke-width: 6; }
+        .score-ring-fill { fill: none; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 201; stroke-dashoffset: 201; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset 1.5s cubic-bezier(0.4,0,0.2,1); }
+        .score-ring-fill.animated { stroke-dashoffset: 58; } /* 71% of 201 ≈ 143, so 201-143=58 */
+        .score-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 800; opacity: 0; transition: opacity 0.5s ease 0.8s; }
+        .score-text.visible { opacity: 1; }
+        .score-label-text { font-size: 10px; font-weight: 600; color: var(--accent-orange); letter-spacing: 0.5px; text-transform: uppercase; opacity: 0; transition: opacity 0.5s ease 1s; }
+        .score-label-text.visible { opacity: 1; }
+
+        /* Analysis section below PDF */
+        .analysis-section { border-top: 1px solid var(--border); }
+        .report-header { display: flex; align-items: center; gap: 20px; padding: 20px 24px; background: var(--bg-card); border-bottom: 1px solid var(--border); }
+        .report-summary h2 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+        .report-summary .summary-text { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+        .risk-counts { display: flex; gap: 8px; margin-top: 8px; }
+        .risk-chip { padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; }
+        .risk-chip.high { background: rgba(239,68,68,0.15); color: var(--accent-red); }
+        .risk-chip.med { background: rgba(251,191,36,0.15); color: var(--accent-yellow); }
+        .risk-chip.low { background: rgba(249,115,22,0.15); color: var(--accent-orange); }
+
+        .flags-list { padding: 16px 24px; display: flex; flex-direction: column; gap: 12px; }
+        .flag-card {
+            padding: 18px 20px; background: var(--bg-card); border: 1px solid var(--border);
+            border-radius: var(--radius-md); border-left: 4px solid; transition: all 0.5s ease;
+            opacity: 0; transform: translateY(12px); cursor: default;
+        }
+        .flag-card.visible { opacity: 1; transform: translateY(0); }
+        .flag-card.risk-high { border-left-color: var(--accent-red); }
+        .flag-card.risk-med { border-left-color: var(--accent-orange); }
+        .flag-card.risk-low { border-left-color: var(--accent-yellow); }
+        .flag-card.pulse { border-color: var(--accent-blue); box-shadow: 0 0 20px rgba(99,102,241,0.2); }
+        .flag-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .risk-badge { padding: 2px 9px; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .risk-badge.risk-high { background: rgba(239,68,68,0.2); color: var(--accent-red); }
+        .risk-badge.risk-med { background: rgba(249,115,22,0.2); color: var(--accent-orange); }
+        .risk-badge.risk-low { background: rgba(251,191,36,0.2); color: var(--accent-yellow); }
+        .flag-category { font-size: 11px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.5px; }
+        .flag-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+        .flag-clause { margin: 0 0 10px; padding: 10px 14px; background: var(--bg-glass); border-left: 3px solid var(--text-tertiary); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 12px; color: var(--text-secondary); font-style: italic; line-height: 1.6; }
+        .flag-explanation { font-size: 12px; color: var(--text-secondary); line-height: 1.6; }
+
+        /* ═══ CHAT STATE ═══ */
+        .focus-chat { margin: 16px 24px; background: rgba(251,191,36,0.04); border: 1px solid rgba(251,191,36,0.18); border-radius: 10px; overflow: hidden; }
+        .focus-chat-header { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid rgba(251,191,36,0.12); }
+        .focus-chat-header svg { color: #fbbf24; }
+        .focus-chat-header span { font-size: 12px; font-weight: 600; color: #fbbf24; }
+        .focus-chat-messages { max-height: 240px; overflow-y: auto; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+        .chat-msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.55; opacity: 0; transform: translateY(8px); transition: all 0.4s ease; }
+        .chat-msg.visible { opacity: 1; transform: translateY(0); }
+        .chat-msg.user { align-self: flex-end; background: rgba(99,102,241,0.15); color: var(--text-primary); border-bottom-right-radius: 4px; }
+        .chat-msg.ai { align-self: flex-start; background: var(--bg-glass); color: var(--text-secondary); border-bottom-left-radius: 4px; }
+        .chat-typing { display: flex; gap: 4px; padding: 10px 14px; align-self: flex-start; opacity: 0; transition: opacity 0.3s ease; }
+        .chat-typing.visible { opacity: 1; }
+        .typing-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--text-tertiary); animation: typingBounce 1.2s ease-in-out infinite; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; } .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingBounce { 0%,60%,100%{opacity:0.3;transform:translateY(0)} 30%{opacity:1;transform:translateY(-4px)} }
+        .focus-chat-input-row { display: flex; gap: 8px; padding: 10px 14px; border-top: 1px solid rgba(251,191,36,0.12); background: rgba(0,0,0,0.15); }
+        .focus-chat-input { flex: 1; padding: 9px 14px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 8px; color: var(--text-tertiary); font-family: inherit; font-size: 12px; }
+        .focus-chat-send { display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: none; border-radius: 8px; background: linear-gradient(135deg, #f59e0b, #f97316); color: #fff; cursor: default; }
+
+        /* ═══ SCENE 6: FINALE ═══ */
+        .finale-scene { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+        .finale-logo { width: 48px; height: 48px; opacity: 0; animation: fadeScaleIn 0.7s 0.2s ease forwards; }
+        .finale-title { font-size: 28px; font-weight: 800; background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; animation: fadeUp 0.7s 0.4s ease forwards; letter-spacing: -0.5px; text-align: center; }
+        .finale-sub { font-size: 14px; color: var(--text-secondary); opacity: 0; animation: fadeUp 0.7s 0.7s ease forwards; text-align: center; }
+        .finale-features { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 8px; }
+        .finale-feat { padding: 8px 18px; border-radius: 10px; background: var(--bg-card); border: 1px solid var(--border); font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; opacity: 0; transform: translateY(8px); }
+        .finale-cta { margin-top: 16px; padding: 14px 44px; border-radius: 12px; background: var(--gradient-primary); color: white; font-size: 15px; font-weight: 700; border: none; cursor: default; opacity: 0; text-decoration: none; box-shadow: 0 4px 20px rgba(99,102,241,0.4); }
+
+        /* ═══ NAV DOTS (hidden in embed) ═══ */
+        .scene-nav { display: none; }
+
+        /* ═══ KEYFRAMES ═══ */
+        @keyframes fadeScaleIn { from{opacity:0;transform:scale(0.6)} to{opacity:1;transform:scale(1)} }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════ SCENE 1: TITLE ═══════════ -->
+<div class="scene title-scene active" data-scene="0">
+    <svg class="title-logo" viewBox="0 0 24 24" fill="none">
+        <defs>
+            <linearGradient id="tb-sg" x1="3" y1="2" x2="21" y2="23" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#06b6d4"/>
+            </linearGradient>
+            <linearGradient id="tb-cg" x1="9" y1="10" x2="15" y2="14" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#f97316"/><stop offset="100%" stop-color="#fbbf24"/>
+            </linearGradient>
+        </defs>
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#tb-sg)" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <polyline points="14,2 14,8 20,8" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/>
+        <path d="M9 15l2 2 4-4" stroke="url(#tb-cg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h1 class="title-name">Contract Guardian</h1>
+    <p class="title-tagline">AI-powered contract analysis for freelancers</p>
+    <div class="title-badge"><span class="dot"></span> Desktop App</div>
+</div>
+
+<!-- ═══════════ SCENE 2: UPLOAD ═══════════ -->
+<div class="scene" data-scene="1">
+    <div class="app-frame">
+        <div class="app-titlebar">
+            <div class="traffic-lights"><div class="tl tl-r"></div><div class="tl tl-y"></div><div class="tl tl-g"></div></div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/><polyline points="14,2 14,8 20,8" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/><path d="M9 15l2 2 4-4" stroke="url(#tb-cg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="tb-logo-text">Contract Guardian</span>
+            <span class="tb-version">v1.0</span>
+            <div class="tb-status"><div class="status-dot"></div><span>Ready</span></div>
+        </div>
+        <div class="app-body">
+            <aside class="app-sidebar">
+                <nav class="sb-nav">
+                    <button class="sb-btn active">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+                        Analyze
+                    </button>
+                    <button class="sb-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        History
+                    </button>
+                    <button class="sb-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        Details
+                    </button>
+                    <button class="sb-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                        Subscription
+                    </button>
+                </nav>
+                <div class="sb-footer">
+                    <div class="tier-badge"><div class="tier-dot premium"></div><span class="tier-label">Premium</span></div>
+                </div>
+            </aside>
+            <div class="app-content" id="uploadContent">
+                <div class="view-header">
+                    <h1>Contract Guardian</h1>
+                    <p class="subtitle">Scan client contracts for financial and legal risks</p>
+                </div>
+                <div class="upload-section" style="position:relative;">
+                    <svg class="flying-file" id="flyingFile" viewBox="0 0 64 80">
+                        <rect class="file-icon-rect" x="4" y="4" width="48" height="68" rx="4"/>
+                        <path class="file-icon-fold" d="M36 4V20H52L36 4Z"/>
+                        <g class="file-icon-lines"><line x1="14" y1="34" x2="42" y2="34"/><line x1="14" y1="44" x2="38" y2="44"/><line x1="14" y1="54" x2="34" y2="54"/></g>
+                    </svg>
+                    <div class="dropzone" id="dz">
+                        <svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9,15 12,12 15,15"/>
+                        </svg>
+                        <h3>Drop a PDF contract here</h3>
+                        <p>or click to browse files</p>
+                    </div>
+                    <div class="divider-or"><span>OR</span></div>
+                    <textarea class="contract-textarea" readonly>Paste your contract text here...
+
+Tip: Copy the full contract text from your email, Google Doc, or PDF viewer and paste it here.</textarea>
+                    <button class="analyze-btn" id="analyzeBtn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        Analyze Contract
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ SCENE 3: ANALYZING ═══════════ -->
+<div class="scene" data-scene="2">
+    <div class="app-frame">
+        <div class="app-titlebar">
+            <div class="traffic-lights"><div class="tl tl-r"></div><div class="tl tl-y"></div><div class="tl tl-g"></div></div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/><polyline points="14,2 14,8 20,8" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/><path d="M9 15l2 2 4-4" stroke="url(#tb-cg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="tb-logo-text">Contract Guardian</span>
+            <span class="tb-version">v1.0</span>
+            <div class="tb-status"><div class="status-dot"></div><span>Analyzing...</span></div>
+        </div>
+        <div class="app-body">
+            <aside class="app-sidebar">
+                <nav class="sb-nav">
+                    <button class="sb-btn active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg> Analyze</button>
+                    <button class="sb-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> History</button>
+                    <button class="sb-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Details</button>
+                    <button class="sb-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Subscription</button>
+                </nav>
+                <div class="sb-footer"><div class="tier-badge"><div class="tier-dot premium"></div><span class="tier-label">Premium</span></div></div>
+            </aside>
+            <div class="app-content">
+                <div class="view-header">
+                    <h1>Contract Guardian</h1>
+                    <p class="subtitle">Scan client contracts for financial and legal risks</p>
+                </div>
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <div class="progress-bar-wrap">
+                        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                        <p class="progress-label" id="progressLabel">Preparing analysis...</p>
+                    </div>
+                    <div class="scan-cats" id="scanCats">
+                        <div class="scan-cat">Payment Terms</div>
+                        <div class="scan-cat">IP &amp; Ownership</div>
+                        <div class="scan-cat">Liability Caps</div>
+                        <div class="scan-cat">Termination</div>
+                        <div class="scan-cat">Scope Creep</div>
+                        <div class="scan-cat">Non-Compete</div>
+                        <div class="scan-cat">Indemnification</div>
+                        <div class="scan-cat">Confidentiality</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ SCENE 4: RESULTS ═══════════ -->
+<div class="scene" data-scene="3">
+    <div class="app-frame">
+        <div class="app-titlebar">
+            <div class="traffic-lights"><div class="tl tl-r"></div><div class="tl tl-y"></div><div class="tl tl-g"></div></div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/><polyline points="14,2 14,8 20,8" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/><path d="M9 15l2 2 4-4" stroke="url(#tb-cg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="tb-logo-text">Contract Guardian</span>
+            <span class="tb-version">v1.0</span>
+            <div class="tb-status"><div class="status-dot"></div><span>Ready</span></div>
+        </div>
+        <div class="app-body">
+            <aside class="app-sidebar">
+                <nav class="sb-nav">
+                    <button class="sb-btn active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg> Analyze</button>
+                    <button class="sb-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> History</button>
+                    <button class="sb-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Details</button>
+                    <button class="sb-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Subscription</button>
+                </nav>
+                <div class="sb-footer"><div class="tier-badge"><div class="tier-dot premium"></div><span class="tier-label">Premium</span></div></div>
+            </aside>
+            <div style="flex:1;display:flex;flex-direction:column;overflow:hidden;">
+                <!-- PDF Viewer -->
+                <div class="pdf-pane" style="flex:1;position:relative;">
+                    <div class="pdf-toolbar">
+                        <span class="pdf-toolbar-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg></span>
+                        <span class="pdf-page-info">Page 1 / 3</span>
+                        <span class="pdf-toolbar-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg></span>
+                        <div class="pdf-toolbar-divider"></div>
+                        <span class="pdf-toolbar-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+                        <span class="pdf-zoom-info">100%</span>
+                        <span class="pdf-toolbar-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg></span>
+                        <div class="pdf-toolbar-divider"></div>
+                        <span class="pdf-toolbar-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span>
+                        <span class="pdf-toolbar-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></span>
+                    </div>
+                    <div class="pdf-viewer-container">
+                        <div class="pdf-page">
+                            <div class="pdf-line" style="width:55%"></div>
+                            <div class="pdf-line"></div>
+                            <div class="pdf-line" style="width:78%"></div>
+                            <div class="pdf-hl high" id="hl1"><div class="pdf-line" style="width:95%"></div><div class="pdf-line" style="width:88%"></div><div class="pdf-line" style="width:40%"></div></div>
+                            <div class="pdf-line"></div>
+                            <div class="pdf-line" style="width:72%"></div>
+                            <div class="pdf-hl medium" id="hl2"><div class="pdf-line" style="width:90%"></div><div class="pdf-line" style="width:55%"></div></div>
+                            <div class="pdf-line" style="width:88%"></div>
+                            <div class="pdf-line"></div>
+                            <div class="pdf-line" style="width:62%"></div>
+                            <div class="pdf-hl low" id="hl3"><div class="pdf-line" style="width:85%"></div><div class="pdf-line" style="width:70%"></div></div>
+                            <div class="pdf-line" style="width:80%"></div>
+                            <div class="pdf-line" style="width:50%"></div>
+                        </div>
+                    </div>
+                    <div class="pdf-score-overlay">
+                        <div class="score-ring-wrap">
+                            <svg viewBox="0 0 80 80"><circle class="score-ring-bg" cx="40" cy="40" r="32"/><circle class="score-ring-fill" id="scoreRing" cx="40" cy="40" r="32" stroke="var(--accent-orange)"/></svg>
+                            <div class="score-text" id="scoreText">71</div>
+                        </div>
+                        <div class="score-label-text" id="scoreLabel">Moderate Risk</div>
+                    </div>
+                </div>
+                <!-- Analysis -->
+                <div class="analysis-section" style="overflow-y:auto;max-height:45%;">
+                    <div class="report-header">
+                        <div class="report-summary">
+                            <h2>Web Development Agreement</h2>
+                            <p class="summary-text">This contract contains several clauses that could expose you to financial risk, including unlimited liability and broad IP assignment.</p>
+                            <div class="risk-counts">
+                                <span class="risk-chip high">1 HIGH</span>
+                                <span class="risk-chip med">1 MEDIUM</span>
+                                <span class="risk-chip low">1 LOW</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flags-list" id="flagsList">
+                        <div class="flag-card risk-high" id="flag1" data-hl="hl1">
+                            <div class="flag-card-header">
+                                <span class="risk-badge risk-high">High</span>
+                                <span class="flag-category">Liability &amp; Indemnification</span>
+                            </div>
+                            <div class="flag-title">Unlimited Personal Liability</div>
+                            <div class="flag-clause">"Contractor shall be liable for all direct, indirect, incidental, and consequential damages arising from this Agreement without limitation."</div>
+                            <div class="flag-explanation">This clause makes you personally liable for all damages with no cap. Standard practice is to limit liability to the total fees paid under the contract.</div>
+                        </div>
+                        <div class="flag-card risk-med" id="flag2" data-hl="hl2">
+                            <div class="flag-card-header">
+                                <span class="risk-badge risk-med">Medium</span>
+                                <span class="flag-category">IP &amp; Ownership</span>
+                            </div>
+                            <div class="flag-title">Broad IP Assignment</div>
+                            <div class="flag-clause">"All work product, including tools, frameworks, and methodologies developed during the engagement, shall become the exclusive property of the Client."</div>
+                            <div class="flag-explanation">This assigns all work product to the client including your pre-existing tools and frameworks. You should add a carve-out for pre-existing IP.</div>
+                        </div>
+                        <div class="flag-card risk-low" id="flag3" data-hl="hl3">
+                            <div class="flag-card-header">
+                                <span class="risk-badge risk-low">Low</span>
+                                <span class="flag-category">Payment Terms</span>
+                            </div>
+                            <div class="flag-title">Net-60 Payment Window</div>
+                            <div class="flag-clause">"Payment shall be due within sixty (60) days of receipt of invoice."</div>
+                            <div class="flag-explanation">Payment due 60 days after invoice. Industry standard for freelancers is Net-15 to Net-30. This could strain your cash flow.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ SCENE 5: CHAT ═══════════ -->
+<div class="scene" data-scene="4">
+    <div class="app-frame">
+        <div class="app-titlebar">
+            <div class="traffic-lights"><div class="tl tl-r"></div><div class="tl tl-y"></div><div class="tl tl-g"></div></div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/><polyline points="14,2 14,8 20,8" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/><path d="M9 15l2 2 4-4" stroke="url(#tb-cg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span class="tb-logo-text">Contract Guardian</span>
+            <span class="tb-version">v1.0</span>
+            <div class="tb-status"><div class="status-dot"></div><span>Ready</span></div>
+        </div>
+        <div class="app-body">
+            <aside class="app-sidebar">
+                <nav class="sb-nav">
+                    <button class="sb-btn active"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg> Analyze</button>
+                    <button class="sb-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> History</button>
+                    <button class="sb-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg> Details</button>
+                    <button class="sb-btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Subscription</button>
+                </nav>
+                <div class="sb-footer"><div class="tier-badge"><div class="tier-dot premium"></div><span class="tier-label">Premium</span></div></div>
+            </aside>
+            <div class="app-content" style="padding:20px 24px;overflow-y:auto;">
+                <div class="view-header" style="margin-bottom:16px;">
+                    <h1>Contract Guardian</h1>
+                    <p class="subtitle">Web Development Agreement — Analysis Results</p>
+                </div>
+                <!-- Chat widget -->
+                <div class="focus-chat">
+                    <div class="focus-chat-header">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        <span>AI Contract Chat</span>
+                        <span class="premium-badge" style="margin-left:auto;">Premium</span>
+                    </div>
+                    <div class="focus-chat-messages" id="chatMessages">
+                        <div class="chat-msg user" id="cm1">Can I negotiate the liability clause to cap damages at the contract value?</div>
+                        <div class="chat-typing" id="chatTyping1"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
+                        <div class="chat-msg ai" id="cm2">Yes, absolutely. Section 8.2 currently states unlimited liability. A standard revision would be: <strong>"Contractor's total liability shall not exceed the total fees paid under this Agreement."</strong> This is a very common and reasonable negotiation point.</div>
+                        <div class="chat-msg user" id="cm3">What about the IP clause? Can I keep my pre-existing tools?</div>
+                        <div class="chat-typing" id="chatTyping2"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>
+                        <div class="chat-msg ai" id="cm4">Section 5.1 assigns all "work product" broadly. I'd recommend adding a carve-out: <strong>"Pre-existing IP and general-purpose tools, frameworks, and libraries remain Contractor's property, with a perpetual license granted to Client for project use."</strong></div>
+                    </div>
+                    <div class="focus-chat-input-row">
+                        <input class="focus-chat-input" placeholder="Ask about your contract..." readonly>
+                        <button class="focus-chat-send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════ SCENE 6: FINALE ═══════════ -->
+<div class="scene finale-scene" data-scene="5">
+    <svg class="finale-logo" viewBox="0 0 24 24" fill="none">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/>
+        <polyline points="14,2 14,8 20,8" stroke="url(#tb-sg)" stroke-width="1.5" fill="none"/>
+        <path d="M9 15l2 2 4-4" stroke="url(#tb-cg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h2 class="finale-title">Protect every contract you sign.</h2>
+    <p class="finale-sub">AI-powered analysis in under 60 seconds. From $19.95/month.</p>
+    <div class="finale-features" id="finaleFeats">
+        <div class="finale-feat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 8 risk categories</div>
+        <div class="finale-feat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> 60-second analysis</div>
+        <div class="finale-feat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-yellow)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg> AI contract chat</div>
+        <div class="finale-feat"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/></svg> PDF report export</div>
+    </div>
+    <button class="finale-cta" id="finaleCta">Get Started Today</button>
+</div>
+
+<!-- ═══ NAV DOTS ═══ -->
+
+<script>
+(function() {
+    const scenes = document.querySelectorAll('.scene');
+    let current = 0, transitioning = false, autoTimer = null;
+    const durations = [3500, 3200, 5500, 7500, 8500, 5000];
+
+    function goTo(idx) {
+        if (idx === current || transitioning || idx < 0 || idx >= scenes.length) return;
+        transitioning = true;
+        scenes[current].classList.remove('active');
+        current = idx;
+        scenes[current].classList.add('active');
+        setTimeout(() => { runScene(current); transitioning = false; }, 250);
+        scheduleNext();
+    }
+
+    function scheduleNext() {
+        clearTimeout(autoTimer);
+        autoTimer = setTimeout(() => goTo(current < scenes.length - 1 ? current + 1 : 0), durations[current]);
+    }
+
+    function runScene(idx) {
+        if (idx === 1) animateUpload();
+        if (idx === 2) animateAnalysis();
+        if (idx === 3) animateResults();
+        if (idx === 4) animateChat();
+        if (idx === 5) animateFinale();
+    }
+
+    // ── Upload ──
+    function animateUpload() {
+        const f = document.getElementById('flyingFile');
+        const dz = document.getElementById('dz');
+        f.classList.remove('animate'); dz.classList.remove('drag-over', 'file-ready');
+        void f.offsetWidth;
+        setTimeout(() => { f.classList.add('animate'); setTimeout(() => dz.classList.add('drag-over'), 500); setTimeout(() => { dz.classList.remove('drag-over'); dz.classList.add('file-ready'); }, 1000); }, 400);
+    }
+
+    // ── Analysis ──
+    function animateAnalysis() {
+        const fill = document.getElementById('progressFill');
+        const label = document.getElementById('progressLabel');
+        const cats = document.querySelectorAll('.scan-cat');
+        fill.style.width = '0%'; cats.forEach(c => c.classList.remove('active', 'done'));
+        label.textContent = 'Preparing analysis...';
+
+        const labels = ['Extracting text...', 'Scanning Payment Terms...', 'Scanning IP & Ownership...', 'Scanning Liability Caps...', 'Scanning Termination...', 'Scanning Scope Creep...', 'Scanning Non-Compete...', 'Scanning Indemnification...', 'Finalizing results...'];
+        let progress = 0, catIdx = 0;
+        const pInt = setInterval(() => { progress += 2; fill.style.width = Math.min(progress, 100) + '%'; if (progress >= 100) clearInterval(pInt); }, 100);
+
+        function next() {
+            if (catIdx >= cats.length) return;
+            if (catIdx > 0) cats[catIdx - 1].classList.replace('active', 'done');
+            cats[catIdx].classList.add('active');
+            label.textContent = labels[catIdx] || labels[labels.length - 1];
+            catIdx++;
+            if (catIdx < cats.length) setTimeout(next, 550);
+            else setTimeout(() => { cats[catIdx - 1].classList.replace('active', 'done'); label.textContent = 'Analysis complete!'; }, 500);
+        }
+        setTimeout(next, 300);
+    }
+
+    // ── Results ──
+    function animateResults() {
+        const ring = document.getElementById('scoreRing');
+        const text = document.getElementById('scoreText');
+        const label = document.getElementById('scoreLabel');
+        const flags = document.querySelectorAll('.flag-card');
+        const hls = [document.getElementById('hl1'), document.getElementById('hl2'), document.getElementById('hl3')];
+
+        ring.classList.remove('animated'); text.classList.remove('visible'); label.classList.remove('visible');
+        flags.forEach(f => f.classList.remove('visible', 'pulse'));
+        hls.forEach(h => { h.classList.remove('visible'); h.classList.remove('scroll-target'); });
+
+        setTimeout(() => ring.classList.add('animated'), 200);
+        setTimeout(() => text.classList.add('visible'), 700);
+        setTimeout(() => label.classList.add('visible'), 1100);
+
+        flags.forEach((flag, i) => {
+            setTimeout(() => { flag.classList.add('visible'); if (hls[i]) hls[i].classList.add('visible'); }, 1600 + i * 500);
+        });
+
+        // Simulate click-to-scroll
+        setTimeout(() => {
+            flags[0].classList.add('pulse');
+            hls[0].classList.add('scroll-target');
+            setTimeout(() => { flags[0].classList.remove('pulse'); }, 2000);
+        }, 4500);
+    }
+
+    // ── Chat ──
+    function animateChat() {
+        const msgs = ['cm1','cm2','cm3','cm4'].map(id => document.getElementById(id));
+        const t1 = document.getElementById('chatTyping1');
+        const t2 = document.getElementById('chatTyping2');
+        msgs.forEach(m => m.classList.remove('visible'));
+        t1.classList.remove('visible'); t2.classList.remove('visible');
+
+        setTimeout(() => msgs[0].classList.add('visible'), 400);
+        setTimeout(() => t1.classList.add('visible'), 1200);
+        setTimeout(() => { t1.classList.remove('visible'); msgs[1].classList.add('visible'); }, 2800);
+        setTimeout(() => msgs[2].classList.add('visible'), 4200);
+        setTimeout(() => t2.classList.add('visible'), 5000);
+        setTimeout(() => { t2.classList.remove('visible'); msgs[3].classList.add('visible'); }, 6600);
+    }
+
+    // ── Finale ──
+    function animateFinale() {
+        const feats = document.querySelectorAll('.finale-feat');
+        const cta = document.getElementById('finaleCta');
+        feats.forEach(f => { f.style.opacity = '0'; f.style.transform = 'translateY(8px)'; });
+        cta.style.opacity = '0'; cta.style.transform = 'translateY(8px)';
+        feats.forEach((f, i) => setTimeout(() => { f.style.transition = 'all 0.5s ease'; f.style.opacity = '1'; f.style.transform = 'translateY(0)'; }, 900 + i * 180));
+        setTimeout(() => { cta.style.transition = 'all 0.5s ease'; cta.style.opacity = '1'; cta.style.transform = 'translateY(0)'; }, 1800);
+    }
+
+    scheduleNext();
+})();
+</script>
+
+</body>
+</html>

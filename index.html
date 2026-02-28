@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Guardian — AI-Powered Freelance Contract Analyzer</title>
+    <meta name="description" content="Contract Guardian uses Gemini AI to scan freelance contracts and service agreements and flag dangerous clauses — so you negotiate from a position of strength.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ─── NAV ───────────────────────────────────────── -->
+<nav id="mainNav">
+    <div class="nav-inner">
+        <a href="#hero" class="nav-brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <defs>
+                    <linearGradient id="nav-sg" x1="3" y1="2" x2="21" y2="23" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#6366f1"/>
+                        <stop offset="100%" stop-color="#06b6d4"/>
+                    </linearGradient>
+                    <linearGradient id="nav-cg" x1="9" y1="10" x2="15" y2="14" gradientUnits="userSpaceOnUse">
+                        <stop offset="0%" stop-color="#34d399"/>
+                        <stop offset="100%" stop-color="#06b6d4"/>
+                    </linearGradient>
+                </defs>
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#nav-sg)" stroke-width="1.75" stroke-linejoin="round" fill="none"/>
+                <polyline points="14,2 14,8 20,8" stroke="url(#nav-sg)" stroke-width="1.75" stroke-linejoin="round" fill="none"/>
+                <path d="M9 15l2 2 4-4" stroke="url(#nav-cg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Contract Guardian</span>
+        </a>
+
+        <div class="nav-links" id="navLinks">
+            <a href="#how-it-works" class="nav-link">How It Works</a>
+            <a href="#pricing" class="nav-link">Pricing</a>
+            <a href="#download" class="nav-link">Download</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+        </div>
+
+        <div class="nav-actions">
+            <a href="login.html" class="nav-btn nav-btn-ghost">Log In</a>
+            <a href="signup.html" class="nav-btn nav-btn-primary">Sign Up</a>
+        </div>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</nav>
+
+<!-- ─── HERO ──────────────────────────────────────── -->
+<section id="hero">
+    <div class="hero-glow"></div>
+    <div class="container">
+        <div class="hero-badge">
+            </span>
+            AI for Freelancers and Small Businesses
+        </div>
+
+        <h1 class="hero-title">
+            Stop signing contracts<br>
+            <span class="gradient-text">that f*ck you over</span>
+        </h1>
+
+        <p class="hero-subtitle">
+            Contract Guardian uses Gemini AI to instantly scan freelance
+            contracts and service agreements and flag deal-killer clauses
+            — all before you sign.
+        </p>
+
+        <div class="hero-cta">
+            <a href="signup.html" class="btn-hero">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><path d="M9 15l2 2 4-4"/>
+                </svg>
+                Analyze Your Contract Free
+            </a>
+            <a href="#how-it-works" class="btn-hero-outline">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>
+                </svg>
+                See How It Works
+            </a>
+        </div>
+
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="hero-stat-value">8</div>
+                <div class="hero-stat-label">Risk Categories Detected</div>
+            </div>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">AI</div>
+                <div class="hero-stat-label">Gemini-Powered Analysis</div>
+            </div>
+            <div class="hero-stat-divider"></div>
+            <div class="hero-stat">
+                <div class="hero-stat-value">PDF</div>
+                <div class="hero-stat-label">Analysis Report Preview</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── HOW IT WORKS ──────────────────────────────── -->
+<section id="how-it-works">
+    <div class="container text-center">
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">From risky contract to clean draft in minutes</h2>
+        <p class="section-subtitle">Upload a PDF or paste your contract text. Contract Guardian does the rest — no legal degree required.</p>
+
+        <div class="steps-grid">
+            <div class="step-card fade-up">
+                <div class="step-number">Step 01</div>
+                <div class="step-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="17 8 12 3 7 8"/>
+                        <line x1="12" y1="3" x2="12" y2="15"/>
+                    </svg>
+                </div>
+                <div class="step-title">Upload Your Contract</div>
+                <div class="step-desc">Drop in a PDF or paste contract text. Contract Guardian accepts any freelance contract, SOW, or service agreement up to 80,000 characters.</div>
+            </div>
+
+            <div class="step-card fade-up" style="transition-delay:0.1s">
+                <div class="step-number">Step 02</div>
+                <div class="step-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                </div>
+                <div class="step-title">AI Scans Every Clause</div>
+                <div class="step-desc">Gemini AI reads the full contract and flags deal-killer clauses across 8 risk categories — Scope Creep, Cashflow Risk, IP Ownership, Non-Compete, and more.</div>
+            </div>
+
+            <div class="step-card fade-up" style="transition-delay:0.2s">
+                <div class="step-number">Step 03</div>
+                <div class="step-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14 2 14 8 20 8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                    </svg>
+                </div>
+                <div class="step-title">Review &amp; Understand with AI</div>
+                <div class="step-desc">Each flagged clause comes with a plain-English explanation of the risk and why it matters. Premium users also receive AI-suggested revisions. Ask the AI follow-up questions in chat.</div>
+            </div>
+
+            <div class="step-card fade-up" style="transition-delay:0.3s">
+                <div class="step-number">Step 04</div>
+                <div class="step-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><path d="M9 15l2 2 4-4"/>
+                    </svg>
+                </div>
+                <div class="step-title">Preview Your Analysis Report</div>
+                <div class="step-desc">After analysis, a professionally formatted PDF report appears right in the app — flagged clauses, risk scores, and explanations clearly laid out. Premium reports also include AI-suggested revisions for every flagged clause.</div>
+            </div>
+        </div>
+
+        <!-- Product Demo (embedded interactive animation) -->
+        <div class="demo-video-wrapper fade-up">
+            <iframe src="product-demo.html" class="product-demo-iframe" loading="lazy" title="Contract Guardian Product Demo" allow="autoplay"></iframe>
+        </div>
+    </div>
+</section>
+
+<!-- ─── COMPARISON ─────────────────────────────────── -->
+<section id="comparison">
+    <div class="container text-center">
+        <div class="section-label">Why Contract Guardian?</div>
+        <h2 class="section-title">The old way vs. the smart way</h2>
+        <p class="section-subtitle">Stop overpaying for contract review. Get the same peace of mind in seconds.</p>
+
+        <div class="comparison-grid">
+            <!-- ── LEFT: The Old Way ── -->
+            <div class="comparison-card old-way fade-up">
+                <div class="comparison-badge old">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    The Old Way
+                </div>
+                <h3 class="comparison-headline old">Hiring a lawyer or<br>reading it yourself</h3>
+
+                <!-- Old way photo with greyscale + red X -->
+                <div class="comparison-media old-media">
+                    <div class="old-way-photo-wrapper">
+                        <img src="old-way-stock.png" alt="Stressed person reviewing contract with lawyer" class="old-way-photo"/>
+                    </div>
+                </div>
+
+                <div class="comparison-points">
+                    <div class="comparison-point">
+                        <div class="comparison-point-icon old-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </div>
+                        <div class="comparison-point-body">
+                            <div class="comparison-point-title">$300 &ndash; $500/hr for a lawyer</div>
+                            <div class="comparison-point-desc">A single review can cost $1,000+ before you even negotiate.</div>
+                        </div>
+                    </div>
+                    <div class="comparison-point">
+                        <div class="comparison-point-icon old-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </div>
+                        <div class="comparison-point-body">
+                            <div class="comparison-point-title">Days to weeks turnaround</div>
+                            <div class="comparison-point-desc">Clients want an answer now &mdash; not after your lawyer's queue.</div>
+                        </div>
+                    </div>
+                    <div class="comparison-point">
+                        <div class="comparison-point-icon old-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </div>
+                        <div class="comparison-point-body">
+                            <div class="comparison-point-title">Read it yourself for hours</div>
+                            <div class="comparison-point-desc">Dense legal language makes it easy to miss buried traps.</div>
+                        </div>
+                    </div>
+                    <div class="comparison-point">
+                        <div class="comparison-point-icon old-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </div>
+                        <div class="comparison-point-body">
+                            <div class="comparison-point-title">Easy to miss hidden clauses</div>
+                            <div class="comparison-point-desc">Non-competes, IP grabs, and auto-renewals hide in plain sight.</div>
+                        </div>
+                    </div>
+                    <div class="comparison-point">
+                        <div class="comparison-point-icon old-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        </div>
+                        <div class="comparison-point-body">
+                            <div class="comparison-point-title">No ongoing protection</div>
+                            <div class="comparison-point-desc">You pay per review. Next contract? Start from scratch.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── RIGHT: The Contract Guardian Way ── -->
+            <div class="comparison-card new-way fade-up" style="transition-delay:0.12s">
+                <div class="comparison-badge new">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                    The Contract Guardian Way
+                </div>
+                <h3 class="comparison-headline new">AI-powered analysis in<br>under 60 seconds</h3>
+
+                <!-- AI analysis illustration -->
+                <div class="comparison-media new-media">
+                    <div class="new-way-illustration">
+                        <svg viewBox="0 0 400 225" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- App window background -->
+                            <rect x="10" y="10" width="380" height="205" rx="10" fill="#0a0e1a" stroke="rgba(99,102,241,0.2)" stroke-width="1"/>
+                            <!-- Titlebar -->
+                            <rect x="10" y="10" width="380" height="28" rx="10" fill="#111827"/>
+                            <rect x="10" y="28" width="380" height="10" fill="#111827"/>
+                            <circle cx="26" cy="24" r="4" fill="#ef4444"/>
+                            <circle cx="38" cy="24" r="4" fill="#fbbf24"/>
+                            <circle cx="50" cy="24" r="4" fill="#34d399"/>
+                            <text x="64" y="27" fill="url(#cg-grad)" font-size="9" font-weight="700" font-family="Inter, sans-serif">Contract Guardian</text>
+                            <defs>
+                                <linearGradient id="cg-grad" x1="64" y1="20" x2="150" y2="30">
+                                    <stop offset="0%" stop-color="#6366f1"/>
+                                    <stop offset="100%" stop-color="#06b6d4"/>
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Score ring -->
+                            <circle cx="60" cy="80" r="24" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="5"/>
+                            <circle cx="60" cy="80" r="24" fill="none" stroke="#ef4444" stroke-width="5" stroke-linecap="round" stroke-dasharray="110 151" transform="rotate(-90 60 80)"/>
+                            <text x="60" y="78" text-anchor="middle" fill="#f0f4ff" font-size="16" font-weight="800" font-family="Inter, sans-serif">72</text>
+                            <text x="60" y="89" text-anchor="middle" fill="#5a6a8a" font-size="6" font-weight="600" font-family="Inter, sans-serif">RISK SCORE</text>
+
+                            <!-- Summary text -->
+                            <text x="100" y="68" fill="#f0f4ff" font-size="9" font-weight="700" font-family="Inter, sans-serif">Freelance Service Agreement</text>
+                            <text x="100" y="80" fill="#8b9dc3" font-size="7" font-family="Inter, sans-serif">3 risks flagged across liability, IP, and payment</text>
+                            <!-- Risk chips -->
+                            <rect x="100" y="86" width="38" height="14" rx="7" fill="rgba(239,68,68,0.15)"/>
+                            <text x="119" y="96" text-anchor="middle" fill="#ef4444" font-size="7" font-weight="700" font-family="Inter, sans-serif">1 HIGH</text>
+                            <rect x="142" y="86" width="34" height="14" rx="7" fill="rgba(249,115,22,0.15)"/>
+                            <text x="159" y="96" text-anchor="middle" fill="#f97316" font-size="7" font-weight="700" font-family="Inter, sans-serif">1 MED</text>
+
+                            <!-- Flag card 1 - HIGH -->
+                            <rect x="22" y="112" width="170" height="42" rx="6" fill="rgba(17,24,39,0.7)" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+                            <rect x="22" y="112" width="3" height="42" rx="1.5" fill="#ef4444"/>
+                            <rect x="30" y="117" width="30" height="10" rx="3" fill="rgba(239,68,68,0.2)"/>
+                            <text x="45" y="125" text-anchor="middle" fill="#ef4444" font-size="6" font-weight="700" font-family="Inter, sans-serif">HIGH</text>
+                            <text x="64" y="125" fill="#5a6a8a" font-size="5.5" font-weight="600" font-family="Inter, sans-serif">LIABILITY</text>
+                            <text x="30" y="136" fill="#f0f4ff" font-size="7" font-weight="700" font-family="Inter, sans-serif">Unlimited Personal Liability</text>
+                            <text x="30" y="148" fill="#8b9dc3" font-size="5.5" font-family="Inter, sans-serif">Makes you liable for all damages with no cap...</text>
+
+                            <!-- Flag card 2 - MED -->
+                            <rect x="22" y="158" width="170" height="42" rx="6" fill="rgba(17,24,39,0.7)" stroke="rgba(255,255,255,0.07)" stroke-width="0.5"/>
+                            <rect x="22" y="158" width="3" height="42" rx="1.5" fill="#f97316"/>
+                            <rect x="30" y="163" width="28" height="10" rx="3" fill="rgba(249,115,22,0.2)"/>
+                            <text x="44" y="171" text-anchor="middle" fill="#f97316" font-size="6" font-weight="700" font-family="Inter, sans-serif">MED</text>
+                            <text x="62" y="171" fill="#5a6a8a" font-size="5.5" font-weight="600" font-family="Inter, sans-serif">IP OWNERSHIP</text>
+                            <text x="30" y="182" fill="#f0f4ff" font-size="7" font-weight="700" font-family="Inter, sans-serif">Broad IP Assignment</text>
+                            <text x="30" y="194" fill="#8b9dc3" font-size="5.5" font-family="Inter, sans-serif">Assigns all work product including your tools...</text>
+
+                            <!-- Suggested revision box on card 1 -->
+                            <rect x="200" y="112" width="178" height="42" rx="6" fill="rgba(99,102,241,0.06)" stroke="rgba(99,102,241,0.15)" stroke-width="0.5"/>
+                            <text x="210" y="124" fill="#6366f1" font-size="6" font-weight="700" font-family="Inter, sans-serif">SUGGESTED REVISION</text>
+                            <text x="210" y="135" fill="#8b9dc3" font-size="5.5" font-family="Inter, sans-serif">"Contractor's total liability shall not</text>
+                            <text x="210" y="143" fill="#8b9dc3" font-size="5.5" font-family="Inter, sans-serif">exceed the total fees paid under this</text>
+                            <text x="210" y="151" fill="#8b9dc3" font-size="5.5" font-family="Inter, sans-serif">Agreement."</text>
+
+                            <!-- Benefit line -->
+                            <text x="210" y="170" fill="#34d399" font-size="6" font-weight="600" font-family="Inter, sans-serif">&#x1F4B0; Caps exposure at fees received</text>
+
+                            <!-- Suggested revision box on card 2 -->
+                            <rect x="200" y="178" width="178" height="30" rx="6" fill="rgba(99,102,241,0.06)" stroke="rgba(99,102,241,0.15)" stroke-width="0.5"/>
+                            <text x="210" y="190" fill="#6366f1" font-size="6" font-weight="700" font-family="Inter, sans-serif">SUGGESTED REVISION</text>
+                            <text x="210" y="200" fill="#8b9dc3" font-size="5.5" font-family="Inter, sans-serif">"Contractor retains ownership of all</text>
+
+                            <!-- Premium badge -->
+                            <rect x="330" y="50" width="50" height="14" rx="7" fill="url(#prem-grad)"/>
+                            <text x="355" y="60" text-anchor="middle" fill="#fff" font-size="6" font-weight="700" font-family="Inter, sans-serif">PREMIUM</text>
+                            <defs>
+                                <linearGradient id="prem-grad" x1="330" y1="50" x2="380" y2="64">
+                                    <stop offset="0%" stop-color="#f59e0b"/>
+                                    <stop offset="100%" stop-color="#f97316"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="comparison-points">
+                    <div class="comparison-point">
+                        <div class="comparison-point-icon new-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="comparison-point-body">
+                            <div class="comparison-point-title">AI analysis from $14.95/mo</div>
+                            <div class="comparison-point-desc">All your contracts for the price of 4 minutes with a lawyer.</div>
+                        </div>
+                    </div>
+                    <div class="comparison-point">
+                        <div class="comparison-point-icon new-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="comparison-point-body">
+                            <div class="comparison-point-title">Results in under 60 seconds</div>
+                            <div class="comparison-point-desc">Upload a PDF, get a full risk breakdown before your coffee cools.</div>
+                        </div>
+                    </div>
+                    <div class="comparison-point">
+                        <div class="comparison-point-icon new-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="comparison-point-body">
+                            <div class="comparison-point-title">Plain-English risk breakdown</div>
+                            <div class="comparison-point-desc">Every flagged clause explained in language you actually understand.</div>
+                        </div>
+                    </div>
+                    <div class="comparison-point">
+                        <div class="comparison-point-icon new-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="comparison-point-body">
+                            <div class="comparison-point-title">8 risk categories scanned</div>
+                            <div class="comparison-point-desc">Scope creep, IP grabs, non-competes, cashflow traps &mdash; nothing slips through.</div>
+                        </div>
+                    </div>
+                    <div class="comparison-point">
+                        <div class="comparison-point-icon new-icon">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        </div>
+                        <div class="comparison-point-body">
+                            <div class="comparison-point-title">Analyze every contract you sign</div>
+                            <div class="comparison-point-desc">Ongoing protection, not a one-off expense.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PRICING ────────────────────────────────────── -->
+<section id="pricing">
+    <div class="container text-center">
+        <div class="section-label">Pricing</div>
+        <h2 class="section-title">Simple, transparent pricing</h2>
+        <p class="section-subtitle">Start free, then upgrade for more.<br>Prices are based on Gemini API usage*</p>
+
+        <div class="billing-toggle" id="pricingBillingToggle">
+            <span class="billing-option" data-billing="monthly">Monthly</span>
+            <label class="billing-switch">
+                <input type="checkbox" id="websiteBillingToggle">
+                <span class="billing-slider"></span>
+            </label>
+            <span class="billing-option" data-billing="annual">Annual <span class="billing-save">Save 15%</span></span>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Free -->
+            <div class="plan-card fade-up">
+                <div class="plan-badge free">Free</div>
+                <div class="plan-name">Free</div>
+                <div class="plan-price">
+                    <span class="price-amount">$0</span>
+                </div>
+                <div class="plan-desc">Try Contract Guardian on your next contract — no credit card required.</div>
+                <ul class="plan-features">
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        3 contract analyses
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Up to 10 pages per contract
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        All 8 risk categories
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        AI clause explanations
+                    </li>
+                    <li class="excluded">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        AI-suggested revisions
+                    </li>
+                    <li class="excluded">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        PDF analysis report
+                    </li>
+                    <li class="excluded">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                        Scan history
+                    </li>
+                </ul>
+                <a href="signup.html" class="plan-cta free-btn">Get Started Free</a>
+            </div>
+
+            <!-- Pro (Featured) -->
+            <div class="plan-card featured fade-up" style="transition-delay:0.1s">
+                <div class="plan-badge popular">Most Popular</div>
+                <div class="plan-name">Pro</div>
+                <div class="plan-price">
+                    <span class="price-amount" data-monthly="$14.95" data-annual="$12.71">$14.95</span>
+                    <span class="price-period" data-monthly="/month" data-annual="/mo, billed annually">/month</span>
+                </div>
+                <div class="plan-desc">Everything solo freelancers and consultants need to negotiate with confidence.</div>
+                <ul class="plan-features">
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        15 analyses per month
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Up to 30 pages per contract
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        AI-suggested clause revisions
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        PDF analysis report
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Full scan history
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        AI chat for follow-up questions
+                    </li>
+                </ul>
+                <a href="signup.html" class="plan-cta upgrade-btn">Get Pro</a>
+            </div>
+
+            <!-- Premium -->
+            <div class="plan-card fade-up" style="transition-delay:0.2s">
+                <div class="plan-badge enterprise">Premium</div>
+                <div class="plan-name">Premium</div>
+                <div class="plan-price">
+                    <span class="price-amount" data-monthly="$49.95" data-annual="$42.46">$49.95</span>
+                    <span class="price-period" data-monthly="/month" data-annual="/mo, billed annually">/month</span>
+                </div>
+                <div class="plan-desc">The complete package for agencies and businesses reviewing contracts at scale.</div>
+                <ul class="plan-features">
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        50 analyses per month
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Up to 50 pages per contract
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Everything in Pro
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Custom review guidelines
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Pushback email generation
+                    </li>
+                    <li class="included">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        Advanced predatory clause detection
+                    </li>
+                </ul>
+                <a href="signup.html" class="plan-cta upgrade-btn">Get Premium</a>
+            </div>
+        </div>
+
+        <p class="pricing-footnote">*Contract Guardian uses Google's Gemini AI to analyze your contracts. Our pricing reflects the cost of these API calls, and our training costs — we keep margins thin so you get the best protection at the fairest price. You only pay for what your plan includes, no hidden fees.</p>
+    </div>
+</section>
+
+<!-- ─── CTA BANNER ────────────────────────────────── -->
+
+<!-- ─── DOWNLOAD ──────────────────────────────────── -->
+<section id="download">
+    <div class="container text-center">
+        <div class="section-label">Download</div>
+        <h2 class="section-title">Download Contract Guardian</h2>
+        <p class="section-subtitle">A native desktop app for Windows and macOS. Your contracts never leave your machine.</p>
+
+        <div class="download-grid">
+            <!-- Windows -->
+            <div class="download-card fade-up">
+                <div class="download-card-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                        <line x1="8" y1="21" x2="16" y2="21"/>
+                        <line x1="12" y1="17" x2="12" y2="21"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>Windows</h3>
+                    <p>Native Electron app for Windows 10 and 11. Runs quietly in your system tray. Drag-and-drop PDF support with a full analysis dashboard.</p>
+                </div>
+                <div class="platform-badges">
+                    <span class="platform-badge">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Windows 10
+                    </span>
+                    <span class="platform-badge">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                        Windows 11
+                    </span>
+                </div>
+                <a href="downloads/Contract Guardian Setup.exe" download class="download-btn primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Download for Windows
+                </a>
+            </div>
+
+            <!-- macOS -->
+            <div class="download-card fade-up" style="transition-delay:0.1s">
+                <div class="download-card-icon">
+                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z"/>
+                        <path d="M12 6v6l4 2"/>
+                    </svg>
+                </div>
+                <div>
+                    <h3>macOS</h3>
+                    <p>Native Electron app for macOS 12 Monterey and later. Supports Apple Silicon and Intel. Lives in your menu bar for instant access.</p>
+                </div>
+                <div class="platform-badges">
+                    <span class="platform-badge">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>
+                        Apple Silicon
+                    </span>
+                    <span class="platform-badge">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>
+                        Intel
+                    </span>
+                </div>
+                <div class="mac-download-buttons">
+                    <a href="downloads/Contract Guardian-arm64.dmg" download class="download-btn outline">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Apple Silicon
+                    </a>
+                    <a href="downloads/Contract Guardian-intel.dmg" download class="download-btn outline">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Intel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FAQ ───────────────────────────────────────── -->
+<section id="faq">
+    <div class="container text-center">
+        <div class="section-label">FAQ</div>
+        <h2 class="section-title">Frequently asked questions</h2>
+        <p class="section-subtitle">Everything you need to know about Contract Guardian.</p>
+
+        <div class="faq-list">
+            <div class="faq-item">
+                <div class="faq-question">
+                    How does Contract Guardian detect risky clauses?
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Contract Guardian sends your contract text to Google's Gemini 2.5 Flash AI model with a detailed legal analysis prompt. The AI reads the full document and flags clauses that put the service provider — you — at financial or legal risk. Each flag is classified into one of 8 risk categories and assigned a severity level of HIGH or MED based on how much exposure you face.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What file formats are supported?
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Contract Guardian supports PDF uploads and plain text input. When you upload a PDF, the app extracts and renders the full document with clause highlighting directly in the viewer. You can also paste contract text if you receive it as a Word document or email — just copy and paste into the text input. Contracts up to 80,000 characters are fully supported.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How does the AI analysis work?
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Contract Guardian scans your contract and flags potentially risky clauses across 8 risk categories. Each flagged clause includes a plain-English explanation and a risk score. Pro users (Gemini 2.5 Pro) get up to 10 analyses per month with full risk breakdowns. Premium users (Gemini 3 Pro) get up to 20 analyses per month, AI chat for follow-up questions, and AI-suggested revisions written as actual contract language you could propose to your client.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is my contract data kept private?
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Contract Guardian runs entirely on your local machine. Your contract files and analysis results are stored locally in your app's data directory — never uploaded to our servers. The only external communication is the contract text sent to Google's Gemini API for AI analysis, which is governed by Google's API privacy policy. You can use your own Gemini API key for full control.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What are the 8 risk categories?
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Contract Guardian checks for: Scope Creep (unlimited revisions or vague deliverables), Cashflow Risk (Net 60+ payment, clawbacks, retroactive pricing), IP Ownership (loss of background or pre-existing IP), Non-Compete (restrictions on working in your industry), Termination (cancellation without payment for completed work), Liability Trap (uncapped exposure or one-sided indemnification), Auto-Renewal Trap (silent renewal or steep exit penalties), and Exclusivity (forced exclusive dealing or MFN pricing).
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What's the difference between Pro and Premium?
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Pro gives you up to 10 contract analyses per month powered by Gemini 2.5 Pro — you get full risk scoring, flagged clauses, and plain-English explanations. Premium upgrades you to Gemini 3 Pro with up to 20 analyses per month, AI chat for asking follow-up questions about specific clauses, and AI-suggested revisions for every flagged clause — written as ready-to-use contract language.
+                    </div>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Can I cancel my subscription anytime?
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">
+                        Yes, absolutely. There are no lock-in contracts. You can cancel your Pro or Premium subscription at any time from your account settings and you'll retain access until the end of your billing period. Your account will then revert to the Free plan. Your local analysis history is always yours — it stays on your machine regardless of plan.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────── -->
+<footer>
+    <div class="container">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <defs>
+                        <linearGradient id="ft-sg" x1="3" y1="2" x2="21" y2="23" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#6366f1"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                        <linearGradient id="ft-cg" x1="9" y1="10" x2="15" y2="14" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#34d399"/>
+                            <stop offset="100%" stop-color="#06b6d4"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#ft-sg)" stroke-width="1.75" stroke-linejoin="round" fill="none"/>
+                    <polyline points="14,2 14,8 20,8" stroke="url(#ft-sg)" stroke-width="1.75" stroke-linejoin="round" fill="none"/>
+                    <path d="M9 15l2 2 4-4" stroke="url(#ft-cg)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                Contract Guardian
+            </div>
+
+            <nav class="footer-links">
+                <a href="#how-it-works">How It Works</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#download">Download</a>
+                <a href="#faq">FAQ</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="signup.html">Sign Up</a>
+                <a href="login.html">Log In</a>
+            </nav>
+
+            <p class="footer-copy">© 2026 Contract Guardian. All rights reserved. Built to protect freelancers and SMBs.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

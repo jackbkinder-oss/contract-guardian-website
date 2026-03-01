@@ -2,20 +2,19 @@ const Stripe = require('stripe');
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
-// Map plan names to Stripe Price lookup keys
-// Set these in your Stripe Dashboard under Products → Prices → Lookup Key
+// Map plan names to Stripe Price IDs
 const PLAN_CONFIG = {
     pro_monthly: {
         mode: 'subscription',
-        lookup_key: 'pro_monthly'
+        priceId: 'price_1T6JEV1pwLqhPIA1un6t38VM'
     },
     pro_annual: {
         mode: 'subscription',
-        lookup_key: 'pro_annual'
+        priceId: 'price_1T6JEZ1pwLqhPIA1NrYsyFcJ'
     },
     payg: {
         mode: 'payment',
-        lookup_key: 'payg_single'
+        priceId: 'price_1T6JEa1pwLqhPIA1eLrSPZo3'
     }
 };
 
@@ -32,29 +31,18 @@ module.exports = async (req, res) => {
     }
 
     try {
-        // Look up the price by lookup key
-        const prices = await stripe.prices.list({
-            lookup_keys: [config.lookup_key],
-            expand: ['data.product']
-        });
-
-        if (!prices.data.length) {
-            return res.status(400).json({ error: `No price found for lookup key: ${config.lookup_key}` });
-        }
-
         const baseUrl = process.env.SITE_URL || 'https://contractaegis.app';
 
         const sessionParams = {
             mode: config.mode,
             line_items: [{
-                price: prices.data[0].id,
+                price: config.priceId,
                 quantity: plan === 'payg' ? (quantity || 1) : 1
             }],
             success_url: `${baseUrl}/success.html?session_id={CHECKOUT_SESSION_ID}&plan=${plan}`,
             cancel_url: `${baseUrl}/cancel.html`
         };
 
-        // Pre-fill email if provided
         if (email) {
             sessionParams.customer_email = email;
         }

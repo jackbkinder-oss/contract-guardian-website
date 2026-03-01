@@ -119,7 +119,7 @@
         </p>
 
         <p class="auth-footer-text">
-            Already have an account? <a href="login.html">Log in</a>
+            Already have an account? <a id="loginLink" href="login.html">Log in</a>
         </p>
     </div>
 </main>
@@ -212,10 +212,24 @@
         submitBtn.textContent = '✓ Account Created!';
         submitBtn.style.background = 'linear-gradient(135deg, #34d399, #06b6d4)';
 
+        // Check if there's a plan param — redirect to checkout instead of index
+        const urlParams = new URLSearchParams(window.location.search);
+        const planParam = urlParams.get('plan');
+        const redirectUrl = planParam ? `index.html?plan=${planParam}` : 'index.html';
+
         setTimeout(() => {
-            window.location.href = 'index.html';
+            window.location.href = redirectUrl;
         }, 1500);
     });
+
+    // Preserve plan param in login link
+    (function() {
+        const p = new URLSearchParams(window.location.search).get('plan');
+        if (p) {
+            const link = document.getElementById('loginLink');
+            if (link) link.href = `login.html?plan=${p}`;
+        }
+    })();
 </script>
 </body>
 </html>

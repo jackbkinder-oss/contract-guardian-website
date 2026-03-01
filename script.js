@@ -150,3 +150,69 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         }
     });
 });
+
+// ─── STRIPE CHECKOUT ────────────────────────────────────────
+function startCheckout(plan) {
+    const user = localStorage.getItem('cg_user');
+    if (!user) {
+        // Not logged in — send to signup with plan param so they return to checkout after
+        window.location.href = `signup.html?plan=${plan}`;
+        return;
+    }
+
+    const parsed = JSON.parse(user);
+    // Determine the Stripe plan key (pro respects billing toggle)
+    let stripePlan = plan;
+    if (plan === 'pro') {
+        const toggle = document.getElementById('websiteBillingToggle');
+        stripePlan = (toggle && toggle.checked) ? 'pro_annual' : 'pro_monthly';
+    }
+
+    redirectToStripe(stripePlan, parsed.email);
+}
+
+async function redirectToStripe(plan, email, quantity) {
+    try {
+        const body = { plan, email };
+        if (quantity) body.quantity = quantity;
+
+        const res = await fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body)
+        });
+
+        if (!res.ok) {
+            const err = await res.json();
+            alert(err.error || 'Failed to start checkout.');
+            return;
+        }
+
+        const { url } = await res.json();
+        window.location.href = url;
+    } catch (e) {
+        console.error('Checkout error:', e);
+        alert('Something went wrong. Please try again.');
+    }
+}
+
+// On page load, check if redirected back after auth with a plan param
+(function checkPostAuthCheckout() {
+    const params = new URLSearchParams(window.location.search);
+    const plan = params.get('plan');
+    if (!plan) return;
+
+    const user = localStorage.getItem('cg_user');
+    if (!user) return; // still not logged in
+
+    // Clean the URL
+    history.replaceState(null, '', window.location.pathname + window.location.hash);
+
+    const parsed = JSON.parse(user);
+    let stripePlan = plan;
+    if (plan === 'pro') {
+        stripePlan = 'pro_monthly'; // default to monthly for redirects
+    }
+
+    redirectToStripe(stripePlan, parsed.email);
+})();

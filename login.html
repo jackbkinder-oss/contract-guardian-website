@@ -113,7 +113,7 @@
         </form>
 
         <p class="auth-footer-text">
-            Don't have an account? <a href="signup.html">Sign up free</a>
+            Don't have an account? <a id="signupLink" href="signup.html">Sign up free</a>
         </p>
     </div>
 </main>
@@ -196,8 +196,20 @@
             email: data.email
         }));
 
-        window.location.href = 'index.html';
+        // Check if there's a plan param — redirect to checkout instead of index
+        const urlParams = new URLSearchParams(window.location.search);
+        const planParam = urlParams.get('plan');
+        window.location.href = planParam ? `index.html?plan=${planParam}` : 'index.html';
     });
+
+    // Preserve plan param in signup link
+    (function() {
+        const p = new URLSearchParams(window.location.search).get('plan');
+        if (p) {
+            const link = document.getElementById('signupLink');
+            if (link) link.href = `signup.html?plan=${p}`;
+        }
+    })();
 </script>
 </body>
 </html>

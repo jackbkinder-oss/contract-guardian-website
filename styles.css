@@ -812,6 +812,11 @@ section {
     filter: drop-shadow(0 0 8px rgba(52,211,153,0.3));
 }
 
+.ct-check-muted {
+    color: rgba(255,255,255,0.35);
+    filter: none;
+}
+
 .ct-x {
     color: rgba(255,255,255,0.15);
 }

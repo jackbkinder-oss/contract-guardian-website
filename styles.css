@@ -517,6 +517,51 @@ section {
 }
 
 /* ─── HOW IT WORKS (Zigzag) ──────────────────────── */
+.install-note {
+    margin-top: 24px;
+    text-align: left;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.install-note details {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 16px;
+}
+.install-note summary {
+    cursor: pointer;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
+}
+.install-note summary:hover {
+    color: rgba(255,255,255,0.7);
+}
+.install-note p, .install-note ol {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 10px;
+    line-height: 1.6;
+}
+.install-note ol {
+    padding-left: 20px;
+}
+.install-cmd {
+    display: block;
+    background: rgba(0,0,0,0.4);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #34d399;
+    margin: 10px 0;
+    user-select: all;
+    word-break: break-all;
+}
+
 #how-it-works {
     position: relative;
 }

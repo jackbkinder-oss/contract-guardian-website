@@ -131,8 +131,21 @@
                     <h3 class="step-title">Upload Your Contract</h3>
                     <p class="step-desc">Drop in a PDF or paste contract text. Contract Guardian accepts any freelance contract, SOW, or service agreement up to 80,000 characters.</p>
                 </div>
-                <div class="step-row-image">
-                    <span>Image placeholder</span>
+                <div class="step-row-image step-mockup">
+                    <div class="mock-upload">
+                        <div class="mock-upload-zone">
+                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:#6366f1;margin-bottom:10px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            <div class="mock-upload-label">Drop PDF here or click to browse</div>
+                            <div class="mock-upload-hint">Supports .pdf up to 30 pages</div>
+                        </div>
+                        <div class="mock-or">or paste contract text</div>
+                        <div class="mock-textarea">
+                            <div class="mock-textarea-line" style="width:90%"></div>
+                            <div class="mock-textarea-line" style="width:75%"></div>
+                            <div class="mock-textarea-line" style="width:85%"></div>
+                            <div class="mock-textarea-line" style="width:60%"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -143,8 +156,24 @@
                     <h3 class="step-title">AI Scans Every Clause</h3>
                     <p class="step-desc">Gemini AI reads the full contract and flags deal-killer clauses across key risk categories — Scope Creep, Cashflow Risk, IP Ownership, Non-Compete, and more.</p>
                 </div>
-                <div class="step-row-image">
-                    <span>Image placeholder</span>
+                <div class="step-row-image step-mockup">
+                    <div class="mock-scan">
+                        <div class="mock-scan-header">
+                            <div class="mock-scan-dot" style="background:#22c55e"></div>
+                            <span>Analyzing contract...</span>
+                            <div class="mock-scan-bar"><div class="mock-scan-fill"></div></div>
+                        </div>
+                        <div class="mock-scan-categories">
+                            <div class="mock-cat"><span class="mock-cat-dot" style="background:#ef4444"></span>Scope Creep</div>
+                            <div class="mock-cat"><span class="mock-cat-dot" style="background:#f97316"></span>Cashflow Risk</div>
+                            <div class="mock-cat"><span class="mock-cat-dot" style="background:#fbbf24"></span>IP Ownership</div>
+                            <div class="mock-cat"><span class="mock-cat-dot" style="background:#ef4444"></span>Non-Compete</div>
+                            <div class="mock-cat"><span class="mock-cat-dot" style="background:#f97316"></span>Termination</div>
+                            <div class="mock-cat"><span class="mock-cat-dot" style="background:#fbbf24"></span>Liability Trap</div>
+                            <div class="mock-cat mock-cat-muted"><span class="mock-cat-dot" style="background:#666"></span>Auto-Renewal</div>
+                            <div class="mock-cat mock-cat-muted"><span class="mock-cat-dot" style="background:#666"></span>Exclusivity</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -155,8 +184,21 @@
                     <h3 class="step-title">Review &amp; Understand with AI</h3>
                     <p class="step-desc">Each flagged clause comes with a plain-English explanation of the risk and why it matters. Pro users also receive AI-suggested revisions. Ask the AI follow-up questions in chat.</p>
                 </div>
-                <div class="step-row-image">
-                    <span>Image placeholder</span>
+                <div class="step-row-image step-mockup">
+                    <div class="mock-review">
+                        <div class="mock-flag">
+                            <div class="mock-flag-header">
+                                <span class="mock-flag-severity high">HIGH</span>
+                                <span class="mock-flag-cat">Scope Creep</span>
+                            </div>
+                            <div class="mock-flag-clause">"Client may request unlimited revisions at no additional cost..."</div>
+                            <div class="mock-flag-explanation">This clause exposes you to unbounded work without extra pay. A fair contract limits revision rounds.</div>
+                            <div class="mock-flag-revision">
+                                <div class="mock-flag-revision-label">Suggested Revision</div>
+                                "Revisions are limited to 2 rounds. Additional rounds billed at $75/hr."
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -167,8 +209,32 @@
                     <h3 class="step-title">Preview Your Analysis Report</h3>
                     <p class="step-desc">After analysis, a professionally formatted PDF report appears right in the app — flagged clauses, risk scores, and explanations clearly laid out. Pro reports also include AI-suggested revisions for every flagged clause.</p>
                 </div>
-                <div class="step-row-image">
-                    <span>Image placeholder</span>
+                <div class="step-row-image step-mockup">
+                    <div class="mock-pdf">
+                        <div class="mock-pdf-header">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="1.75"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            <span>Analysis_Report.pdf</span>
+                        </div>
+                        <div class="mock-pdf-body">
+                            <div class="mock-pdf-title">Contract Analysis Report</div>
+                            <div class="mock-pdf-score">
+                                <div class="mock-pdf-score-ring">
+                                    <svg width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="4"/><circle cx="24" cy="24" r="20" fill="none" stroke="#f97316" stroke-width="4" stroke-dasharray="88 126" stroke-linecap="round" transform="rotate(-90 24 24)"/></svg>
+                                    <span class="mock-pdf-score-num">62</span>
+                                </div>
+                                <div class="mock-pdf-score-info">
+                                    <div>Risk Score: <strong style="color:#f97316">Medium</strong></div>
+                                    <div style="font-size:10px;color:rgba(255,255,255,0.35)">5 flags found &middot; 2 HIGH &middot; 3 MED</div>
+                                </div>
+                            </div>
+                            <div class="mock-pdf-lines">
+                                <div class="mock-pdf-line" style="width:100%"></div>
+                                <div class="mock-pdf-line" style="width:85%"></div>
+                                <div class="mock-pdf-line" style="width:92%"></div>
+                                <div class="mock-pdf-line" style="width:70%"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

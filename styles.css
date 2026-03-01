@@ -587,6 +587,276 @@ section {
     font-weight: 500;
 }
 
+/* ─── STEP MOCKUPS ───────────────────────────────── */
+.step-mockup {
+    padding: 24px;
+    overflow: hidden;
+}
+
+/* Step 1: Upload */
+.mock-upload {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.mock-upload-zone {
+    border: 2px dashed rgba(99,102,241,0.3);
+    border-radius: 12px;
+    padding: 24px 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.mock-upload-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+}
+.mock-upload-hint {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 4px;
+}
+.mock-or {
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.mock-textarea {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.mock-textarea-line {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+}
+
+/* Step 2: Scan */
+.mock-scan {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.mock-scan-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+}
+.mock-scan-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+.mock-scan-bar {
+    flex: 1;
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    overflow: hidden;
+}
+.mock-scan-fill {
+    height: 100%;
+    width: 72%;
+    background: linear-gradient(90deg, #6366f1, #06b6d4);
+    border-radius: 3px;
+    animation: scanPulse 2s ease-in-out infinite;
+}
+@keyframes scanPulse {
+    0%, 100% { width: 60%; }
+    50% { width: 85%; }
+}
+.mock-scan-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.mock-cat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+.mock-cat-muted {
+    opacity: 0.4;
+}
+.mock-cat-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Step 3: Review */
+.mock-review {
+    width: 100%;
+}
+.mock-flag {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.mock-flag-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.mock-flag-severity {
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+.mock-flag-severity.high {
+    background: rgba(239,68,68,0.15);
+    color: #ef4444;
+}
+.mock-flag-cat {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+}
+.mock-flag-clause {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    font-style: italic;
+    line-height: 1.5;
+    padding: 8px 10px;
+    background: rgba(239,68,68,0.05);
+    border-left: 3px solid rgba(239,68,68,0.3);
+    border-radius: 0 6px 6px 0;
+}
+.mock-flag-explanation {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+}
+.mock-flag-revision {
+    font-size: 12px;
+    color: rgba(52,211,153,0.8);
+    line-height: 1.5;
+    padding: 8px 10px;
+    background: rgba(52,211,153,0.05);
+    border-left: 3px solid rgba(52,211,153,0.3);
+    border-radius: 0 6px 6px 0;
+}
+.mock-flag-revision-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: #34d399;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+/* Step 4: PDF Report */
+.mock-pdf {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.mock-pdf-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.5);
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px 8px 0 0;
+}
+.mock-pdf-body {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+.mock-pdf-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+}
+.mock-pdf-score {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+}
+.mock-pdf-score-ring {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+.mock-pdf-score-num {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #f97316;
+}
+.mock-pdf-score-info {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+}
+.mock-pdf-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.mock-pdf-line {
+    height: 5px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 3px;
+}
+
+@media (max-width: 768px) {
+    .step-mockup { padding: 16px; }
+    .mock-upload-zone { padding: 16px 12px; }
+    .mock-upload-zone svg { width: 28px; height: 28px; }
+    .mock-flag { padding: 12px; }
+    .mock-flag-clause, .mock-flag-explanation, .mock-flag-revision { font-size: 11px; }
+}
+
 @media (max-width: 768px) {
     .steps-zigzag {
         gap: 48px;

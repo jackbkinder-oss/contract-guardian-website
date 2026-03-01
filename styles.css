@@ -691,16 +691,21 @@ section {
     min-width: 0;
 }
 
-/* Old way column */
-.ct-col.ct-old {
-    width: 140px;
+/* Narrow data columns */
+.ct-col.ct-old,
+.ct-col.ct-tier,
+.ct-col.ct-cg {
+    width: 120px;
     flex-shrink: 0;
 }
 
-/* Contract Guardian column (featured) */
+/* CG tier columns (Free, PAYG) — slightly muted */
+.ct-col.ct-tier {
+    border-color: rgba(99,102,241,0.15);
+}
+
+/* Contract Guardian Pro column (featured) */
 .ct-col.ct-cg {
-    width: 140px;
-    flex-shrink: 0;
     background: linear-gradient(0deg, rgba(0,0,0,0.8), rgba(0,0,0,0.8)),
                 linear-gradient(180deg, #6366f1 0%, #06b6d4 100%);
     border-color: rgba(99,102,241,0.3);
@@ -793,6 +798,10 @@ section {
     color: rgba(255,255,255,0.35);
 }
 
+.ct-val-muted {
+    color: rgba(255,255,255,0.45);
+}
+
 .ct-val-good {
     color: #34d399;
 }
@@ -808,9 +817,44 @@ section {
 }
 
 /* Mobile */
+@media (max-width: 900px) {
+    .ct {
+        gap: 8px;
+    }
+
+    .ct-col.ct-old,
+    .ct-col.ct-tier,
+    .ct-col.ct-cg {
+        width: 90px;
+    }
+
+    .ct-cell {
+        height: 52px;
+        padding: 0 10px;
+    }
+
+    .ct-icon {
+        width: 16px;
+        height: 16px;
+        margin-right: 10px;
+    }
+
+    .ct-features .ct-row span {
+        font-size: 13px;
+    }
+
+    .ct-head-label {
+        font-size: 11px;
+    }
+
+    .ct-val {
+        font-size: 10px;
+    }
+}
+
 @media (max-width: 700px) {
     .ct {
-        gap: 6px;
+        gap: 5px;
     }
 
     .ct-col {
@@ -818,19 +862,18 @@ section {
     }
 
     .ct-col.ct-old,
+    .ct-col.ct-tier,
     .ct-col.ct-cg {
-        width: 70px;
+        width: 62px;
     }
 
     .ct-cell {
-        height: 48px;
-        padding: 0 8px;
+        height: 46px;
+        padding: 0 6px;
     }
 
     .ct-icon {
-        width: 14px;
-        height: 14px;
-        margin-right: 8px;
+        display: none;
     }
 
     .ct-features .ct-row span {
@@ -838,11 +881,11 @@ section {
     }
 
     .ct-head-label {
-        font-size: 10px;
+        font-size: 9px;
     }
 
     .ct-val {
-        font-size: 9px;
+        font-size: 8px;
     }
 
     .ct-check {
@@ -861,19 +904,28 @@ section {
     }
 }
 
-@media (max-width: 420px) {
-    .ct-icon {
-        display: none;
-    }
-
+@media (max-width: 480px) {
     .ct-col.ct-old,
+    .ct-col.ct-tier,
     .ct-col.ct-cg {
-        width: 56px;
+        width: 52px;
     }
 
     .ct-cell {
-        height: 42px;
-        padding: 0 6px;
+        height: 40px;
+        padding: 0 4px;
+    }
+
+    .ct-features .ct-row span {
+        font-size: 10px;
+    }
+
+    .ct-head-label {
+        font-size: 8px;
+    }
+
+    .ct-val {
+        font-size: 7px;
     }
 }
 

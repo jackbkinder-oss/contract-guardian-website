@@ -660,252 +660,199 @@ section {
     position: relative;
 }
 
-.comparison-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
+/* ─── COMPARISON TABLE ─────────────────────────── */
+.ct-wrapper {
     margin-top: 56px;
-    align-items: stretch;
-}
-
-/* Shared card base */
-.comparison-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
+    max-width: 780px;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: var(--radius-lg);
-    padding: 36px 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-    text-align: left;
-    transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
-}
-
-.comparison-card:hover {
-    border-color: rgba(99,102,241,0.3);
-    transform: translateY(-4px);
-}
-
-/* Right card (new way) gets the featured glow like pricing featured card */
-.comparison-card.new-way {
-    border-color: rgba(99,102,241,0.4);
-    background: linear-gradient(160deg, rgba(99,102,241,0.07) 0%, rgba(6,182,212,0.04) 100%);
-    box-shadow: 0 0 0 1px rgba(99,102,241,0.15), var(--shadow-glow);
-}
-
-.comparison-card.new-way:hover {
-    border-color: rgba(99,102,241,0.55);
-    box-shadow: 0 0 0 1px rgba(99,102,241,0.25), 0 0 48px rgba(99,102,241,0.22);
-}
-
-/* Badges */
-.comparison-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: var(--radius-pill);
-    width: fit-content;
-}
-
-.comparison-badge.old {
-    color: var(--text-tertiary);
-    background: rgba(90,106,138,0.15);
     border: 1px solid var(--border);
+    background: var(--bg-card);
+    overflow: hidden;
 }
 
-.comparison-badge.new {
-    color: var(--green);
-    background: rgba(52,211,153,0.1);
-    border: 1px solid rgba(52,211,153,0.25);
+.ct {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
 }
 
-/* Headlines */
-.comparison-headline {
-    font-size: 20px;
-    font-weight: 800;
-    line-height: 1.3;
-    letter-spacing: -0.3px;
+.ct thead tr {
+    border-bottom: 1px solid var(--border);
 }
 
-.comparison-headline.old {
-    color: var(--text-secondary);
+.ct th {
+    padding: 24px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    vertical-align: middle;
 }
 
-.comparison-headline.new {
+.ct-feature-col {
+    width: 46%;
+}
+
+.ct-old-col,
+.ct-new-col {
+    width: 27%;
+}
+
+.ct-old-col {
+    color: var(--text-tertiary);
+}
+
+.ct-new-col {
+    background: linear-gradient(180deg, rgba(99,102,241,0.08) 0%, rgba(99,102,241,0.03) 100%);
+    position: relative;
+}
+
+.ct-new-col::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--gradient-primary);
+}
+
+.ct-col-label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.ct-col-label.old {
+    color: var(--text-tertiary);
+}
+
+.ct-col-label.new {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-/* Media placeholders (video / PDF / image slots) */
-.comparison-media {
-    border-radius: var(--radius);
-    overflow: hidden;
-    aspect-ratio: 16 / 9;
-    position: relative;
-}
-
-.comparison-media video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.ct-logo {
     display: block;
+    margin: 0 auto 6px;
 }
 
-.comparison-media-fallback {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.comparison-media-fallback span {
-    font-size: 13px;
-    font-weight: 500;
-}
-
-.comparison-media.old-media {
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
-}
-
-.comparison-media.old-media .comparison-media-fallback {
-    color: var(--text-tertiary);
-}
-
-.comparison-media.old-media .comparison-media-fallback svg {
-    color: var(--text-tertiary);
-    opacity: 0.5;
-}
-
-.comparison-media.new-media {
-    background: linear-gradient(160deg, rgba(99,102,241,0.06) 0%, rgba(6,182,212,0.04) 100%);
-    border: 1px solid rgba(99,102,241,0.15);
-}
-
-.comparison-media.new-media .comparison-media-fallback {
-    color: var(--text-secondary);
-}
-
-.comparison-media.new-media .comparison-media-fallback svg {
-    color: var(--indigo);
-    opacity: 0.5;
-}
-
-.old-way-photo-wrapper {
-    position: absolute;
-    inset: 0;
-}
-
-.old-way-photo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    filter: grayscale(100%) brightness(0.5);
-}
-
-.old-way-x-overlay {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.new-way-illustration {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.new-way-illustration svg {
-    width: 100%;
-    height: 100%;
-}
-
-/* Points list */
-.comparison-points {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.comparison-point {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 12px 14px;
-    border-radius: var(--radius);
+/* Table body */
+.ct tbody tr {
+    border-bottom: 1px solid var(--border);
     transition: background var(--transition);
 }
 
-.comparison-point:hover {
-    background: rgba(255,255,255,0.02);
+.ct tbody tr:last-child {
+    border-bottom: none;
 }
 
-.comparison-point-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    margin-top: 1px;
+.ct tbody tr:hover {
+    background: rgba(255,255,255,0.015);
 }
 
-.comparison-point-icon.old-icon {
-    background: rgba(239,68,68,0.08);
-    border: 1px solid rgba(239,68,68,0.12);
-    color: var(--red);
-}
-
-.comparison-point-icon.new-icon {
-    background: rgba(52,211,153,0.08);
-    border: 1px solid rgba(52,211,153,0.15);
-    color: var(--green);
-}
-
-.comparison-point-body {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-}
-
-.comparison-point-title {
+.ct td {
+    padding: 16px 20px;
     font-size: 14px;
+    vertical-align: middle;
+}
+
+.ct-feature {
+    text-align: left;
     font-weight: 600;
     color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.comparison-card.new-way .comparison-point-title {
-    color: var(--text-primary);
+/* Workaround: tables don't support flex on td in all browsers, use this */
+.ct-feature {
+    display: table-cell;
 }
 
-.comparison-point-desc {
-    font-size: 13px;
-    line-height: 1.55;
+.ct-feature-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    color: var(--text-tertiary);
+    opacity: 0.6;
+    position: relative;
+    top: -1px;
+}
+
+.ct-old {
     color: var(--text-tertiary);
 }
 
-@media (max-width: 900px) {
-    .comparison-grid {
-        grid-template-columns: 1fr;
-        max-width: 520px;
-        margin-left: auto;
-        margin-right: auto;
+.ct-new {
+    background: linear-gradient(180deg, rgba(99,102,241,0.06) 0%, rgba(99,102,241,0.02) 100%);
+}
+
+/* Value badges */
+.ct-val-bad {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    background: rgba(239,68,68,0.08);
+    color: var(--red);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.ct-val-good {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: var(--radius-pill);
+    background: rgba(52,211,153,0.1);
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Check / X icons */
+.ct-check {
+    color: var(--green);
+}
+
+.ct-x {
+    color: var(--text-tertiary);
+    opacity: 0.35;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .ct-wrapper {
+        border-radius: var(--radius);
+    }
+
+    .ct th,
+    .ct td {
+        padding: 12px 10px;
+        font-size: 12px;
+    }
+
+    .ct-feature-icon {
+        display: none;
+    }
+
+    .ct-val-bad,
+    .ct-val-good {
+        font-size: 11px;
+        padding: 2px 8px;
+    }
+
+    .ct-col-label {
+        font-size: 12px;
+    }
+
+    .ct-logo {
+        width: 16px;
+        height: 16px;
     }
 }
 

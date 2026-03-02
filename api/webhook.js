@@ -37,7 +37,7 @@ async function getUserByEmail(email) {
 }
 
 // Map Stripe plan metadata to our plan names
-const PAYG_CREDITS_PER_UNIT = 10;
+const PAYG_CREDITS_PER_UNIT = 1;
 
 const handler = async (req, res) => {
     if (req.method !== 'POST') {

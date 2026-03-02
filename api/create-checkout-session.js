@@ -6,15 +6,15 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const PLAN_CONFIG = {
     pro_monthly: {
         mode: 'subscription',
-        priceId: 'price_1T6JEV1pwLqhPIA1un6t38VM'
+        priceId: 'price_1T6Kla1pwLqhPIA1OW4tEIXf'
     },
     pro_annual: {
         mode: 'subscription',
-        priceId: 'price_1T6JEZ1pwLqhPIA1NrYsyFcJ'
+        priceId: 'price_1T6Klr1pwLqhPIA18BxgNUQ3'
     },
     payg: {
         mode: 'payment',
-        priceId: 'price_1T6JEa1pwLqhPIA1eLrSPZo3'
+        priceId: 'price_1T6Km41pwLqhPIA1VAQNCdGj'
     }
 };
 

@@ -1,6 +1,6 @@
 const Stripe = require('stripe');
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = new Stripe(process.env.TEST_STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY);
 
 // Map plan names to Stripe Price IDs
 const PLAN_CONFIG = {

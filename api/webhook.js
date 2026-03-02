@@ -1,7 +1,7 @@
 const Stripe = require('stripe');
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
+const stripe = new Stripe(process.env.TEST_STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY);
+const WEBHOOK_SECRET = process.env.TEST_STRIPE_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET;
 
 const SUPABASE_URL = 'https://xdhmexgxhjalxieiwzcj.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;

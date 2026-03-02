@@ -40,7 +40,8 @@ module.exports = async (req, res) => {
                 quantity: plan === 'payg' ? (quantity || 1) : 1
             }],
             success_url: `${baseUrl}/success.html?session_id={CHECKOUT_SESSION_ID}&plan=${plan}`,
-            cancel_url: `${baseUrl}/cancel.html`
+            cancel_url: `${baseUrl}/cancel.html`,
+            metadata: { plan, quantity: String(plan === 'payg' ? (quantity || 1) : 1) }
         };
 
         if (email) {

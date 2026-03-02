@@ -168,7 +168,21 @@ function startCheckout(plan) {
         stripePlan = (toggle && toggle.checked) ? 'pro_annual' : 'pro_monthly';
     }
 
-    redirectToStripe(stripePlan, parsed.email);
+    let quantity;
+    if (plan === 'payg') {
+        const qtyEl = document.getElementById('paygQty');
+        quantity = qtyEl ? parseInt(qtyEl.textContent) : 1;
+    }
+    redirectToStripe(stripePlan, parsed.email, quantity);
+}
+
+function changePaygQty(delta) {
+    const el = document.getElementById('paygQty');
+    if (!el) return;
+    let qty = parseInt(el.textContent) + delta;
+    if (qty < 1) qty = 1;
+    if (qty > 50) qty = 50;
+    el.textContent = qty;
 }
 
 async function redirectToStripe(plan, email, quantity) {

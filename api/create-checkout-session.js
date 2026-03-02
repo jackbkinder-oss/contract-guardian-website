@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
     }
 
     try {
-        const baseUrl = process.env.SITE_URL || 'https://contractaegis.app';
+        const baseUrl = process.env.SITE_URL || 'https://www.contractaegis.com';
 
         const sessionParams = {
             mode: config.mode,

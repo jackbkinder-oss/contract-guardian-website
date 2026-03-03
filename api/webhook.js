@@ -18,15 +18,21 @@ function verifyPaddleSignature(rawBody, signature, secret) {
     // Paddle sends: ts=<timestamp>;h1=<hash>
     const parts = {};
     signature.split(';').forEach(p => {
-        const [k, v] = p.split('=');
-        parts[k] = v;
+        const idx = p.indexOf('=');
+        if (idx !== -1) {
+            parts[p.substring(0, idx)] = p.substring(idx + 1);
+        }
     });
     const ts = parts.ts;
     const h1 = parts.h1;
     if (!ts || !h1) return false;
     const payload = `${ts}:${rawBody.toString('utf8')}`;
     const computed = crypto.createHmac('sha256', secret).update(payload).digest('hex');
-    return crypto.timingSafeEqual(Buffer.from(computed), Buffer.from(h1));
+    try {
+        return crypto.timingSafeEqual(Buffer.from(computed), Buffer.from(h1));
+    } catch {
+        return false;
+    }
 }
 
 async function supabaseFetch(method, path, body) {

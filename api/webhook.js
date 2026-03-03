@@ -1,8 +1,6 @@
-const Stripe = require('stripe');
+const crypto = require('crypto');
 
-const stripe = new Stripe(process.env.TEST_STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY);
-const WEBHOOK_SECRET = process.env.TEST_STRIPE_WEBHOOK_SECRET || process.env.STRIPE_WEBHOOK_SECRET;
-
+const PADDLE_WEBHOOK_SECRET = process.env.PADDLE_SANDBOX_WEBHOOK_SECRET || process.env.PADDLE_WEBHOOK_SECRET;
 const SUPABASE_URL = 'https://xdhmexgxhjalxieiwzcj.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -13,6 +11,22 @@ function getRawBody(req) {
         req.on('end', () => resolve(Buffer.concat(chunks)));
         req.on('error', reject);
     });
+}
+
+function verifyPaddleSignature(rawBody, signature, secret) {
+    if (!secret || !signature) return false;
+    // Paddle sends: ts=<timestamp>;h1=<hash>
+    const parts = {};
+    signature.split(';').forEach(p => {
+        const [k, v] = p.split('=');
+        parts[k] = v;
+    });
+    const ts = parts.ts;
+    const h1 = parts.h1;
+    if (!ts || !h1) return false;
+    const payload = `${ts}:${rawBody.toString('utf8')}`;
+    const computed = crypto.createHmac('sha256', secret).update(payload).digest('hex');
+    return crypto.timingSafeEqual(Buffer.from(computed), Buffer.from(h1));
 }
 
 async function supabaseFetch(method, path, body) {
@@ -36,7 +50,6 @@ async function getUserByEmail(email) {
     return data && data.length > 0 ? data[0] : null;
 }
 
-// Map Stripe plan metadata to our plan names
 const PAYG_CREDITS_PER_UNIT = 1;
 
 const handler = async (req, res) => {
@@ -44,46 +57,64 @@ const handler = async (req, res) => {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const sig = req.headers['stripe-signature'];
-    let event;
+    const rawBody = await getRawBody(req);
+    const signature = req.headers['paddle-signature'];
 
-    try {
-        const rawBody = await getRawBody(req);
-        event = stripe.webhooks.constructEvent(rawBody, sig, WEBHOOK_SECRET);
-    } catch (err) {
-        console.error('Webhook signature verification failed:', err.message);
-        return res.status(400).json({ error: 'Invalid signature' });
+    // Verify webhook signature
+    if (PADDLE_WEBHOOK_SECRET && signature) {
+        if (!verifyPaddleSignature(rawBody, signature, PADDLE_WEBHOOK_SECRET)) {
+            console.error('Paddle webhook signature verification failed');
+            return res.status(400).json({ error: 'Invalid signature' });
+        }
     }
 
+    let event;
     try {
-        switch (event.type) {
-            case 'checkout.session.completed':
-                await handleCheckoutCompleted(event.data.object);
+        event = JSON.parse(rawBody.toString('utf8'));
+    } catch (err) {
+        return res.status(400).json({ error: 'Invalid JSON' });
+    }
+
+    const eventType = event.event_type;
+    const data = event.data;
+
+    try {
+        switch (eventType) {
+            case 'transaction.completed':
+                await handleTransactionCompleted(data);
                 break;
-            case 'customer.subscription.updated':
-                await handleSubscriptionUpdated(event.data.object);
+            case 'subscription.activated':
+                await handleSubscriptionActivated(data);
                 break;
-            case 'customer.subscription.deleted':
-                await handleSubscriptionDeleted(event.data.object);
+            case 'subscription.updated':
+                await handleSubscriptionUpdated(data);
                 break;
-            case 'invoice.payment_failed':
-                await handlePaymentFailed(event.data.object);
+            case 'subscription.canceled':
+                await handleSubscriptionCanceled(data);
+                break;
+            case 'subscription.past_due':
+                await handleSubscriptionPastDue(data);
                 break;
             default:
-                console.log(`Unhandled event type: ${event.type}`);
+                console.log(`Unhandled Paddle event: ${eventType}`);
         }
 
         res.json({ received: true });
     } catch (err) {
-        console.error(`Error handling ${event.type}:`, err.message);
+        console.error(`Error handling ${eventType}:`, err.message);
         res.status(500).json({ error: 'Webhook handler failed' });
     }
 };
 
-async function handleCheckoutCompleted(session) {
-    const email = session.customer_email || session.customer_details?.email;
+async function handleTransactionCompleted(data) {
+    // PAYG one-time purchases come through as transactions
+    const customData = data.custom_data || {};
+    const plan = customData.plan;
+    if (plan !== 'payg') return; // Subscriptions handled by subscription events
+
+    const email = customData.email;
     if (!email) {
-        console.error('No email found on checkout session');
+        console.error('No email in PAYG transaction custom_data');
         return;
     }
 
@@ -93,84 +124,97 @@ async function handleCheckoutCompleted(session) {
         return;
     }
 
-    const plan = session.metadata?.plan || 'unknown';
+    const quantity = customData.quantity ? parseInt(customData.quantity) : 1;
+    const credits = quantity * PAYG_CREDITS_PER_UNIT;
 
-    if (plan === 'payg') {
-        // One-time payment — add credits
-        const quantity = session.metadata?.quantity ? parseInt(session.metadata.quantity) : 1;
-        const credits = quantity * PAYG_CREDITS_PER_UNIT;
+    const existing = await supabaseFetch('GET', `subscriptions?user_id=eq.${user.id}&plan=eq.payg&select=id,payg_credits`);
 
-        // Check for existing subscription row
-        const existing = await supabaseFetch('GET', `subscriptions?user_id=eq.${user.id}&plan=eq.payg&select=id,payg_credits`);
-
-        if (existing && existing.length > 0) {
-            // Add credits to existing row
-            const newCredits = (existing[0].payg_credits || 0) + credits;
-            await supabaseFetch('PATCH', `subscriptions?id=eq.${existing[0].id}`, {
-                payg_credits: newCredits,
-                status: 'active',
-                updated_at: new Date().toISOString()
-            });
-        } else {
-            await supabaseFetch('POST', 'subscriptions', {
-                user_id: user.id,
-                stripe_customer_id: session.customer || null,
-                plan: 'payg',
-                status: 'active',
-                payg_credits: credits,
-                updated_at: new Date().toISOString()
-            });
-        }
-        console.log(`Added ${credits} PAYG credits for user ${user.id}`);
-    } else if (plan === 'pro_monthly' || plan === 'pro_annual') {
-        // Subscription — create/update row
-        const existing = await supabaseFetch('GET', `subscriptions?user_id=eq.${user.id}&plan=in.(pro_monthly,pro_annual)&select=id`);
-
-        const subData = {
-            user_id: user.id,
-            stripe_customer_id: session.customer || null,
-            stripe_subscription_id: session.subscription || null,
-            plan: plan,
+    if (existing && existing.length > 0) {
+        const newCredits = (existing[0].payg_credits || 0) + credits;
+        await supabaseFetch('PATCH', `subscriptions?id=eq.${existing[0].id}`, {
+            payg_credits: newCredits,
             status: 'active',
-            current_period_end: null, // Will be set by subscription.updated event
             updated_at: new Date().toISOString()
-        };
-
-        if (existing && existing.length > 0) {
-            await supabaseFetch('PATCH', `subscriptions?id=eq.${existing[0].id}`, subData);
-        } else {
-            await supabaseFetch('POST', 'subscriptions', subData);
-        }
-        console.log(`Created/updated Pro subscription for user ${user.id} (${plan})`);
+        });
+    } else {
+        await supabaseFetch('POST', 'subscriptions', {
+            user_id: user.id,
+            paddle_customer_id: data.customer_id || null,
+            plan: 'payg',
+            status: 'active',
+            payg_credits: credits,
+            updated_at: new Date().toISOString()
+        });
     }
+    console.log(`Added ${credits} PAYG credits for user ${user.id}`);
 }
 
-async function handleSubscriptionUpdated(subscription) {
-    const stripeSubId = subscription.id;
-    const existing = await supabaseFetch('GET', `subscriptions?stripe_subscription_id=eq.${encodeURIComponent(stripeSubId)}&select=id`);
+async function handleSubscriptionActivated(data) {
+    const customData = data.custom_data || {};
+    const email = customData.email;
+    const plan = customData.plan || 'pro_monthly';
 
-    if (!existing || existing.length === 0) {
-        console.log(`No subscription found for Stripe sub ${stripeSubId}`);
+    if (!email) {
+        console.error('No email in subscription custom_data');
         return;
     }
 
-    const status = subscription.cancel_at_period_end ? 'canceling' :
-                   subscription.status === 'active' ? 'active' :
-                   subscription.status;
+    const user = await getUserByEmail(email);
+    if (!user) {
+        console.error(`No user found for email: ${email}`);
+        return;
+    }
+
+    const existing = await supabaseFetch('GET', `subscriptions?user_id=eq.${user.id}&plan=in.(pro_monthly,pro_annual)&select=id`);
+
+    const periodEnd = data.current_billing_period?.ends_at || null;
+
+    const subData = {
+        user_id: user.id,
+        paddle_customer_id: data.customer_id || null,
+        paddle_subscription_id: data.id || null,
+        plan: plan,
+        status: 'active',
+        current_period_end: periodEnd,
+        updated_at: new Date().toISOString()
+    };
+
+    if (existing && existing.length > 0) {
+        await supabaseFetch('PATCH', `subscriptions?id=eq.${existing[0].id}`, subData);
+    } else {
+        await supabaseFetch('POST', 'subscriptions', subData);
+    }
+    console.log(`Activated Pro subscription for user ${user.id} (${plan})`);
+}
+
+async function handleSubscriptionUpdated(data) {
+    const paddleSubId = data.id;
+    const existing = await supabaseFetch('GET', `subscriptions?paddle_subscription_id=eq.${encodeURIComponent(paddleSubId)}&select=id`);
+
+    if (!existing || existing.length === 0) {
+        console.log(`No subscription found for Paddle sub ${paddleSubId}`);
+        return;
+    }
+
+    const scheduledChange = data.scheduled_change;
+    const isCanceling = scheduledChange && scheduledChange.action === 'cancel';
+    const periodEnd = data.current_billing_period?.ends_at || null;
+
+    const status = isCanceling ? 'canceling' :
+                   data.status === 'active' ? 'active' :
+                   data.status;
 
     await supabaseFetch('PATCH', `subscriptions?id=eq.${existing[0].id}`, {
         status: status,
-        current_period_end: subscription.current_period_end
-            ? new Date(subscription.current_period_end * 1000).toISOString()
-            : null,
+        current_period_end: periodEnd,
         updated_at: new Date().toISOString()
     });
-    console.log(`Updated subscription ${stripeSubId} to status: ${status}`);
+    console.log(`Updated Paddle subscription ${paddleSubId} to status: ${status}`);
 }
 
-async function handleSubscriptionDeleted(subscription) {
-    const stripeSubId = subscription.id;
-    const existing = await supabaseFetch('GET', `subscriptions?stripe_subscription_id=eq.${encodeURIComponent(stripeSubId)}&select=id`);
+async function handleSubscriptionCanceled(data) {
+    const paddleSubId = data.id;
+    const existing = await supabaseFetch('GET', `subscriptions?paddle_subscription_id=eq.${encodeURIComponent(paddleSubId)}&select=id`);
 
     if (!existing || existing.length === 0) return;
 
@@ -178,14 +222,12 @@ async function handleSubscriptionDeleted(subscription) {
         status: 'canceled',
         updated_at: new Date().toISOString()
     });
-    console.log(`Canceled subscription ${stripeSubId}`);
+    console.log(`Canceled Paddle subscription ${paddleSubId}`);
 }
 
-async function handlePaymentFailed(invoice) {
-    const stripeSubId = invoice.subscription;
-    if (!stripeSubId) return;
-
-    const existing = await supabaseFetch('GET', `subscriptions?stripe_subscription_id=eq.${encodeURIComponent(stripeSubId)}&select=id`);
+async function handleSubscriptionPastDue(data) {
+    const paddleSubId = data.id;
+    const existing = await supabaseFetch('GET', `subscriptions?paddle_subscription_id=eq.${encodeURIComponent(paddleSubId)}&select=id`);
 
     if (!existing || existing.length === 0) return;
 
@@ -193,9 +235,8 @@ async function handlePaymentFailed(invoice) {
         status: 'past_due',
         updated_at: new Date().toISOString()
     });
-    console.log(`Marked subscription ${stripeSubId} as past_due`);
+    console.log(`Marked Paddle subscription ${paddleSubId} as past_due`);
 }
 
-// Vercel: disable body parsing so we get raw buffer for Stripe signature verification
 module.exports = handler;
 module.exports.config = { api: { bodyParser: false } };

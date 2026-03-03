@@ -23,9 +23,6 @@ module.exports = async (req, res) => {
     }
 
     try {
-        // Create a Paddle transaction server-side to get a checkout URL
-        const baseUrl = process.env.SITE_URL || 'https://www.contractaegis.com';
-
         const transactionBody = {
             items: [{
                 price_id: config.priceId,
@@ -35,16 +32,8 @@ module.exports = async (req, res) => {
                 plan,
                 email: email || '',
                 quantity: String(plan === 'payg' ? (quantity || 1) : 1)
-            },
-            checkout: {
-                url: `${baseUrl}/success.html?plan=${plan}`
             }
         };
-
-        // If email provided, look up or let Paddle create customer
-        if (email) {
-            transactionBody.customer = { email };
-        }
 
         const response = await fetch(`${PADDLE_BASE}/transactions`, {
             method: 'POST',
@@ -58,19 +47,20 @@ module.exports = async (req, res) => {
         if (!response.ok) {
             const errText = await response.text();
             console.error('Paddle transaction error:', errText);
-            return res.status(500).json({ error: 'Failed to create checkout session' });
+            return res.status(500).json({ error: 'Failed to create checkout session', detail: errText });
         }
 
         const data = await response.json();
         const transaction = data.data;
 
-        // Build checkout URL from transaction ID
-        const checkoutDomain = PADDLE_BASE.includes('sandbox')
-            ? 'https://sandbox-checkout.paddle.com'
-            : 'https://checkout.paddle.com';
-        const checkoutUrl = `${checkoutDomain}/transaction/${transaction.id}`;
-
-        res.json({ url: checkoutUrl });
+        // Paddle returns checkout.url (default payment link + _ptxn param)
+        if (transaction.checkout && transaction.checkout.url) {
+            res.json({ url: transaction.checkout.url });
+        } else {
+            // Fallback: construct URL manually
+            const baseUrl = process.env.SITE_URL || 'https://www.contractaegis.com';
+            res.json({ url: `${baseUrl}/checkout.html?_ptxn=${transaction.id}` });
+        }
     } catch (err) {
         console.error('Paddle checkout error:', err.message);
         res.status(500).json({ error: 'Failed to create checkout session' });

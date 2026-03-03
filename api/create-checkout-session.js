@@ -15,19 +15,64 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { plan, quantity, email, user_id } = req.body;
+    const { plan, quantity, email } = req.body;
 
     const config = PLAN_CONFIG[plan];
     if (!config) {
         return res.status(400).json({ error: 'Invalid plan. Must be: pro_monthly, pro_annual, or payg' });
     }
 
-    // For Paddle overlay checkout, the client handles the UI.
-    // This endpoint returns the price ID and transaction config for Paddle.js
-    // If needed, we can create a transaction server-side instead.
-    res.json({
-        priceId: config.priceId,
-        plan,
-        quantity: plan === 'payg' ? (quantity || 1) : 1
-    });
+    try {
+        // Create a Paddle transaction server-side to get a checkout URL
+        const baseUrl = process.env.SITE_URL || 'https://www.contractaegis.com';
+
+        const transactionBody = {
+            items: [{
+                price_id: config.priceId,
+                quantity: plan === 'payg' ? (quantity || 1) : 1
+            }],
+            custom_data: {
+                plan,
+                email: email || '',
+                quantity: String(plan === 'payg' ? (quantity || 1) : 1)
+            },
+            checkout: {
+                url: `${baseUrl}/success.html?plan=${plan}`
+            }
+        };
+
+        // If email provided, look up or let Paddle create customer
+        if (email) {
+            transactionBody.customer = { email };
+        }
+
+        const response = await fetch(`${PADDLE_BASE}/transactions`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${PADDLE_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(transactionBody)
+        });
+
+        if (!response.ok) {
+            const errText = await response.text();
+            console.error('Paddle transaction error:', errText);
+            return res.status(500).json({ error: 'Failed to create checkout session' });
+        }
+
+        const data = await response.json();
+        const transaction = data.data;
+
+        // Build checkout URL from transaction ID
+        const checkoutDomain = PADDLE_BASE.includes('sandbox')
+            ? 'https://sandbox-checkout.paddle.com'
+            : 'https://checkout.paddle.com';
+        const checkoutUrl = `${checkoutDomain}/transaction/${transaction.id}`;
+
+        res.json({ url: checkoutUrl });
+    } catch (err) {
+        console.error('Paddle checkout error:', err.message);
+        res.status(500).json({ error: 'Failed to create checkout session' });
+    }
 };

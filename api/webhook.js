@@ -107,14 +107,15 @@ const handler = async (req, res) => {
 };
 
 async function handleTransactionCompleted(data) {
-    // PAYG one-time purchases come through as transactions
     const customData = data.custom_data || {};
     const plan = customData.plan;
-    if (plan !== 'payg') return; // Subscriptions handled by subscription events
+
+    // Handle PAYG and Pro top-up one-time purchases
+    if (plan !== 'payg' && plan !== 'pro_topup') return; // Subscriptions handled by subscription events
 
     const email = customData.email;
     if (!email) {
-        console.error('No email in PAYG transaction custom_data');
+        console.error('No email in transaction custom_data');
         return;
     }
 
@@ -126,6 +127,20 @@ async function handleTransactionCompleted(data) {
 
     const quantity = customData.quantity ? parseInt(customData.quantity) : 1;
     const credits = quantity * PAYG_CREDITS_PER_UNIT;
+
+    // Pro top-up: add credits to the Pro subscription row (don't change plan)
+    if (plan === 'pro_topup') {
+        const proSub = await supabaseFetch('GET', `subscriptions?user_id=eq.${user.id}&plan=in.(pro_monthly,pro_annual)&status=in.(active,canceling)&select=id,payg_credits`);
+        if (proSub && proSub.length > 0) {
+            const newCredits = (proSub[0].payg_credits || 0) + credits;
+            await supabaseFetch('PATCH', `subscriptions?id=eq.${proSub[0].id}`, {
+                payg_credits: newCredits,
+                updated_at: new Date().toISOString()
+            });
+            console.log(`Added ${credits} top-up credits to Pro user ${user.id}`);
+        }
+        return;
+    }
 
     const existing = await supabaseFetch('GET', `subscriptions?user_id=eq.${user.id}&plan=eq.payg&select=id,payg_credits`);
 

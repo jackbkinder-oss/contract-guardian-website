@@ -7,7 +7,8 @@ const PADDLE_BASE = process.env.PADDLE_ENV === 'live'
 const PLAN_CONFIG = {
     pro_monthly: { priceId: 'pri_01kjs2rmwbvhqke26qdyhrswky' },
     pro_annual:  { priceId: 'pri_01kjs2t11rwydq53gtm4ct2fz6' },
-    payg:        { priceId: 'pri_01kjs2wg87a1708vvmhrw65q17' }
+    payg:        { priceId: 'pri_01kjs2wg87a1708vvmhrw65q17' },
+    pro_topup:   { priceId: process.env.PADDLE_PRO_TOPUP_PRICE_ID || 'PLACEHOLDER' }
 };
 
 module.exports = async (req, res) => {
@@ -28,19 +29,19 @@ module.exports = async (req, res) => {
 
     const config = PLAN_CONFIG[plan];
     if (!config) {
-        return res.status(400).json({ error: 'Invalid plan. Must be: pro_monthly, pro_annual, or payg' });
+        return res.status(400).json({ error: 'Invalid plan. Must be: pro_monthly, pro_annual, payg, or pro_topup' });
     }
 
     try {
         const transactionBody = {
             items: [{
                 price_id: config.priceId,
-                quantity: plan === 'payg' ? (quantity || 1) : 1
+                quantity: (plan === 'payg' || plan === 'pro_topup') ? (quantity || 1) : 1
             }],
             custom_data: {
                 plan,
                 email: email || '',
-                quantity: String(plan === 'payg' ? (quantity || 1) : 1)
+                quantity: String((plan === 'payg' || plan === 'pro_topup') ? (quantity || 1) : 1)
             }
         };
 

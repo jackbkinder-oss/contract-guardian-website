@@ -330,18 +330,9 @@
     <div class="container text-center">
         <div class="section-label">Pricing</div>
         <h2 class="section-title">Simple, transparent pricing</h2>
-        <p class="section-subtitle">Start free, then upgrade for more.<br>Prices are based on Gemini API usage*</p>
+        <p class="section-subtitle">Start free, then pay per analysis — no subscription needed.<br>Prices are based on Gemini API usage*</p>
 
-        <div class="billing-toggle" id="pricingBillingToggle">
-            <span class="billing-option" data-billing="monthly">Monthly</span>
-            <label class="billing-switch">
-                <input type="checkbox" id="websiteBillingToggle">
-                <span class="billing-slider"></span>
-            </label>
-            <span class="billing-option" data-billing="annual">Annual <span class="billing-save">Save 15%</span></span>
-        </div>
-
-        <div class="pricing-grid">
+        <div class="pricing-grid" style="max-width:700px;margin:0 auto;">
             <!-- Free -->
             <div class="plan-card fade-up">
                 <div class="plan-badge free">Free</div>
@@ -354,33 +345,20 @@
             </div>
 
             <!-- Pay As You Go -->
-            <div class="plan-card fade-up" style="transition-delay:0.1s">
-                <div class="plan-badge popular">No Commitment</div>
+            <div class="plan-card featured fade-up" style="transition-delay:0.1s">
+                <div class="plan-badge popular">All Features</div>
                 <div class="plan-name">Pay As You Go</div>
                 <div class="plan-price">
-                    <span class="price-amount">$3.99</span>
+                    <span class="price-amount">$9.95</span>
                     <span class="price-period">/analysis</span>
                 </div>
-                <div class="plan-desc">One-off Gemini 2.5 Pro analysis with AI-suggested revisions — no subscription needed.</div>
+                <div class="plan-desc">Full Gemini 2.5 Pro analysis with every feature: AI chat, revisions, PDF report, scan history, pushback emails, and more.</div>
                 <div class="payg-qty" style="display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:12px;">
                     <button onclick="changePaygQty(-1)" style="width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:#fff;font-size:18px;cursor:pointer;">−</button>
                     <span id="paygQty" style="font-size:18px;font-weight:600;min-width:24px;text-align:center;">1</span>
                     <button onclick="changePaygQty(1)" style="width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:#fff;font-size:18px;cursor:pointer;">+</button>
                 </div>
                 <button class="plan-cta upgrade-btn" onclick="startCheckout('payg')">Buy Analyses</button>
-            </div>
-
-            <!-- Pro (Featured) -->
-            <div class="plan-card featured fade-up" style="transition-delay:0.2s">
-                <div class="plan-badge enterprise">Best Value</div>
-                <div class="plan-name">Pro</div>
-                <div class="plan-price">
-                    <span class="price-amount" data-monthly="$19.95" data-annual="$16.96">$19.95</span>
-                    <span class="price-period" data-monthly="/month" data-annual="/mo">/month</span>
-                    <span class="price-annual-note" style="display:none; font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 400;">billed annually</span>
-                </div>
-                <div class="plan-desc">Everything you need to review every contract with confidence. All features unlocked.</div>
-                <button class="plan-cta upgrade-btn" onclick="startCheckout('pro')">Get Pro</button>
             </div>
         </div>
 
@@ -418,30 +396,14 @@
                 <div class="ct-cell ct-row ct-row-last"><svg class="ct-x" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
             </div>
 
-            <!-- PAYG column -->
-            <div class="ct-col ct-old">
-                <div class="ct-cell ct-head"><span class="ct-head-label">Pay As You Go</span></div>
-                <div class="ct-cell ct-row"><span class="ct-val ct-val-muted">Gemini 2.5 Pro</span></div>
-                <div class="ct-cell ct-row"><span class="ct-val ct-val-muted">Per purchase</span></div>
-                <div class="ct-cell ct-row"><span class="ct-val ct-val-muted">20</span></div>
-                <div class="ct-cell ct-row"><svg class="ct-check-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
-                <div class="ct-cell ct-row"><svg class="ct-check-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
-                <div class="ct-cell ct-row"><svg class="ct-x" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
-                <div class="ct-cell ct-row"><svg class="ct-check-muted" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div>
-                <div class="ct-cell ct-row"><svg class="ct-x" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
-                <div class="ct-cell ct-row"><svg class="ct-x" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
-                <div class="ct-cell ct-row"><svg class="ct-x" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
-                <div class="ct-cell ct-row ct-row-last"><svg class="ct-x" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></div>
-            </div>
-
-            <!-- Pro column (featured) -->
+            <!-- PAYG column (featured) -->
             <div class="ct-col ct-cg">
                 <div class="ct-cell ct-head">
                     <svg class="ct-cg-logo" width="22" height="22" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="ct-sg2" x1="3" y1="2" x2="21" y2="23" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient><linearGradient id="ct-cg2" x1="9" y1="10" x2="15" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="url(#ct-sg2)" stroke-width="1.75" stroke-linejoin="round" fill="none"/><polyline points="14,2 14,8 20,8" stroke="url(#ct-sg2)" stroke-width="1.75" stroke-linejoin="round" fill="none"/><path d="M9 15l2 2 4-4" stroke="url(#ct-cg2)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <span class="ct-head-label">Pro</span>
+                    <span class="ct-head-label">Pay As You Go</span>
                 </div>
                 <div class="ct-cell ct-row"><span class="ct-val ct-val-good">Gemini 2.5 Pro</span></div>
-                <div class="ct-cell ct-row"><span class="ct-val ct-val-good">15/month</span></div>
+                <div class="ct-cell ct-row"><span class="ct-val ct-val-good">Per purchase</span></div>
                 <div class="ct-cell ct-row"><span class="ct-val ct-val-good">30</span></div>
                 <div class="ct-cell ct-row"><svg class="ct-check" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
                 <div class="ct-cell ct-row"><svg class="ct-check" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -454,7 +416,7 @@
             </div>
         </div>
 
-        <p class="pricing-footnote">*Contract Aegis uses Google's Gemini AI to analyze your contracts. Our pricing reflects the cost of these API calls, and our training costs — we keep margins thin so you get the best protection at the fairest price. You only pay for what your plan includes, no hidden fees.</p>
+        <p class="pricing-footnote">*Contract Aegis uses Google's Gemini AI to analyze your contracts. Our pricing reflects the cost of these API calls, and our training costs — we keep margins thin so you get the best protection at the fairest price. You only pay for what you use, no hidden fees or subscriptions.</p>
     </div>
 </section>
 
@@ -499,7 +461,7 @@
                 </div>
                 <div class="faq-answer">
                     <div class="faq-answer-inner">
-                        Contract Aegis scans your contract and flags potentially risky clauses across multiple risk categories. Each flagged clause includes a plain-English explanation and a risk score. Free users get 3 analyses with Gemini 2.5 Flash — a lighter model that gives you a basic overview but won't perform at the same level as the paid tiers. Pay As You Go ($3.99/analysis) uses Gemini 2.5 Pro for deeper, more accurate analysis plus AI-suggested revisions for every flagged clause. Pro subscribers ($19.95/mo) get 15 analyses per month with Gemini 2.5 Pro, plus AI chat, AI-suggested revisions, missing protections detection, and all advanced features.
+                        Contract Aegis scans your contract and flags potentially risky clauses across multiple risk categories. Each flagged clause includes a plain-English explanation and a risk score. Free users get 3 analyses with Gemini 2.5 Flash — a lighter model that gives you a basic overview. Pay As You Go ($9.95/analysis) uses Gemini 2.5 Pro for deeper, more accurate analysis with every feature included: AI chat, AI-suggested revisions, missing protections detection, pushback email generation, PDF reports, and scan history.
                     </div>
                 </div>
             </div>
@@ -530,24 +492,24 @@
 
             <div class="faq-item">
                 <div class="faq-question">
-                    What's the difference between Pay As You Go and Pro?
+                    What does Pay As You Go include?
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
                 <div class="faq-answer">
                     <div class="faq-answer-inner">
-                        Pay As You Go ($3.99/analysis) gives you the same Gemini 2.5 Pro analysis engine as Pro — full risk scoring, flagged clauses, plain-English explanations, and AI-suggested revisions for every flagged clause — but for a single contract with no subscription. Pro ($19.95/mo) gives you 15 analyses per month plus all advanced features: unlimited AI chat, missing protections detection, pushback email generation, PDF reports, and scan history.
+                        Every Pay As You Go analysis ($9.95) includes all features: Gemini 2.5 Pro AI analysis, unlimited AI chat about your contract, AI-suggested revisions for every flagged clause, missing protections detection, pushback email generation, downloadable PDF reports, and full scan history. No subscription needed — just pay per analysis.
                     </div>
                 </div>
             </div>
 
             <div class="faq-item">
                 <div class="faq-question">
-                    Can I cancel my subscription anytime?
+                    Is there a subscription?
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
                 </div>
                 <div class="faq-answer">
                     <div class="faq-answer-inner">
-                        Yes, absolutely. There are no lock-in contracts. You can cancel your Pro subscription at any time from your account settings and you'll retain access until the end of your billing period. Your account will then revert to the Free plan. Pay As You Go purchases are one-time and non-recurring. Your local analysis history is always yours — it stays on your machine regardless of plan.
+                        No subscriptions required. Contract Aegis uses a simple pay-per-analysis model. Buy analyses when you need them — no recurring charges, no lock-in contracts. Your local analysis history is always yours and stays on your machine.
                     </div>
                 </div>
             </div>

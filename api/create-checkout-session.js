@@ -4,10 +4,9 @@ const PADDLE_BASE = process.env.PADDLE_ENV === 'live'
     : 'https://sandbox-api.paddle.com';
 
 // Map plan names to Paddle Price IDs
+// Note: pro_monthly and pro_annual kept only for grandfathered subscribers (no new signups)
 const PLAN_CONFIG = {
-    pro_monthly: { priceId: 'pri_01kjs2rmwbvhqke26qdyhrswky' },
-    pro_annual:  { priceId: 'pri_01kjs2t11rwydq53gtm4ct2fz6' },
-    payg:        { priceId: 'pri_01kjs2wg87a1708vvmhrw65q17' },
+    payg:        { priceId: 'pri_01kjs2wg87a1708vvmhrw65q17' },  // TODO: update to $9.95 price ID after creating in Paddle
     pro_topup:   { priceId: process.env.PADDLE_PRO_TOPUP_PRICE_ID || 'PLACEHOLDER' }
 };
 
@@ -29,7 +28,7 @@ module.exports = async (req, res) => {
 
     const config = PLAN_CONFIG[plan];
     if (!config) {
-        return res.status(400).json({ error: 'Invalid plan. Must be: pro_monthly, pro_annual, payg, or pro_topup' });
+        return res.status(400).json({ error: 'Invalid plan. Must be: payg or pro_topup' });
     }
 
     try {

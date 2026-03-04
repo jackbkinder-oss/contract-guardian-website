@@ -161,12 +161,7 @@ function startCheckout(plan) {
     }
 
     const parsed = JSON.parse(user);
-    // Determine the Stripe plan key (pro respects billing toggle)
     let stripePlan = plan;
-    if (plan === 'pro') {
-        const toggle = document.getElementById('websiteBillingToggle');
-        stripePlan = (toggle && toggle.checked) ? 'pro_annual' : 'pro_monthly';
-    }
 
     let quantity;
     if (plan === 'payg') {
@@ -223,10 +218,5 @@ async function redirectToStripe(plan, email, quantity) {
     history.replaceState(null, '', window.location.pathname + window.location.hash);
 
     const parsed = JSON.parse(user);
-    let stripePlan = plan;
-    if (plan === 'pro') {
-        stripePlan = 'pro_monthly'; // default to monthly for redirects
-    }
-
-    redirectToStripe(stripePlan, parsed.email);
+    redirectToStripe(plan, parsed.email);
 })();

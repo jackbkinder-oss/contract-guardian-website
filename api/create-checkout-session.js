@@ -6,7 +6,7 @@ const PADDLE_BASE = process.env.PADDLE_ENV === 'live'
 // Map plan names to Paddle Price IDs
 // Note: pro_monthly and pro_annual kept only for grandfathered subscribers (no new signups)
 const PLAN_CONFIG = {
-    payg:        { priceId: 'pri_01kjs2wg87a1708vvmhrw65q17' },  // TODO: update to $9.95 price ID after creating in Paddle
+    payg:        { priceId: 'pri_01kjs2wg87a1708vvmhrw65q17' },
     pro_topup:   { priceId: process.env.PADDLE_PRO_TOPUP_PRICE_ID || 'PLACEHOLDER' }
 };
 

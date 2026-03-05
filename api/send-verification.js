@@ -75,7 +75,7 @@ module.exports = async (req, res) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                from: 'Contract Aegis <onboarding@resend.dev>',
+                from: 'Contract Aegis <noreply@contractaegis.com>',
                 to: [email],
                 subject: 'Your Contract Aegis verification code',
                 html: `

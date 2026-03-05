@@ -131,8 +131,12 @@ async function handleTransactionCompleted(data) {
         return;
     }
 
-    const quantity = customData.quantity ? parseInt(customData.quantity) : 1;
+    // Read quantity from Paddle items array (most reliable), fallback to custom_data
+    const paddleQty = data.items && data.items[0] ? parseInt(data.items[0].quantity) : 0;
+    const customQty = customData.quantity ? parseInt(customData.quantity) : 0;
+    const quantity = paddleQty || customQty || 1;
     const credits = quantity * PAYG_CREDITS_PER_UNIT;
+    console.log(`PAYG purchase: paddleQty=${paddleQty}, customQty=${customQty}, using quantity=${quantity}`);
 
     // Pro top-up: add credits to the Pro subscription row (don't change plan)
     if (plan === 'pro_topup') {

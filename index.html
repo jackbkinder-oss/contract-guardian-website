@@ -6,7 +6,6 @@
     <title>Contract Aegis — AI-Powered Freelance Contract Analyzer</title>
     <meta name="description" content="Contract Aegis uses Gemini AI to scan freelance contracts and service agreements and flag dangerous clauses — so you negotiate from a position of strength.">
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -556,28 +555,6 @@
 </footer>
 
 <script>
-    const sb = window.supabase.createClient(
-        'https://xdhmexgxhjalxieiwzcj.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkaG1leGd4aGphbHhpZWl3emNqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIyNjczOTUsImV4cCI6MjA4Nzg0MzM5NX0.kqIGkdEpvNosppqZMmXPTDfdqiTs95ZTc8I7fIABIaM'
-    );
-
-    // Handle Google OAuth callback — capture session after redirect
-    (async function handleOAuthCallback() {
-        const { data: { session } } = await sb.auth.getSession();
-        if (session && session.user && !localStorage.getItem('cg_user')) {
-            const user = session.user;
-            localStorage.setItem('cg_user', JSON.stringify({
-                id: user.id,
-                email: user.email
-            }));
-            // Clean the URL hash left by the OAuth redirect
-            if (window.location.hash.includes('access_token')) {
-                history.replaceState(null, '', window.location.pathname);
-            }
-            updateNav();
-        }
-    })();
-
     function updateNav() {
         const user = localStorage.getItem('cg_user');
         const loginBtn = document.getElementById('loginBtn');
@@ -594,8 +571,7 @@
         }
     }
 
-    async function signOut() {
-        await sb.auth.signOut();
+    function signOut() {
         localStorage.removeItem('cg_user');
         window.location.reload();
     }

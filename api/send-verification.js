@@ -96,7 +96,7 @@ module.exports = async (req, res) => {
         if (!emailRes.ok) {
             const errText = await emailRes.text();
             console.error('Resend error:', errText);
-            return res.status(500).json({ error: 'Failed to send verification email.' });
+            return res.status(500).json({ error: 'Failed to send verification email.', detail: errText });
         }
 
         return res.status(200).json({ success: true });

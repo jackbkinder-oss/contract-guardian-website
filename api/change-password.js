@@ -1,6 +1,5 @@
 const SUPABASE_URL = 'https://xdhmexgxhjalxieiwzcj.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const crypto = require('crypto');
 
 async function supabaseRequest(path, options = {}) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/${path}`, {
@@ -24,13 +23,10 @@ module.exports = async (req, res) => {
     if (req.method === 'OPTIONS') return res.status(200).end();
     if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-    const { email, code, new_password } = req.body || {};
+    const { email, code, password_hash } = req.body || {};
 
-    if (!email || !code || !new_password) {
+    if (!email || !code || !password_hash) {
         return res.status(400).json({ error: 'Missing required fields.' });
-    }
-    if (new_password.length < 8) {
-        return res.status(400).json({ error: 'Password must be at least 8 characters.' });
     }
 
     try {
@@ -48,12 +44,7 @@ module.exports = async (req, res) => {
             return res.status(400).json({ error: 'Code has expired. Please request a new one.' });
         }
 
-        // Hash new password
-        const salt = crypto.randomBytes(16).toString('hex');
-        const hash = crypto.scryptSync(new_password, salt, 64).toString('hex');
-        const password_hash = `${salt}:${hash}`;
-
-        // Update password in users table
+        // Update password in users table (hash comes pre-computed from client as SHA-256)
         const updateRes = await supabaseRequest(`users?email=eq.${encodeURIComponent(email)}`, {
             method: 'PATCH',
             body: JSON.stringify({ password_hash })

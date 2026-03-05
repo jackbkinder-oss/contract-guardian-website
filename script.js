@@ -176,7 +176,7 @@ function changePaygQty(delta) {
     if (!el) return;
     let qty = parseInt(el.textContent) + delta;
     if (qty < 1) qty = 1;
-    if (qty > 50) qty = 50;
+    if (qty > 10) qty = 10;
     el.textContent = qty;
 }
 

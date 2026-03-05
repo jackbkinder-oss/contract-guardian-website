@@ -24,7 +24,8 @@ module.exports = async (req, res) => {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const { plan, quantity, email } = req.body;
+    const { plan, email } = req.body;
+    let quantity = Math.min(Math.max(parseInt(req.body.quantity) || 1, 1), 10); // Cap at 10
 
     const config = PLAN_CONFIG[plan];
     if (!config) {
@@ -32,15 +33,16 @@ module.exports = async (req, res) => {
     }
 
     try {
+        const qty = (plan === 'payg' || plan === 'pro_topup') ? quantity : 1;
         const transactionBody = {
             items: [{
                 price_id: config.priceId,
-                quantity: (plan === 'payg' || plan === 'pro_topup') ? (quantity || 1) : 1
+                quantity: qty
             }],
             custom_data: {
                 plan,
                 email: email || '',
-                quantity: String((plan === 'payg' || plan === 'pro_topup') ? (quantity || 1) : 1)
+                quantity: String(qty)
             }
         };
 

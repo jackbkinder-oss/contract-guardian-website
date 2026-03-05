@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-const PADDLE_WEBHOOK_SECRET = process.env.PADDLE_SANDBOX_WEBHOOK_SECRET || process.env.PADDLE_WEBHOOK_SECRET;
+const PADDLE_WEBHOOK_SECRET = process.env.PADDLE_WEBHOOK_SECRET;
 const SUPABASE_URL = 'https://xdhmexgxhjalxieiwzcj.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 

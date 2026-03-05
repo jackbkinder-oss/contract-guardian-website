@@ -1,12 +1,10 @@
-const PADDLE_API_KEY = process.env.PADDLE_SANDBOX_API_KEY || process.env.PADDLE_API_KEY;
-const PADDLE_BASE = process.env.PADDLE_ENV === 'live'
-    ? 'https://api.paddle.com'
-    : 'https://sandbox-api.paddle.com';
+const PADDLE_API_KEY = process.env.PADDLE_API_KEY;
+const PADDLE_BASE = 'https://api.paddle.com';
 
 // Map plan names to Paddle Price IDs
 // Note: pro_monthly and pro_annual kept only for grandfathered subscribers (no new signups)
 const PLAN_CONFIG = {
-    payg:        { priceId: 'pri_01kjs2wg87a1708vvmhrw65q17' },
+    payg:        { priceId: 'pri_01kjyk75ed1p3zr2jqgfh05gbg' },
     pro_topup:   { priceId: process.env.PADDLE_PRO_TOPUP_PRICE_ID || 'PLACEHOLDER' }
 };
 

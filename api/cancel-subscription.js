@@ -1,7 +1,5 @@
-const PADDLE_API_KEY = process.env.PADDLE_SANDBOX_API_KEY || process.env.PADDLE_API_KEY;
-const PADDLE_BASE = process.env.PADDLE_ENV === 'live'
-    ? 'https://api.paddle.com'
-    : 'https://sandbox-api.paddle.com';
+const PADDLE_API_KEY = process.env.PADDLE_API_KEY;
+const PADDLE_BASE = 'https://api.paddle.com';
 
 module.exports = async (req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

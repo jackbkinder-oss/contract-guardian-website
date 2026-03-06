@@ -106,18 +106,73 @@
             </a>
         </div>
 
-        <div class="install-note">
-            <details>
-                <summary>Mac users: seeing "app is damaged" or "can't be verified"?</summary>
-                <p>macOS blocks apps from independent developers by default. To open Contract Aegis:</p>
-                <ol>
-                    <li>Move <strong>Contract Aegis</strong> to your Applications folder</li>
-                    <li>Open <strong>Terminal</strong> (search "Terminal" in Spotlight)</li>
-                    <li>Paste this command and press Enter:</li>
-                </ol>
-                <code class="install-cmd">xattr -cr /Applications/Contract\ Aegis.app</code>
-                <p>Then open the app normally. You only need to do this once.</p>
-            </details>
+        <div class="first-launch-guide" id="first-launch">
+            <div class="flg-header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#6366f1"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                <span>First Launch Guide</span>
+            </div>
+
+            <div class="flg-tabs">
+                <button class="flg-tab active" data-tab="mac">Mac</button>
+                <button class="flg-tab" data-tab="windows">Windows</button>
+            </div>
+
+            <div class="flg-content" id="flg-mac">
+                <p class="flg-intro">macOS blocks apps from unverified developers by default. This is a one-time setup that takes about 15 seconds.</p>
+                <div class="flg-steps">
+                    <div class="flg-step">
+                        <span class="flg-step-num">1</span>
+                        <div class="flg-step-text">
+                            <strong>Open the DMG</strong> and drag <strong>Contract Aegis</strong> into your Applications folder.
+                        </div>
+                    </div>
+                    <div class="flg-step">
+                        <span class="flg-step-num">2</span>
+                        <div class="flg-step-text">
+                            <strong>Open Terminal</strong> — press <kbd>Cmd</kbd> + <kbd>Space</kbd>, type "Terminal", and hit Enter.
+                        </div>
+                    </div>
+                    <div class="flg-step">
+                        <span class="flg-step-num">3</span>
+                        <div class="flg-step-text">
+                            <strong>Paste this command</strong> and press Enter:
+                            <code class="install-cmd" id="xattrCmd">xattr -cr /Applications/Contract\ Aegis.app</code>
+                            <button class="flg-copy-btn" onclick="navigator.clipboard.writeText('xattr -cr /Applications/Contract\\ Aegis.app');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+                        </div>
+                    </div>
+                    <div class="flg-step">
+                        <span class="flg-step-num">4</span>
+                        <div class="flg-step-text">
+                            <strong>Open Contract Aegis</strong> from your Applications folder. That's it — you'll never need to do this again.
+                        </div>
+                    </div>
+                </div>
+                <p class="flg-why">Why is this needed? Apple requires developers to pay $99/year for code signing. As an indie developer, we're working on getting this set up. Until then, this one-time step tells macOS to trust the app.</p>
+            </div>
+
+            <div class="flg-content" id="flg-windows" style="display:none">
+                <p class="flg-intro">Windows SmartScreen may show a warning for new apps. This is normal for indie software.</p>
+                <div class="flg-steps">
+                    <div class="flg-step">
+                        <span class="flg-step-num">1</span>
+                        <div class="flg-step-text">
+                            <strong>Run the installer.</strong> If SmartScreen appears, click <strong>"More info"</strong>.
+                        </div>
+                    </div>
+                    <div class="flg-step">
+                        <span class="flg-step-num">2</span>
+                        <div class="flg-step-text">
+                            Click <strong>"Run anyway"</strong> to continue the installation.
+                        </div>
+                    </div>
+                    <div class="flg-step">
+                        <span class="flg-step-num">3</span>
+                        <div class="flg-step-text">
+                            <strong>Choose your install location</strong> and complete the setup. Launch Contract Aegis — no further steps needed.
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -577,6 +632,16 @@
     }
 
     updateNav();
+
+    // First Launch Guide tabs
+    document.querySelectorAll('.flg-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.flg-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            document.getElementById('flg-mac').style.display = tab.dataset.tab === 'mac' ? '' : 'none';
+            document.getElementById('flg-windows').style.display = tab.dataset.tab === 'windows' ? '' : 'none';
+        });
+    });
 </script>
 <script src="script.js"></script>
 </body>

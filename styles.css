@@ -639,6 +639,19 @@ section {
     background: rgba(99,102,241,0.2);
     border-color: rgba(99,102,241,0.5);
 }
+.flg-safe {
+    margin-top: 8px;
+    font-size: 11.5px;
+    color: rgba(52,211,153,0.7);
+    line-height: 1.5;
+}
+.flg-safe code {
+    background: rgba(52,211,153,0.1);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 11px;
+    color: #34d399;
+}
 .flg-why {
     margin-top: 18px;
     font-size: 12px;

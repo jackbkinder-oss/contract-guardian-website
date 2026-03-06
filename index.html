@@ -118,7 +118,7 @@
             </div>
 
             <div class="flg-content" id="flg-mac">
-                <p class="flg-intro">macOS blocks apps from unverified developers by default. This is a one-time setup that takes about 15 seconds.</p>
+                <p class="flg-intro">macOS blocks apps from unverified developers by default. We're currently in the process of getting Apple Developer certification — once that's done, this step won't be needed. For now, this is a one-time setup that takes about 15 seconds.</p>
                 <div class="flg-steps">
                     <div class="flg-step">
                         <span class="flg-step-num">1</span>
@@ -138,6 +138,7 @@
                             <strong>Paste this command</strong> and press Enter:
                             <code class="install-cmd" id="xattrCmd">xattr -cr /Applications/Contract\ Aegis.app</code>
                             <button class="flg-copy-btn" onclick="navigator.clipboard.writeText('xattr -cr /Applications/Contract\\ Aegis.app');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy',1500)">Copy</button>
+                            <p class="flg-safe">This command is safe — <code>xattr -cr</code> simply removes the macOS quarantine flag that marks downloaded files as untrusted. It doesn't modify the app or your system in any way. It's the standard method recommended by Apple for opening apps from independent developers.</p>
                         </div>
                     </div>
                     <div class="flg-step">
@@ -147,7 +148,7 @@
                         </div>
                     </div>
                 </div>
-                <p class="flg-why">Why is this needed? Apple requires developers to pay $99/year for code signing. As an indie developer, we're working on getting this set up. Until then, this one-time step tells macOS to trust the app.</p>
+                <p class="flg-why">Why is this needed? Apple requires a paid Developer Program membership ($99/year) for code signing and notarization. We're actively enrolling in the program and will release a signed update soon — after that, the app will open like any other. Until then, this safe one-time step is all you need.</p>
             </div>
 
             <div class="flg-content" id="flg-windows" style="display:none">

@@ -166,20 +166,6 @@ if (stickyMobileCta) {
     window.addEventListener('scroll', showSticky, { passive: true });
 }
 
-// ─── LEAD CAPTURE FORM ─────────────────────────────────
-const leadForm = document.getElementById('leadCaptureForm');
-if (leadForm) {
-    leadForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = leadForm.querySelector('input[type="email"]').value;
-        // Store locally for now — replace with actual email service integration
-        const leads = JSON.parse(localStorage.getItem('cg_leads') || '[]');
-        leads.push({ email, date: new Date().toISOString() });
-        localStorage.setItem('cg_leads', JSON.stringify(leads));
-        leadForm.innerHTML = '<p style="color:#22c55e;font-weight:600;padding:12px 0;">You\'re in! Check your inbox for the checklist.</p>';
-    });
-}
-
 // ─── STRIPE CHECKOUT ────────────────────────────────────────
 function startCheckout(plan) {
     const user = localStorage.getItem('cg_user');

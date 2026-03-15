@@ -850,6 +850,54 @@ section {
     flex-shrink: 0;
 }
 
+/* Contract type selector mock (Step 1) */
+.mock-type-selector {
+    display: flex;
+    gap: 0;
+    background: rgba(255,255,255,0.04);
+    border-radius: 6px;
+    padding: 3px;
+    margin-top: 10px;
+}
+.mock-type-btn {
+    flex: 1;
+    padding: 5px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+.mock-type-active {
+    color: rgba(255,255,255,0.85);
+    background: rgba(99,102,241,0.25);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* Scan type tabs (Step 2) */
+.mock-scan-type-tabs {
+    display: flex;
+    gap: 0;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.mock-scan-tab {
+    flex: 1;
+    text-align: center;
+    padding: 6px 8px;
+    font-size: 10px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    border-bottom: 2px solid transparent;
+    cursor: default;
+    transition: color 0.3s, border-color 0.3s;
+}
+.mock-scan-tab.active {
+    color: rgba(255,255,255,0.85);
+    border-bottom-color: #6366f1;
+}
+
 /* Step 3: Review */
 .mock-review {
     width: 100%;

@@ -273,3 +273,91 @@ async function redirectToStripe(plan, email, quantity) {
     const parsed = JSON.parse(user);
     redirectToStripe(plan, parsed.email);
 })();
+
+// ─── CONTRACT TYPE CYCLING ANIMATION ────────────────────────
+(function initContractTypeCycling() {
+    const heroTitle = document.getElementById('heroMockupTitle');
+    const scanCats = document.getElementById('mockScanCats');
+    const tabFreelance = document.getElementById('mockTabFreelance');
+    const tabEmployee = document.getElementById('mockTabEmployee');
+    const tabNda = document.getElementById('mockTabNda');
+
+    if (!scanCats || !tabFreelance) return;
+
+    const types = [
+        {
+            tab: tabFreelance,
+            filename: 'Service_Agreement_2026.pdf',
+            cats: [
+                { name: 'Scope Creep', color: '#ef4444' },
+                { name: 'Cashflow Risk', color: '#f97316' },
+                { name: 'IP Ownership', color: '#fbbf24' },
+                { name: 'Non-Compete', color: '#ef4444' },
+                { name: 'Termination', color: '#f97316' },
+                { name: 'Liability Trap', color: '#fbbf24' },
+                { name: 'Auto-Renewal', color: null },
+                { name: 'Exclusivity', color: null }
+            ]
+        },
+        {
+            tab: tabEmployee,
+            filename: 'Employment_Offer_Letter.pdf',
+            cats: [
+                { name: 'Compensation', color: '#fbbf24' },
+                { name: 'Benefits & Equity', color: '#f97316' },
+                { name: 'Non-Compete', color: '#ef4444' },
+                { name: 'IP & Inventions', color: '#ef4444' },
+                { name: 'Termination', color: '#f97316' },
+                { name: 'Restrictive Covenants', color: '#fbbf24' },
+                { name: 'Arbitration', color: null },
+                { name: 'Confidentiality', color: null }
+            ]
+        },
+        {
+            tab: tabNda,
+            filename: 'Mutual_NDA_2026.pdf',
+            cats: [
+                { name: 'Scope Breadth', color: '#ef4444' },
+                { name: 'Duration', color: '#f97316' },
+                { name: 'Obligations', color: '#fbbf24' },
+                { name: 'Missing Carve-outs', color: '#ef4444' },
+                { name: 'Remedies', color: '#f97316' },
+                { name: 'Residuals', color: '#fbbf24' },
+                { name: 'Return & Destruction', color: null },
+                { name: 'Non-Solicitation', color: null }
+            ]
+        }
+    ];
+
+    let currentIndex = 0;
+
+    function renderType(index) {
+        const type = types[index];
+
+        // Update tabs
+        [tabFreelance, tabEmployee, tabNda].forEach(t => t.classList.remove('active'));
+        type.tab.classList.add('active');
+
+        // Update hero mockup filename
+        if (heroTitle) heroTitle.textContent = type.filename;
+
+        // Fade out categories, swap, fade in
+        scanCats.style.opacity = '0';
+        setTimeout(() => {
+            scanCats.innerHTML = type.cats.map(c =>
+                `<div class="mock-cat${c.color ? '' : ' mock-cat-muted'}"><span class="mock-cat-dot" style="background:${c.color || '#666'}"></span>${c.name}</div>`
+            ).join('');
+            scanCats.style.opacity = '1';
+        }, 250);
+    }
+
+    // Initial state
+    scanCats.style.transition = 'opacity 0.25s ease';
+    tabFreelance.classList.add('active');
+
+    // Cycle every 3.5 seconds
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % types.length;
+        renderType(currentIndex);
+    }, 3500);
+})();

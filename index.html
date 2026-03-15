@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contract Aegis — AI-Powered Freelance Contract Analyzer</title>
+    <title>Contract Aegis — AI-Powered Contract Analyzer for Freelancers, Employees & NDAs</title>
     <meta name="description" content="Contract Aegis uses Gemini AI to scan freelance contracts, employee agreements, and NDAs to flag dangerous clauses — so you negotiate from a position of strength.">
     <link rel="stylesheet" href="styles.css">
     <!-- Meta Pixel Code -->
@@ -102,7 +102,7 @@
                     <div class="hero-trust-divider"></div>
                     <div class="hero-trust-item">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                        <span>5.0 from freelancers</span>
+                        <span>5.0 from professionals</span>
                     </div>
                     <div class="hero-trust-divider"></div>
                     <div class="hero-trust-item">
@@ -120,7 +120,7 @@
                             <span style="background:#fbbf24"></span>
                             <span style="background:#22c55e"></span>
                         </div>
-                        <span class="hero-mockup-title">Service_Agreement_2026.pdf</span>
+                        <span class="hero-mockup-title" id="heroMockupTitle">Service_Agreement_2026.pdf</span>
                     </div>
 
                     <!-- TOP HALF: Contract text with highlighted clause -->
@@ -238,6 +238,12 @@
                             <div class="mock-textarea-line" style="width:85%"></div>
                             <div class="mock-textarea-line" style="width:60%"></div>
                         </div>
+                        <div class="mock-type-selector">
+                            <span class="mock-type-btn mock-type-active">Auto-Detect</span>
+                            <span class="mock-type-btn">Freelance</span>
+                            <span class="mock-type-btn">Employee</span>
+                            <span class="mock-type-btn">NDA</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -256,7 +262,12 @@
                             <span>Analyzing contract...</span>
                             <div class="mock-scan-bar"><div class="mock-scan-fill"></div></div>
                         </div>
-                        <div class="mock-scan-categories">
+                        <div class="mock-scan-type-tabs">
+                            <span class="mock-scan-tab" id="mockTabFreelance">Freelance</span>
+                            <span class="mock-scan-tab" id="mockTabEmployee">Employee</span>
+                            <span class="mock-scan-tab" id="mockTabNda">NDA</span>
+                        </div>
+                        <div class="mock-scan-categories" id="mockScanCats">
                             <div class="mock-cat"><span class="mock-cat-dot" style="background:#ef4444"></span>Scope Creep</div>
                             <div class="mock-cat"><span class="mock-cat-dot" style="background:#f97316"></span>Cashflow Risk</div>
                             <div class="mock-cat"><span class="mock-cat-dot" style="background:#fbbf24"></span>IP Ownership</div>
@@ -782,7 +793,7 @@
                 <a href="login.html">Log In</a>
             </nav>
 
-            <p class="footer-copy">© 2026 Contract Aegis. All rights reserved. Built to protect freelancers and SMBs.</p>
+            <p class="footer-copy">© 2026 Contract Aegis. All rights reserved. Built to protect freelancers, employees, and professionals.</p>
         </div>
     </div>
 </footer>

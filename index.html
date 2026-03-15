@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contract Aegis — AI-Powered Freelance Contract Analyzer</title>
-    <meta name="description" content="Contract Aegis uses Gemini AI to scan freelance contracts and service agreements and flag dangerous clauses — so you negotiate from a position of strength.">
+    <meta name="description" content="Contract Aegis uses Gemini AI to scan freelance contracts, employee agreements, and NDAs to flag dangerous clauses — so you negotiate from a position of strength.">
     <link rel="stylesheet" href="styles.css">
     <!-- Meta Pixel Code -->
     <script>
@@ -50,23 +50,7 @@
         <div class="nav-links" id="navLinks">
             <a href="#demo" class="nav-link">How It Works</a>
             <a href="#pricing" class="nav-link">Pricing</a>
-            <div class="nav-download-wrapper">
-                <a href="#" class="nav-link" id="downloadToggle">Download</a>
-                <div class="nav-download-dropdown" id="downloadDropdown">
-                    <a href="https://github.com/jackbkinder-oss/contract-aegis-releases/releases/download/v2.9.0/Contract-Aegis-Windows-Setup.exe" class="nav-download-item">
-                        <svg width="14" height="14" viewBox="0 0 88 88" fill="currentColor"><path d="M0 12.5l35.7-4.9v34.5H0zm0 63l35.7 4.9V46.2H0zM39.8 7l48.2-7v42.1H39.8zm0 74l48.2 7V46.2H39.8z"/></svg>
-                        Windows
-                    </a>
-                    <a href="https://github.com/jackbkinder-oss/contract-aegis-releases/releases/download/v2.9.0/Contract-Aegis-mac-arm64.dmg" class="nav-download-item">
-                        <svg width="14" height="14" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
-                        Mac (Apple Silicon)
-                    </a>
-                    <a href="https://github.com/jackbkinder-oss/contract-aegis-releases/releases/download/v2.9.0/Contract-Aegis-mac-x64.dmg" class="nav-download-item">
-                        <svg width="14" height="14" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184 4 273.5c0 26.2 4.8 53.3 14.4 81.2 12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg>
-                        Mac (Intel)
-                    </a>
-                </div>
-            </div>
+            <a href="#download" class="nav-link">Download</a>
             <a href="#faq" class="nav-link">FAQ</a>
         </div>
 
@@ -94,9 +78,7 @@
                 </h1>
 
                 <p class="hero-subtitle">
-                    Freelancers lose thousands every year to bad contract terms they never caught.
-                    Contract Aegis scans your contracts in seconds and flags every deal-killer clause
-                    — so you negotiate from strength, not ignorance.
+                    One overlooked clause could cost you thousands. Contract Aegis scans freelance contracts, employee agreements, and NDAs in seconds and flags every deal-killer — so you negotiate from strength.
                 </p>
 
                 <div class="hero-stat">
@@ -107,31 +89,26 @@
                 <div class="hero-cta">
                     <a href="signup.html" class="btn-hero btn-hero-primary">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7L12 2z"/><path d="M9 12l2 2 4-4"/></svg>
-                        Try Your Free Analysis
+                        Analyze My First Contract Free
                     </a>
-                    <div class="hero-download-wrapper">
-                        <button class="btn-hero btn-hero-secondary hero-mac-toggle" id="heroMacToggle">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-                            </svg>
-                            Download for Mac
-                            <svg class="hero-dropdown-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-                        </button>
-                        <div class="hero-mac-dropdown" id="heroMacDropdown">
-                            <a href="https://github.com/jackbkinder-oss/contract-aegis-releases/releases/download/v2.9.0/Contract-Aegis-mac-arm64.dmg" class="hero-mac-option">
-                                Apple Silicon (M1–M4)
-                            </a>
-                            <a href="https://github.com/jackbkinder-oss/contract-aegis-releases/releases/download/v2.9.0/Contract-Aegis-mac-x64.dmg" class="hero-mac-option">
-                                Intel
-                            </a>
-                        </div>
+                </div>
+                <div class="hero-cta-subtext">1 Free Analysis Included — No Credit Card Required</div>
+
+                <div class="hero-trust-bar">
+                    <div class="hero-trust-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        <span>Contracts never leave your device</span>
                     </div>
-                    <a href="https://github.com/jackbkinder-oss/contract-aegis-releases/releases/download/v2.9.0/Contract-Aegis-Windows-Setup.exe" class="btn-hero btn-hero-secondary">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
-                        </svg>
-                        Download for Windows
-                    </a>
+                    <div class="hero-trust-divider"></div>
+                    <div class="hero-trust-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                        <span>5.0 from freelancers</span>
+                    </div>
+                    <div class="hero-trust-divider"></div>
+                    <div class="hero-trust-item">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#06b6d4" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <span>Results in under 60 seconds</span>
+                    </div>
                 </div>
             </div>
 
@@ -245,7 +222,7 @@
                 <div class="step-row-text">
                     <div class="step-number">Step 01</div>
                     <h3 class="step-title">Upload Your Contract</h3>
-                    <p class="step-desc">Drop in a PDF or paste contract text. Contract Aegis accepts any freelance contract, SOW, or service agreement up to 80,000 characters.</p>
+                    <p class="step-desc">Drop in a PDF or paste contract text. Contract Aegis accepts any contract — freelance agreements, employee contracts, NDAs — up to 80,000 characters.</p>
                 </div>
                 <div class="step-row-image step-mockup">
                     <div class="mock-upload">
@@ -270,7 +247,7 @@
                 <div class="step-row-text">
                     <div class="step-number">Step 02</div>
                     <h3 class="step-title">AI Scans Every Clause</h3>
-                    <p class="step-desc">Gemini AI reads the full contract and flags deal-killer clauses across key risk categories — Scope Creep, Cashflow Risk, IP Ownership, Non-Compete, and more.</p>
+                    <p class="step-desc">Gemini AI reads the full contract and flags deal-killer clauses across 27 risk categories — from Scope Creep and Cashflow Risk to NDA Scope Breadth and Employment Non-Competes.</p>
                 </div>
                 <div class="step-row-image step-mockup">
                     <div class="mock-scan">
@@ -377,7 +354,7 @@
                 <div class="ct-cell ct-row"><svg class="ct-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span>PDF report</span></div>
                 <div class="ct-cell ct-row"><svg class="ct-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Missing protections</span></div>
                 <div class="ct-cell ct-row"><svg class="ct-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span>Pushback email</span></div>
-                <div class="ct-cell ct-row ct-row-last"><svg class="ct-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg><span>Built for freelancers</span></div>
+                <div class="ct-cell ct-row ct-row-last"><svg class="ct-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg><span>Built for everyone</span></div>
             </div>
 
             <!-- Lawyer column -->
@@ -417,7 +394,7 @@
                 <div class="ct-cell ct-row"><span class="ct-val ct-val-good">$9.95/analysis</span></div>
                 <div class="ct-cell ct-row"><span class="ct-val ct-val-good">Under 60s</span></div>
                 <div class="ct-cell ct-row"><svg class="ct-check" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-                <div class="ct-cell ct-row"><span class="ct-val ct-val-good">8+ categories</span></div>
+                <div class="ct-cell ct-row"><span class="ct-val ct-val-good">27 categories</span></div>
                 <div class="ct-cell ct-row"><svg class="ct-check" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
                 <div class="ct-cell ct-row"><svg class="ct-check" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
                 <div class="ct-cell ct-row"><svg class="ct-check" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
@@ -431,9 +408,9 @@
 <!-- ─── SOCIAL PROOF / TESTIMONIALS ─────────────────── -->
 <section id="testimonials">
     <div class="container text-center">
-        <div class="section-label">Trusted by Freelancers</div>
+        <div class="section-label">Trusted by Professionals</div>
         <h2 class="section-title">Don't take our word for it</h2>
-        <p class="section-subtitle">Here's what freelancers are saying after scanning their contracts.</p>
+        <p class="section-subtitle">Here's what professionals are saying after scanning their contracts.</p>
 
         <div class="testimonials-grid fade-up">
             <div class="testimonial-card">
@@ -489,11 +466,29 @@
                     </div>
                 </div>
             </div>
+
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#fbbf24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                </div>
+                <p class="testimonial-text">"I ran my new offer letter through Contract Aegis and it flagged an invention assignment clause that would've claimed my side project IP. Negotiated it out before signing. Invaluable for anyone joining a new company."</p>
+                <div class="testimonial-author">
+                    <div class="testimonial-avatar">M</div>
+                    <div>
+                        <div class="testimonial-name">Mike L.</div>
+                        <div class="testimonial-role">Software Engineer</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="social-proof-bar fade-up">
             <div class="social-proof-item">
-                <span class="social-proof-num">9</span>
+                <span class="social-proof-num">27</span>
                 <span class="social-proof-label">Risk categories scanned</span>
             </div>
             <div class="social-proof-divider"></div>
@@ -526,7 +521,7 @@
                     <span class="price-amount">$0</span>
                 </div>
                 <div class="plan-desc">Get a taste of Contract Aegis — powered by Gemini 2.5 Flash, a lighter model with less depth than Pro's Gemini 2.5 Pro.</div>
-                <a href="signup.html" class="plan-cta free-btn">Get Started Free</a>
+                <a href="signup.html" class="plan-cta free-btn">Start My Free Analysis</a>
             </div>
 
             <!-- Pro (Pay Per Analysis) -->
@@ -543,7 +538,7 @@
                     <span id="paygQty" style="font-size:18px;font-weight:600;min-width:24px;text-align:center;">1</span>
                     <button onclick="changePaygQty(1)" style="width:32px;height:32px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.05);color:#fff;font-size:18px;cursor:pointer;">+</button>
                 </div>
-                <button class="plan-cta upgrade-btn" onclick="startCheckout('payg')">Buy Analyses</button>
+                <button class="plan-cta upgrade-btn" onclick="startCheckout('payg')">Get My Pro Analyses</button>
             </div>
         </div>
 
@@ -622,7 +617,7 @@
                 </div>
                 <div class="faq-answer">
                     <div class="faq-answer-inner">
-                        Contract Aegis sends your contract text to Google's Gemini AI with a detailed legal analysis prompt. Free users are analyzed by Gemini 2.5 Flash — a lighter, faster model that provides a solid overview but won't catch as many nuances as the paid tiers. Pay As You Go and Pro users get Gemini 2.5 Pro, Google's most capable reasoning model, which delivers significantly deeper and more accurate contract analysis. The AI reads the full document and flags clauses that put the service provider — you — at financial or legal risk. Each flag is classified into a risk category and assigned a severity level of HIGH or MED based on how much exposure you face.
+                        Contract Aegis sends your contract text to Google's Gemini AI with a detailed legal analysis prompt calibrated for the contract type — freelance, employee, or NDA. The AI automatically detects what kind of contract you uploaded and applies the right risk framework. Free users are analyzed by Gemini 2.5 Flash — a lighter, faster model that provides a solid overview. Pro users get Gemini 2.5 Pro, Google's most capable reasoning model, for significantly deeper analysis. Each flag is classified into a risk category and assigned a severity level of HIGH or MED based on how much exposure you face.
                     </div>
                 </div>
             </div>
@@ -646,7 +641,7 @@
                 </div>
                 <div class="faq-answer">
                     <div class="faq-answer-inner">
-                        Contract Aegis scans your contract and flags potentially risky clauses across multiple risk categories. Each flagged clause includes a plain-English explanation and a risk score. Free users get 1 analysis with Gemini 2.5 Flash — a lighter model that gives you a basic overview. Pro ($9.95/analysis) uses Gemini 2.5 Pro for deeper, more accurate analysis with every feature included: AI chat, AI-suggested revisions, missing protections detection, pushback email generation, PDF reports, and scan history.
+                        Contract Aegis scans your contract — whether it's a freelance agreement, employment offer, or NDA — and flags potentially risky clauses across 27 risk categories. Each flagged clause includes a plain-English explanation and a risk score. The AI uses calibrated prompts for each contract type, so standard employee terms like at-will employment won't be incorrectly flagged. Free users get 1 analysis with Gemini 2.5 Flash. Pro ($9.95/analysis) uses Gemini 2.5 Pro for deeper analysis with all features included.
                     </div>
                 </div>
             </div>
@@ -670,7 +665,7 @@
                 </div>
                 <div class="faq-answer">
                     <div class="faq-answer-inner">
-                        Contract Aegis scans for key risk categories including: Scope Creep (unlimited revisions or vague deliverables), Cashflow Risk (Net 60+ payment, clawbacks, retroactive pricing), IP Ownership (loss of background or pre-existing IP), Non-Compete (restrictions on working in your industry), Termination (cancellation without payment for completed work), Liability Trap (uncapped exposure or one-sided indemnification), Auto-Renewal Trap (silent renewal or steep exit penalties), and Exclusivity (forced exclusive dealing or MFN pricing). The AI will also flag any other suspicious or unfavorable clauses it identifies.
+                        Contract Aegis scans across 27 risk categories tailored to each contract type. For freelance contracts: Scope Creep, Cashflow Risk, IP Ownership, Non-Compete, Termination, Liability Trap, Auto-Renewal, and Exclusivity. For employee contracts: Compensation, Benefits & Equity, Non-Compete, IP & Inventions, Termination, Restrictive Covenants, Arbitration, and Confidentiality. For NDAs: Scope Breadth, Duration, Obligations, Missing Carve-outs, Remedies, Residuals, Return & Destruction, and Non-Solicitation. The AI will also flag any other suspicious clauses it identifies.
                     </div>
                 </div>
             </div>
@@ -702,6 +697,57 @@
     </div>
 </section>
 
+<!-- ─── DOWNLOAD ──────────────────────────────────── -->
+<section id="download">
+    <div class="container text-center">
+        <div class="section-label">Download</div>
+        <h2 class="section-title">Get Contract Aegis for your platform</h2>
+        <p class="section-subtitle">Available for Mac and Windows. Sign up first, then download the desktop app.</p>
+
+        <div class="download-grid fade-up">
+            <a href="https://github.com/jackbkinder-oss/contract-aegis-releases/releases/download/v2.9.0/Contract-Aegis-mac-arm64.dmg" class="download-card">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="color:#a0a0a0">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+                <div class="download-card-title">Mac (Apple Silicon)</div>
+                <div class="download-card-sub">M1, M2, M3, M4</div>
+            </a>
+            <a href="https://github.com/jackbkinder-oss/contract-aegis-releases/releases/download/v2.9.0/Contract-Aegis-mac-x64.dmg" class="download-card">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="color:#a0a0a0">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+                <div class="download-card-title">Mac (Intel)</div>
+                <div class="download-card-sub">2020 and earlier</div>
+            </a>
+            <a href="https://github.com/jackbkinder-oss/contract-aegis-releases/releases/download/v2.9.0/Contract-Aegis-Windows-Setup.exe" class="download-card">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" style="color:#a0a0a0">
+                    <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+                </svg>
+                <div class="download-card-title">Windows</div>
+                <div class="download-card-sub">Windows 10+</div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── EXIT INTENT POPUP ────────────────────────── -->
+<div class="exit-popup-overlay" id="exitPopup">
+    <div class="exit-popup">
+        <button class="exit-popup-close" id="exitPopupClose" aria-label="Close">&times;</button>
+        <div class="exit-popup-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+                <defs><linearGradient id="ep-g" x1="3" y1="2" x2="21" y2="23"><stop offset="0%" stop-color="#6366f1"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient></defs>
+                <path d="M12 2L3 7v5c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7L12 2z" stroke="url(#ep-g)" stroke-width="1.75" stroke-linejoin="round" fill="none"/>
+                <path d="M9 12l2 2 4-4" stroke="#22c55e" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        <h3 class="exit-popup-title">Before you go...</h3>
+        <p class="exit-popup-text">Get your first contract analysis completely free. See exactly what risks are hiding in your next contract — in under 60 seconds.</p>
+        <a href="signup.html" class="exit-popup-cta">Analyze My First Contract Free</a>
+        <p class="exit-popup-subtext">No credit card required</p>
+    </div>
+</div>
+
 <!-- ─── FOOTER ────────────────────────────────────── -->
 <footer>
     <div class="container">
@@ -727,6 +773,7 @@
             <nav class="footer-links">
                 <a href="#demo">How It Works</a>
                 <a href="#pricing">Pricing</a>
+                <a href="#download">Download</a>
                 <a href="#faq">FAQ</a>
                 <a href="terms.html">Terms of Service</a>
                 <a href="privacy.html">Privacy Policy</a>
@@ -768,7 +815,7 @@
 </script>
 <!-- ─── STICKY MOBILE CTA ──────────────────────────── -->
 <div class="sticky-mobile-cta" id="stickyMobileCta">
-    <a href="signup.html" class="sticky-mobile-btn">Try Your Free Analysis</a>
+    <a href="signup.html" class="sticky-mobile-btn">Analyze My First Contract Free</a>
 </div>
 
 <script src="script.js"></script>

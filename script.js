@@ -156,7 +156,7 @@ const stickyMobileCta = document.getElementById('stickyMobileCta');
 if (stickyMobileCta) {
     let lastScrollY = 0;
     const showSticky = () => {
-        if (window.scrollY > 400) {
+        if (window.scrollY > 200) {
             stickyMobileCta.classList.add('visible');
         } else {
             stickyMobileCta.classList.remove('visible');
@@ -165,6 +165,44 @@ if (stickyMobileCta) {
     };
     window.addEventListener('scroll', showSticky, { passive: true });
 }
+
+// ─── EXIT INTENT POPUP ──────────────────────────────────────
+(function initExitPopup() {
+    const popup = document.getElementById('exitPopup');
+    const closeBtn = document.getElementById('exitPopupClose');
+    if (!popup || !closeBtn) return;
+
+    let shown = false;
+
+    function showPopup() {
+        if (shown) return;
+        if (sessionStorage.getItem('cg_exit_shown')) return;
+        if (localStorage.getItem('cg_user')) return; // already signed up
+        shown = true;
+        sessionStorage.setItem('cg_exit_shown', '1');
+        popup.classList.add('active');
+    }
+
+    // Desktop: mouse leaves viewport
+    document.addEventListener('mouseout', (e) => {
+        if (e.clientY <= 0) showPopup();
+    });
+
+    // Mobile: back button / scroll to top rapidly (fallback — 30s idle)
+    let idleTimer = setTimeout(showPopup, 30000);
+    document.addEventListener('scroll', () => {
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(showPopup, 30000);
+    }, { passive: true });
+
+    closeBtn.addEventListener('click', () => {
+        popup.classList.remove('active');
+    });
+
+    popup.addEventListener('click', (e) => {
+        if (e.target === popup) popup.classList.remove('active');
+    });
+})();
 
 // ─── STRIPE CHECKOUT ────────────────────────────────────────
 function startCheckout(plan) {

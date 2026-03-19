@@ -1566,6 +1566,33 @@ section {
     color: var(--text-tertiary);
 }
 
+.price-discount-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.price-original {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    text-decoration: line-through;
+    text-decoration-color: rgba(255,255,255,0.25);
+}
+
+.price-discount-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.25);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+}
+
 .plan-desc {
     font-size: 13px;
     color: var(--text-secondary);
@@ -2596,6 +2623,16 @@ footer {
 .testimonial-role {
     font-size: 12px;
     color: var(--text-tertiary);
+}
+
+.testimonial-verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #22c55e;
+    margin-top: 3px;
 }
 
 /* Social proof stats bar */

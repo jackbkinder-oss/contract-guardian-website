@@ -2,6 +2,78 @@
    TOS Guardian — Website Script
    ============================================================ */
 
+// ─── ANALYTICS HELPER ────────────────────────────────────────
+function track(name, data) {
+    if (typeof window.va === 'function') {
+        window.va('event', { name, data });
+    }
+}
+
+// ─── TRACK CTA CLICKS ────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    // Hero primary CTA
+    document.querySelectorAll('.btn-hero-primary, .sticky-mobile-btn, .exit-popup-cta').forEach(el => {
+        el.addEventListener('click', () => track('CTA Click', { label: el.textContent.trim().slice(0, 60) }));
+    });
+
+    // Nav signup/login
+    document.getElementById('signupBtn')?.addEventListener('click', () => track('Nav Signup Click'));
+    document.getElementById('loginBtn')?.addEventListener('click', () => track('Nav Login Click'));
+
+    // Pricing CTAs
+    document.querySelector('.plan-cta.free-btn')?.addEventListener('click', () => track('Pricing CTA', { plan: 'free' }));
+    document.querySelector('.plan-cta.upgrade-btn')?.addEventListener('click', () => track('Pricing CTA', { plan: 'pro' }));
+
+    // Download cards
+    document.querySelectorAll('.download-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const platform = card.querySelector('.download-card-title')?.textContent.trim() || 'unknown';
+            track('Download Click', { platform });
+        });
+    });
+
+    // FAQ opens
+    document.querySelectorAll('.faq-question').forEach(q => {
+        q.addEventListener('click', () => {
+            const text = q.textContent.trim().replace(/\s+/g, ' ').slice(0, 80);
+            track('FAQ Opened', { question: text });
+        });
+    });
+});
+
+// ─── TRACK SCROLL DEPTH ──────────────────────────────────────
+(function trackScrollDepth() {
+    const milestones = [25, 50, 75, 90];
+    const reached = new Set();
+    window.addEventListener('scroll', () => {
+        const scrolled = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+        milestones.forEach(m => {
+            if (!reached.has(m) && scrolled >= m) {
+                reached.add(m);
+                track('Scroll Depth', { percent: m });
+            }
+        });
+    }, { passive: true });
+})();
+
+// ─── TRACK SECTION VISIBILITY ────────────────────────────────
+(function trackSectionViews() {
+    const sections = ['pricing', 'download', 'testimonials', 'faq', 'comparison'];
+    const seen = new Set();
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && !seen.has(entry.target.id)) {
+                seen.add(entry.target.id);
+                track('Section View', { section: entry.target.id });
+            }
+        });
+    }, { threshold: 0.3 });
+    sections.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+    });
+})();
+
 // ─── NAV: SCROLL EFFECT ─────────────────────────────────────
 const mainNav = document.getElementById('mainNav');
 if (mainNav) {
